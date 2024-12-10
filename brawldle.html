@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MortipinS Brawl Stars Guessing Game">
+    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="author" content="MortipinS">
+    <title>Brawldle</title>
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css -->
+    <link href="css/style.css" rel="stylesheet" >
+    <!-- js -->
+    <script src="js/script.js" defer></script>
+</head>
+
+<body>
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="overlay-text">
+            <a href="index.html">Home</a>
+            <a href="brawldle.html">Play Brawldle</a>
+            <a href="videos.html">Videos</a>
+            <a href="submit.html">Submit a Clip</a>
+        </div>
+    </div>
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo"  onclick="window.location.href='index.html';">
+                <a href="index.html" class="logo-text">Morti-Site</a>
+            </div>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="brawldle.html">Play Brawldle</a>
+                <a href="videos.html">Videos</a>
+                <a href="submit.html">Submit a Clip</a>
+            </div>
+        </nav>
+
+        <!-- mobile-->
+        <nav class="nav mobile-nav">
+            <div>
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo" >
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="hero">
+            <div class="intro">
+                <div class="intro-text">
+                    <h1>Play Brawldle</h1>
+                    <p>Test your skills and guess the rank of Brawl Stars players based on their clips.<br> Are you up for the challenge?</p>
+                    <a href="brawldle-daily.html" class="brawldle-button">Daily Game</a>
+                    <a href="brawldle-unlimited.html" class="brawldle-button2">Play Unlimited</a>
+                    
+                </div>
+                <img src="images/brawldle-icon.jpg" alt="MortipinS Logo">
+            </div>
+        </div>
+
+        <div class="brawldle-section">
+            <h2>How to Play</h2>
+            <p>Watch the clip and guess the rank of the player. The closer your guess, the higher your score! <br> You earn 2 stars if you guess the correct rank and 1 star for being 1 rank off.</p>
+        </div>
+        <div class="leaderboard-section">
+            <h2>Leaderboard</h2>
+            <ul class="leaderboard-list">
+                <li>
+                    <span>MortipinS</span>
+                    <span>1000 pts</span>
+                </li>
+                <li>
+                    <span>MortipinS</span>
+                    <span>950 pts</span>
+                </li>
+                <li>
+                    <span>MortipinS</span>
+                    <span>900 pts</span>
+                </li>
+                <!-- Add more players as needed -->
+            </ul>
+        </div>
+    </main>
+
+    <!-- modal structure-->
+    <div id="rankModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h1>Results</h1>
+            <div id="modalText">
+        </div>
+    </div>
+    
+</body>
+</html>
