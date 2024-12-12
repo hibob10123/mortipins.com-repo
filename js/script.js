@@ -25,9 +25,30 @@ const videoLinks = [
     { link: "https://www.youtube.com/embed/ITTXG36n7EM", trueRank: "Diamond", guesses: []  },
     { link: "https://www.youtube.com/embed/NKVrh_qPZw8", trueRank: "Diamond", guesses: []  },
     { link: "https://www.youtube.com/embed/BjDtf5DlTmA", trueRank: "Diamond", guesses: []  },
+    { link: "https://www.youtube.com/embed/nL7X9SIAobE", trueRank: "Diamond", guesses: []  },
+    { link: "https://www.youtube.com/embed/9vxfjvEUW7o", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/9o5Vjnm--YE", trueRank: "Legendary", guesses: []  },
+    { link: "https://www.youtube.com/embed/ZTYelONAofo", trueRank: "Legendary", guesses: []  },
+    { link: "https://www.youtube.com/embed/iw_dGyd3ZVo", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/zDx6lBZSwG0", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/-Jo_v4kkYQA", trueRank: "Diamond", guesses: []  },
+    { link: "https://www.youtube.com/embed/Ivp5MWRgyuA", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/5_wOpRsc1tk", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/2SyxfBHgGJQ", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/oeoF_gqheHE", trueRank: "Diamond", guesses: []  },
+    { link: "https://www.youtube.com/embed/kQRrHBP-veo", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/qcio5lZXXL8", trueRank: "Masters", guesses: []  },
+    { link: "https://www.youtube.com/embed/xtbva7378mk", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/K8iLdlhpTJE", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/dYkxdNXdmhU", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/vkoBgA5OT50", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/sRVYXzejenc", trueRank: "Legendary", guesses: []  },
+    { link: "https://www.youtube.com/embed/2_syHedgZGI", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/tvCtPuxuE90", trueRank: "Mythic", guesses: []  },
+    { link: "https://www.youtube.com/embed/436S1Obe7qQ", trueRank: "Diamond", guesses: []  },
+    { link: "https://www.youtube.com/embed/n-zsfJtEpmM", trueRank: "Mythic", guesses: []  },
     { link: "https://www.youtube.com/embed/nL7X9SIAobE", trueRank: "Diamond", guesses: []  }
 ];
-
 const videoLinksDaily = [
     { link: "https://www.youtube.com/embed/MH1YnfTBF6I", trueRank: "Diamond", guesses: [] },
 ]

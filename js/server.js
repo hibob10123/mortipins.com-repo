@@ -40,10 +40,10 @@ app.get('/', (req, res) => {
 
 const pool = new Pool({
     user: 'postgres',
-    host: '10.48.64.5',
+    host: 
     database: 'brawldle',
-    password: 'Be101234!',
-    port: 5432,
+    password: 
+    port: 
 });
 
 app.post('/api/guess', async (req, res) => {
