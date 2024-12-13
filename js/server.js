@@ -39,11 +39,11 @@ app.get('/', (req, res) => {
 });
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 
-    database: 'brawldle',
-    password: 
-    port: 
+    //user: 'postgres',
+    //host: 
+    //database: 'brawldle',
+    //password: 
+    //port: 
 });
 
 app.post('/api/guess', async (req, res) => {
