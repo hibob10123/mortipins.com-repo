@@ -116,9 +116,7 @@ const videoLinks = [
 
 
 
-const videoLinksDaily = [
-    { link: "https://www.youtube.com/embed/MH1YnfTBF6I", trueRank: "Diamond", guesses: [] },
-]
+const videoLinksDaily = videoLinks[1];
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
 
