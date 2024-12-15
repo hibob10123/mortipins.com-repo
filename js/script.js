@@ -115,7 +115,6 @@ const videoLinks = [
 ];
 
 
-
 const videoLinksDaily = videoLinks[1];
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
@@ -193,7 +192,7 @@ if (typeof Chart !== 'undefined') {
 
 function canSubmitGuess() {
     const lastGuessDate = localStorage.getItem('lastGuessDate');
-    const today = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
 
     return lastGuessDate !== today;
 }
@@ -214,6 +213,7 @@ function updateSubmitButton() {
 
 function submitGuessDaily() {
     if (!canSubmitGuess()) {
+        console.log('Already submitted guess today');
         return;
     }
 
