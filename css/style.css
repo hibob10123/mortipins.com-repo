@@ -157,6 +157,25 @@ header {
 /* overlay */
 /* mobile nav */
 
+.sidebar-button {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 2rem;
+    display: block;
+    min-width: 300px;
+    padding: 10px 20px;
+    margin: 10px 20px;
+    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+.sidebar-button:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
 #overlay {
     display: none;
     position: fixed;
