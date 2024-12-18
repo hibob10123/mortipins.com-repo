@@ -1,3 +1,6 @@
-# Brawldle
+# Morti-Site (Brawldle)
+## https://mortipins.com
 
-# Does this thingy work
+## Credits:
+### MortipinS - Owner, main contents of the website.
+### enkei64 - Mobile interface, blog.
