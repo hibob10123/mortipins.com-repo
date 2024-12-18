@@ -1,16 +1,14 @@
 # Morti-Site (Brawldle)
 ## https://mortipins.com
 
-### Description
+## Description
 Welcome to The Best Brawl Stars Website! A Brawl Stars website created by YouTuber MortipinS.
 Play mini-games, read blogs, watch documentaries. 
+## Credits:
+MortipinS - Owner, main contents of the website, Brawldle, and the images. 
+enkei64 - Mobile interface, mobile sidebar, header, and the blog. 
 
-### Credits:
-MortipinS - Owner, main contents of the website, Brawldle, and the images.
-
-enkei64 - Mobile interface, mobile sidebar, header, and the blog.
-
-### How to Play - Brawldle:
+## How to Play - Brawldle:
 Aim of the Game:
 
 Test your skills and guess the rank of Brawl Stars players based on their clips. 
@@ -23,3 +21,6 @@ Get a 5 win streak: x2 points
 Get a 10 win streak: +500 points
 
 Your points will show on the leaderboard if you Sign-in to your Morti-Site account.
+
+## License
+This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. See [LICENSE](LICENSE) for more details.
