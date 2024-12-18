@@ -63,18 +63,40 @@ header {
     height: 2rem;
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(20, 20, 20, 0.85);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .nav {
+    justify-content: space-between;
+    display: flex;
     background-color: rgba(20, 20, 20, 0.85);
     backdrop-filter: blur(10px);
     color: rgb(255, 255, 255);
     display: flex;
-    justify-content: center;
     align-items: center;
     padding: var(margin-xxs);
     position: fixed;
     width: 100%;
     height: 5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.logo{
+    margin-left: 30px;
 }
 
 .nav .logo {
@@ -134,13 +156,13 @@ header {
     text-decoration: none;
 }
 
-@media (min-width: 1087px) {
+@media (min-width: 1145px) {
     .mobile-nav {
         display: none;
     }
 }
 
-@media (max-width: 1087px) {
+@media (max-width: 1145px) {
     .full-nav {
         display: none;
     }
@@ -187,14 +209,17 @@ header {
 }
 
 .fa-times {
-    font-size: 4rem;
+    align-self: flex-end;
+    position: absolute;
+    top: 10px;
+    right: 17px;
+    font-size: 2rem;
     color: #fff;
     padding: 1rem;
-    transition: all 200ms ease-in-out;
 }
 
 .fa-times:hover {
-    animation: rottate 200ms ease-in-out;
+    animation: rotate 200ms ease-in-out;
 }
 
 /* hero */
@@ -209,21 +234,22 @@ header {
     animation: fadeIn 1s ease-in-out;
 }
 
-.intro img {
+.intro-img {
     width: 100%;
     min-width: 300px;
     height: auto;
     margin-right: 1.5rem;
+    margin-left: 1.5rem;
     flex: 1;
     border-radius: 15%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    margin-left: 3rem;
     animation: slideInRight 1s ease-in-out;
 }
 
 .intro-text {
     flex: 1;
     margin-left: 1.5rem;
+    margin-right:1.5rem;
     min-width: 300px;
     text-align: left;
     animation: slideInLeft 1s ease-in-out;
@@ -260,6 +286,7 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     border-radius: 5px;
     margin-top: 1.5rem;
+    margin-right: 1rem;
     text-decoration: none;
     transition: all 0.3s ease, color 0.3s ease;
 }
@@ -267,13 +294,13 @@ header {
 .intro-button2 {
     display: inline-block;
     padding: 0.75rem 1.5rem;
+    margin-top: 10px;
     font-size: 1.2rem;
     color: #fff;
     background-color: transparent;
     border: 2px solid #b62323;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     border-radius: 5px;
-    margin-left: 1rem;
     text-decoration: none;
     transition: all 0.3s ease, color 0.3s ease;
 }
@@ -291,7 +318,6 @@ header {
 }
 
 /* flex cards */
-
 .flex-cards img {
     height: 225px;
     border-radius: 10%;
@@ -581,7 +607,7 @@ header {
 }
 
 /* Responsive adjustments */
-@media screen and (max-width: 1087px) {
+@media screen and (max-width: 1145px) {
     .modal-content {
         width: 90%; /* Adjust width for smaller screens */ /*test*/
     }
@@ -701,7 +727,7 @@ header {
     background-color: #292929;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 2rem auto;
-    max-width: 600px;
+    max-width: 700px;
     border-radius: 10px;
 }
 
@@ -729,16 +755,26 @@ header {
     font-size: 4rem;
     margin-top: 6rem;
     margin-bottom: 1rem;
+    margin-left: 3rem;
     color: #ffffff;
 }
 
+.sidebar {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 20px;
+}
+
 .sidebar-button {
+    float: right;
     font-family: 'Lilita One', sans-serif;
     font-size: 2rem;
     display: block;
-    min-width: 300px;
-    padding: 10px 20px;
-    margin: 10px 20px;
+    min-width: 220px;
+    padding: 5px 10px;
+    margin: 5px 10px;
     text-align: left;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -792,13 +828,14 @@ header {
             margin-bottom: 2rem;
         }
 
-.blog-text{
-    margin-left: 400px;
-    margin-right: 400px;
-    margin-top: 100px;
-    margin-bottom: 200px;
-    color: white;
-}
+        .blog-text {
+            max-width: 800px;
+            margin: 100px auto 100px auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: white;
+            box-sizing: border-box;
+        }
 
 @media (max-width: 768px) {
     .blog {
@@ -808,19 +845,6 @@ header {
 }
 
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(20, 20, 20, 0.85);
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.header-items{
+    padding-right: 30px;
 }
