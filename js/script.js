@@ -115,7 +115,9 @@ const videoLinks = [
 ];
 
 
-const videoLinksDaily = videoLinks[1];
+const videoLinksDaily = [
+    videoLinks[69]
+]
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
 
@@ -191,13 +193,17 @@ if (typeof Chart !== 'undefined') {
 }
 
 function canSubmitGuess() {
+    /*
     const lastGuessDate = localStorage.getItem('lastGuessDate');
     const today = new Date().toISOString().split('T')[0];
 
     return lastGuessDate !== today;
+    */
+   return true;
 }
 
 function updateSubmitButton() {
+    
     const submitButton = document.getElementById("submitButton");
     if (!canSubmitGuess()) {
         submitButton.textContent = "Already Submitted";
@@ -208,15 +214,17 @@ function updateSubmitButton() {
         submitButton.classList.remove("disabled");
         submitButton.onclick = submitGuessDaily; // Enable the click event
     }
+    
 }
 
 
 function submitGuessDaily() {
+    /*
     if (!canSubmitGuess()) {
         console.log('Already submitted guess today');
         return;
     }
-
+    */
     if (selectedRankName === null) {
         console.log('No rank selected');
         return;
@@ -224,21 +232,20 @@ function submitGuessDaily() {
 
     const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
-    const trueRank = videoLinksDaily[currentVideoIndex].trueRank;
+    const trueRank = videoLinks[currentVideoIndex].trueRank;
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
-        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
     modal.style.display = "block";
-
     // Log the guess being sent to the backend
+    /*
     console.log('Submitting guess:', {
         video_id: currentVideoIndex,
         guess: selectedRankName
     });
 
-    // Send guess to the backend
+  
     fetch('https://mortipins.com:5000/api/guess', { 
         method: 'POST',
         headers: {
@@ -264,6 +271,7 @@ function submitGuessDaily() {
     }).catch(error => {
         console.error('Error:', error);
     });
+    */
 
     selectedRankName = null;
     buttons.forEach(button => {
