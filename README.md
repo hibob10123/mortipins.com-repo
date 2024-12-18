@@ -7,6 +7,7 @@ Play mini-games, read blogs, watch documentaries.
 
 ### Credits:
 MortipinS - Owner, main contents of the website, Brawldle, and the images.
+
 enkei64 - Mobile interface, mobile sidebar, header, and the blog.
 
 ### How to Play - Brawldle:
