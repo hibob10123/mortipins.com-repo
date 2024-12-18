@@ -24,4 +24,4 @@ Get a 10 win streak: +500 points
 Your points will show on the leaderboard if you Sign-in to your Morti-Site account.
 
 ## License
-This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. See [LICENSE.md](LICENSE) for more details.
+This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. See [LICENSE](LICENSE.md) for more details.
