@@ -278,6 +278,7 @@ async function fetchGuessDistribution() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log('Fetched guess distribution:', data);
         return data;
     } catch (error) {
         console.error('Error fetching guess distribution:', error);
@@ -287,7 +288,6 @@ async function fetchGuessDistribution() {
 async function showGuessDistribution() {
     const data = await fetchGuessDistribution();
     if (data) {
-
         const counts = rankNames.map(rank => {
             const found = data.find(item => item.guess === rank);
             return found ? found.count : 0;
@@ -312,7 +312,9 @@ async function showGuessDistribution() {
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false
             }
         });
     }
