@@ -192,6 +192,8 @@ if (typeof Chart !== 'undefined') {
     console.error('Chart.js is not loaded');
 }
 
+
+
 function canSubmitGuess() {
     /*
     const lastGuessDate = localStorage.getItem('lastGuessDate');
@@ -203,7 +205,6 @@ function canSubmitGuess() {
 }
 
 function updateSubmitButton() {
-    
     const submitButton = document.getElementById("submitButton");
     if (!canSubmitGuess()) {
         submitButton.textContent = "Already Submitted";
@@ -238,15 +239,13 @@ function submitGuessDaily() {
         <p>True Rank: ${trueRank}</p>
     `;
     modal.style.display = "block";
-    // Log the guess being sent to the backend
-    /*
+
     console.log('Submitting guess:', {
         video_id: currentVideoIndex,
         guess: selectedRankName
     });
 
-  
-    fetch('https://mortipins.com:5000/api/guess', { 
+    fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -262,16 +261,14 @@ function submitGuessDaily() {
         return response.json();
     }).then(data => {
         console.log('Guess submitted:', data);
-        showGuessDistribution(); // Show the guess distribution chart after the modal is displayed
+        showGuessDistribution();
 
-        // Store the current date as the last guess date
         const today = new Date().toISOString().split('T')[0];
         localStorage.setItem('lastGuessDate', today);
         updateSubmitButton();
     }).catch(error => {
         console.error('Error:', error);
     });
-    */
 
     selectedRankName = null;
     buttons.forEach(button => {
@@ -281,7 +278,7 @@ function submitGuessDaily() {
 
 async function fetchGuessDistribution() {
     try {
-        const response = await fetch('https://mortipins.com:5000/api/guess-distribution');
+        const response = await fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess-distribution');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

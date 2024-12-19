@@ -305,6 +305,8 @@ header {
     transition: all 0.3s ease, color 0.3s ease;
 }
 
+
+
 .intro-button:hover {
     background-color: #881818;
     transform: scale(1.05);
