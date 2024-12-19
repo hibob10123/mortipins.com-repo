@@ -320,6 +320,11 @@ async function showGuessDistribution() {
     }
 }
 
+if (typeof Chart !== 'undefined') {
+    console.log('Chart.js is loaded');
+} else {
+    console.error('Chart.js is not loaded');
+}
 
 function closeModal() {
     const modal = document.getElementById("rankModal");
