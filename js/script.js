@@ -220,12 +220,6 @@ function updateSubmitButton() {
 
 
 function submitGuessDaily() {
-    /*
-    if (!canSubmitGuess()) {
-        console.log('Already submitted guess today');
-        return;
-    }
-    */
     if (selectedRankName === null) {
         console.log('No rank selected');
         return;
@@ -237,6 +231,7 @@ function submitGuessDaily() {
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
+        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
     modal.style.display = "block";
 
