@@ -314,7 +314,7 @@ async function showGuessDistribution() {
                     }
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true
             }
         });
     }
