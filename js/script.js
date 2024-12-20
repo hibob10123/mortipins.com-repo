@@ -114,9 +114,9 @@ const videoLinks = [
     { link: "https://www.youtube.com/embed/AOUYD6Tu-us", trueRank: "Diamond", guesses: [] },
 ];
 
-
+const videoDailyNumber = 69;
 const videoLinksDaily = [
-    videoLinks[69]
+    videoLinks[videoDailyNumber],
 ]
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
@@ -151,7 +151,7 @@ function selectRank(rank) {
     });
     buttons[rank - 1].classList.add('selected');
     // Record the guess
-    videoLinks[currentVideoIndex].guesses.push(guessedRankName);
+    videoLinks[currentVideoIndex].guesses.push(selectedRankNameRankName);
 }
 
 function submitGuess() {
@@ -236,7 +236,7 @@ function submitGuessDaily() {
     modal.style.display = "block";
 
     console.log('Submitting guess:', {
-        video_id: currentVideoIndex,
+        video_id: videoLinks[videoDailyNumber].link,
         guess: selectedRankName
     });
 
