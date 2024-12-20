@@ -288,9 +288,9 @@ async function fetchGuessDistribution() {
 async function showGuessDistribution() {
     const data = await fetchGuessDistribution();
     if (data) {
+        const rankNames = ['Bronze', 'Silver', 'Gold', 'Diamond', 'Mythic', 'Legendary', 'Masters'];
         const counts = rankNames.map(rank => {
-            const found = data.find(item => item.guess === rank);
-            return found ? found.count : 0;
+            return data[0][rank] || 0;
         });
 
         const ctx = document.getElementById('guessDistributionChart').getContext('2d');
