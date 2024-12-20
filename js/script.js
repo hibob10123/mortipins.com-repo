@@ -246,7 +246,7 @@ function submitGuessDaily() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            video_id: currentVideoIndex,
+            video_id: videoLinks[videoDailyNumber].link,
             guess: selectedRankName
         })
     }).then(response => {
