@@ -240,7 +240,6 @@ header {
     height: auto;
     margin-right: 1.5rem;
     margin-left: 1.5rem;
-    padding-top: 10px;
     flex: 1;
     border-radius: 15%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -291,36 +290,11 @@ header {
     color: #fff;
     background: linear-gradient(135deg, #b62323, #ad2727);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
+    border-radius: 5px;
+    margin-top: 1.5rem;
     margin-right: 1rem;
-    margin-top: 5px;
     text-decoration: none;
     transition: all 0.3s ease, color 0.3s ease;
-}
-
-@media (max-width: 509px) {
-
-    .intro-button {
-        min-width: 88%;
-        margin-right: 30px;
-        text-align: center;
-    }
-
-        .intro-button2 {
-            min-width: 88%;
-            margin-right: 30px;
-            text-align: center;
-    }
-
-    .intro-button-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .Btn {
-        min-width: 100%;
-        margin-right: 31px;
-    }
 }
 
 .intro-button2 {
@@ -330,8 +304,8 @@ header {
     color: #fff;
     background: linear-gradient(135deg, #b62323, #ad2727);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    margin-top: 5px;
+    border-radius: 5px;
+    margin-top: 1.5rem;
     margin-right: 1rem;
     text-decoration: none;
     transition: all 0.3s ease, color 0.3s ease;
@@ -350,6 +324,7 @@ header {
     color: #fff;
 }
 
+/* From Uiverse.io by vinodjangid07 */ 
 .Btn {
     width: 45px;
     height: 45px;
@@ -363,7 +338,7 @@ header {
     border-radius: 7px;
     cursor: pointer;
     transition: all 0.3s;
-    margin-top: 5px;
+    margin-top: 1.65rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
   }
   
@@ -876,54 +851,55 @@ header {
 }
 
  .blog-link {
-            --text-color: hsl(231, 97%, 72%);
-            --accent-color: hsl(231, 97%, 72%);
-            --hover-text-color: hsl(222.2 34% 8.9%);
-            --hover-bg-color: hsl(231, 97%, 72%);
-            display: inline-block;
-            font-family: Sora;
-            color: var(--foreground);
-            text-decoration: none;
-            transition: color 0.15s ease-in-out;
+    --text-color: hsl(231, 97%, 72%);
+    --accent-color: hsl(231, 97%, 72%);
+    --hover-text-color: hsl(222.2 34% 8.9%);
+    --hover-bg-color: hsl(231, 97%, 72%);
+    font-family: var(--ff);
+    display: inline-block;
+    font-family: Sora;
+    color: var(--foreground);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.link-content {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-image: linear-gradient(to bottom, var(--accent-color), var(--accent-color));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: all 0.15s ease-in-out;
+    padding-top: 2.5px;
         }
 
-        .link-content {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            background-image: linear-gradient(to bottom, var(--accent-color), var(--accent-color));
-            background-size: 100% 1px;
-            background-position: 0 100%;
-            background-repeat: no-repeat;
-            transition: all 0.15s ease-in-out;
-            padding-top: 2.5px;
-        }
+.blog-link{
+    color: white;
+}
 
-        .blog-link{
-            color: white;
-        }
+.blog-link:hover .link-content {
+    color: var(--hover-text-color);
+    background-size: 100% 100%;
+}
 
-        .blog-link:hover .link-content {
-            color: var(--hover-text-color);
-            background-size: 100% 100%;
-        }
+.blog {
+    margin: 10vh;
+}
 
-        .blog {
-            margin: 10vh;
-        }
+.blog-item {
+    margin-bottom: 2rem;
+}
 
-        .blog-item {
-            margin-bottom: 2rem;
-        }
-
-        .blog-text {
-            max-width: 800px;
-            margin: 100px auto 100px auto;
-            padding-left: 20px;
-            padding-right: 20px;
-            color: white;
-            box-sizing: border-box;
-        }
+.blog-text {
+    max-width: 800px;
+    margin: 100px auto 100px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    box-sizing: border-box;
+}
 
 @media (max-width: 768px) {
     .blog {
@@ -932,13 +908,159 @@ header {
     }
 }
 
-
 .header-items{
     padding-right: 30px;
 }
 
-.thank-you{
-    margin-top: 100px;
-    margin-left: 20px;
+/* Slider container */
+.trophy-slider {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+/* The slider thumb */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--gray30);
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    background: white;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.slider::-moz-range-thumb:hover {
+    background: #45a049;
+}
+
+/* Trophies value display */
+.trophy-slider p {
+    display: block;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all 200ms ease-in-out;
+}
+
+.mortiproxy-text {
+    font-family: var(--ff);
+    font-size: 40px;
     color: white;
+    margin-left: 40px;
+    margin-top: 75px;
+}
+
+.mortiproxy-text2 {
+    font-family: var(--ff);
+    font-size: 20px;
+    color: white;
+    margin-left: 40px;
+}
+
+.map-container {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.map {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.proxy {
+    position: absolute;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.proxy:hover {
+    background-color: white;
+    color: black;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.proxy-sydney {
+    top: 75%;
+    left: 83%;
+}
+
+.proxy-japan {
+    top: 40%;
+    left: 80%;
+}
+
+.proxy-singapore {
+    top: 48%;
+    left: 76%;
+}
+
+.proxy-miami {
+    top: 45%;
+    left: 28%;
+}
+
+.proxy-north-america {
+    top: 35%;
+    left: 23%;
+}
+
+
+
+.proxy-china {
+    top: 40%;
+    left: 68%;
+}
+
+.proxy-germany {
+    top: 33%;
+    left: 50%;
+}
+
+.proxy-russia {
+    top: 25%;
+    left: 71%;
 }
