@@ -471,13 +471,23 @@ async function showGuessDistribution(videoLink) {
         const videoData = data.find(item => item.VideoId === videoId);
         if (!videoData) {
             console.error(`No distribution data found for video_id: ${videoId}`);
-            return;
+            videoData = {
+                VideoId: videoId,
+                Bronze: 0,
+                Silver: 0,
+                Gold: 0,
+                Diamond: 0,
+                Mythic: 0,
+                Legendary: 0,
+                MASTERS: 0
+            };
+            console.log(`Created new data for video_id: ${videoId}`);
         }
         else {
             console.log('Video data:', videoData);
         }
 
-        const rankNames = ['Bronze', 'Silver', 'Gold', 'Diamond', 'Mythic', 'Legendary', 'Masters'];
+        const rankNames = ['Bronze', 'Silver', 'Gold', 'Diamond', 'Mythic', 'Legendary', 'MASTERS'];
         const counts = rankNames.map(rank => {
             return videoData[rank] || 0;
         });
