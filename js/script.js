@@ -250,7 +250,7 @@ const videoTrophyLinks = [
     { link: "https://www.youtube.com/embed/n-b_k0Nycaw", trueTrophy: "60000", guesses: [] },
 ];
 
-const videoDailyNumber = 68;
+const videoDailyNumber = 66;
 
 const videoLinksDaily = [
     videoLinks[videoDailyNumber],
@@ -471,7 +471,17 @@ async function showGuessDistribution(videoLink) {
         const videoData = data.find(item => item.VideoId === videoId);
         if (!videoData) {
             console.error(`No distribution data found for video_id: ${videoId}`);
-            return;
+            videoData = {
+                VideoId: videoId,
+                Bronze: 0,
+                Silver: 0,
+                Gold: 0,
+                Diamond: 0,
+                Mythic: 0,
+                Legendary: 0,
+                Masters: 0
+            };
+            console.log(`Created new data for video_id: ${videoId}`);
         }
         else {
             console.log('Video data:', videoData);
