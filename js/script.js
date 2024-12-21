@@ -412,6 +412,7 @@ function canSubmitGuess() {
 }
 
 function updateSubmitButton() {
+    /*
     const submitButton = document.getElementById("submitButton");
     if (!canSubmitGuess()) {
         submitButton.textContent = "Already Submitted";
@@ -422,7 +423,10 @@ function updateSubmitButton() {
         submitButton.classList.remove("disabled");
         submitButton.onclick = submitGuessDaily; // Enable the click event
     }
-    
+        */
+    submitButton.textContent = "Submit Guess";
+        submitButton.classList.remove("disabled");
+        submitButton.onclick = submitGuessDaily;
 }
 
 
