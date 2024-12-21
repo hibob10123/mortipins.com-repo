@@ -375,16 +375,17 @@ function submitGuess() {
         return response.json();
     }).then(data => {
         console.log('Guess submitted:', data);
-        showGuessDistribution(videoLinks[currentVideoIndex].link);
+        showGuessDistribution(videoLinks[currentVideoIndex].link).then(() => {
+            selectedRankName = null;
+            buttons.forEach(button => {
+                button.classList.remove('selected');
+            });
+            getRandomVideo();
+        });
     }).catch(error => {
         console.error('Error:', error);
     });
 
-    selectedRankName = null;
-    buttons.forEach(button => {
-        button.classList.remove('selected');
-    });
-    getRandomVideo();
 }
 
 function updateStreakDisplay() {
