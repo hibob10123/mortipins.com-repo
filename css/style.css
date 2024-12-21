@@ -851,54 +851,55 @@ header {
 }
 
  .blog-link {
-            --text-color: hsl(231, 97%, 72%);
-            --accent-color: hsl(231, 97%, 72%);
-            --hover-text-color: hsl(222.2 34% 8.9%);
-            --hover-bg-color: hsl(231, 97%, 72%);
-            display: inline-block;
-            font-family: Sora;
-            color: var(--foreground);
-            text-decoration: none;
-            transition: color 0.15s ease-in-out;
+    --text-color: hsl(231, 97%, 72%);
+    --accent-color: hsl(231, 97%, 72%);
+    --hover-text-color: hsl(222.2 34% 8.9%);
+    --hover-bg-color: hsl(231, 97%, 72%);
+    font-family: var(--ff);
+    display: inline-block;
+    font-family: Sora;
+    color: var(--foreground);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.link-content {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-image: linear-gradient(to bottom, var(--accent-color), var(--accent-color));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: all 0.15s ease-in-out;
+    padding-top: 2.5px;
         }
 
-        .link-content {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            background-image: linear-gradient(to bottom, var(--accent-color), var(--accent-color));
-            background-size: 100% 1px;
-            background-position: 0 100%;
-            background-repeat: no-repeat;
-            transition: all 0.15s ease-in-out;
-            padding-top: 2.5px;
-        }
+.blog-link{
+    color: white;
+}
 
-        .blog-link{
-            color: white;
-        }
+.blog-link:hover .link-content {
+    color: var(--hover-text-color);
+    background-size: 100% 100%;
+}
 
-        .blog-link:hover .link-content {
-            color: var(--hover-text-color);
-            background-size: 100% 100%;
-        }
+.blog {
+    margin: 10vh;
+}
 
-        .blog {
-            margin: 10vh;
-        }
+.blog-item {
+    margin-bottom: 2rem;
+}
 
-        .blog-item {
-            margin-bottom: 2rem;
-        }
-
-        .blog-text {
-            max-width: 800px;
-            margin: 100px auto 100px auto;
-            padding-left: 20px;
-            padding-right: 20px;
-            color: white;
-            box-sizing: border-box;
-        }
+.blog-text {
+    max-width: 800px;
+    margin: 100px auto 100px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    box-sizing: border-box;
+}
 
 @media (max-width: 768px) {
     .blog {
@@ -906,7 +907,6 @@ header {
         margin-right: 2vh;
     }
 }
-
 
 .header-items{
     padding-right: 30px;
@@ -972,4 +972,95 @@ header {
     text-decoration: none;
     font-size: 1.5rem;
     transition: all 200ms ease-in-out;
+}
+
+.mortiproxy-text {
+    font-family: var(--ff);
+    font-size: 40px;
+    color: white;
+    margin-left: 40px;
+    margin-top: 75px;
+}
+
+.mortiproxy-text2 {
+    font-family: var(--ff);
+    font-size: 20px;
+    color: white;
+    margin-left: 40px;
+}
+
+.map-container {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.map {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.proxy {
+    position: absolute;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.proxy:hover {
+    background-color: white;
+    color: black;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.proxy-sydney {
+    top: 75%;
+    left: 83%;
+}
+
+.proxy-japan {
+    top: 40%;
+    left: 80%;
+}
+
+.proxy-singapore {
+    top: 48%;
+    left: 76%;
+}
+
+.proxy-miami {
+    top: 45%;
+    left: 28%;
+}
+
+.proxy-north-america {
+    top: 35%;
+    left: 23%;
+}
+
+
+
+.proxy-china {
+    top: 40%;
+    left: 68%;
+}
+
+.proxy-germany {
+    top: 33%;
+    left: 50%;
+}
+
+.proxy-russia {
+    top: 25%;
+    left: 71%;
 }
