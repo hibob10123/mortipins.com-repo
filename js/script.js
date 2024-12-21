@@ -607,12 +607,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
     }
-    else if (document.getElementById("brawldle-unlimited")) {
+    else {
         getRandomVideo();
     }
-    else {
-        getRandomTrophyVideo();
-    }
+    getRandomTrophyVideo();
 });
 document.addEventListener("DOMContentLoaded", updateSubmitButton);
 document.getElementById("trophyRange").addEventListener("input", updateTrophyValue);
