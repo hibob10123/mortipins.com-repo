@@ -435,7 +435,7 @@ function submitGuessDaily() {
         return response.json();
     }).then(data => {
         console.log('Guess submitted:', data);
-        showGuessDistribution();
+        showGuessDistribution(videoLinks[videoDailyNumber].link);
 
         const today = new Date().toISOString().split('T')[0];
         localStorage.setItem('lastGuessDate', today);
@@ -464,8 +464,8 @@ async function fetchGuessDistribution() {
     }
 }
 
-async function showGuessDistribution() {
-    const videoId = videoLinks[videoDailyNumber].link;
+async function showGuessDistribution(videoLink) {
+    const videoId = videoLink;
     const data = await fetchGuessDistribution();
     if (data) {
         const videoData = data.find(item => item.VideoId === videoId);
@@ -473,10 +473,13 @@ async function showGuessDistribution() {
             console.error(`No distribution data found for video_id: ${videoId}`);
             return;
         }
+        else {
+            console.log('Video data:', videoData);
+        }
 
         const rankNames = ['Bronze', 'Silver', 'Gold', 'Diamond', 'Mythic', 'Legendary', 'Masters'];
         const counts = rankNames.map(rank => {
-            return data[0][rank] || 0;
+            return videoData[rank] || 0;
         });
 
         const ctx = document.getElementById('guessDistributionChart').getContext('2d');
