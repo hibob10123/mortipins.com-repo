@@ -468,7 +468,7 @@ async function showGuessDistribution(videoLink) {
     const videoId = videoLink;
     const data = await fetchGuessDistribution();
     if (data) {
-        const videoData = data.find(item => item.VideoId === videoId);
+        let videoData = data.find(item => item.VideoId === videoId);
         if (!videoData) {
             console.error(`No distribution data found for video_id: ${videoId}`);
             videoData = {
