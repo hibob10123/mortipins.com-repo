@@ -16,8 +16,6 @@ function off() {
     overflow.style.overflow = "auto";
 }
 
-
-
 const videoLinks = [
     { link: "https://www.youtube.com/embed/B79hw1wCoS0", trueRank: "Mythic", guesses: [] },
     { link: "https://www.youtube.com/embed/L99aHF0C_8c", trueRank: "Legendary", guesses: [] },
@@ -112,9 +110,148 @@ const videoLinks = [
     { link: "https://www.youtube.com/embed/1ZxSxc5eSfk", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/EeOyEOhkNBc", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/AOUYD6Tu-us", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/qc2hzIXF28M", trueRank: "Silver", guesses: [] },
+    { link: "https://www.youtube.com/embed/-1EsK0iNE_8", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/OHNIK5hY884", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/dQw4w9WgXcQ", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/Uq37V_N7VB8", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/WaKFkDs6uUc", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/Qwhs0bA-bhw", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/Diikb5VTVz0", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/8ODyf91sgqE", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/qvdgMBFnpPw", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/J4Cu2B4JybY", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/dQw4w9WgXcQ", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/LTYgmxyHcZg", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ay2dS6kshWA", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/XqDCeLydkhI", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/62_d3v5YNx0", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/kQRrHBP-veo", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/3MA9uzJVvGI", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/C0_OqjSocvA", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/yaFfh3DZZtE", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/IbLjFyxVRWo", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/mTc3O1smvRU", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/--8Ph4IB46Q", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/-1EsK0iNE_8", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/d3zpHzyF6d0", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ff5P6XanTQk", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/CUrbZ0Gny34", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/zTLw9wFIlF0", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/7ZH9DXWgIZA", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/7ZH9DXWgIZA", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/vyHfRwVceqo", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/2obdN4JsOYk", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/jz3gFnsqrqM", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/vEtQfLdpXMg", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/QLSfXF_Qt-8", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/PYiubkEhf1I", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/cj1XmlDxnDs", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/QKCwEU8yI88", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/0i9gbTQrDN8", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/mTc3O1smvRU", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/XTUnnIN0KG4", trueRank: "Diamond", guesses: [] },
+    { link: "https://www.youtube.com/embed/Mnn0g-orGHc", trueRank: "Gold", guesses: [] },
+    { link: "https://www.youtube.com/embed/LTAQqRrSh94", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/j27YKvLKlXI", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/Dha7t8gnYe4", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/d69r2XjHe94", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/Rl6JiWFd5Z8", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/LQyU9QCH-vE", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/lZRrKYtmrZ0", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/aU-8mt4t08E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/u_4qGc4TwIs", trueRank: "Silver", guesses: [] },
+    { link: "https://www.youtube.com/embed/Uec4kmcd8J4", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/LmLFWlHCPko", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/oJtsKjF78DQ", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ye5DTeuOknc", trueRank: "Mythic", guesses: [] },
+    { link: "https://www.youtube.com/embed/Xe3AuIcudVg", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/Xe3AuIcudVg", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/9vBXQAc8Gu4", trueRank: "Bronze", guesses: [] },
+    { link: "https://www.youtube.com/embed/fc_7Deq4oyw", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/us--hJmbmBk", trueRank: "Bronze", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/iN5Pm6RCuU0", trueRank: "Gold", guesses: [] },
+    { link: "https://www.youtube.com/embed/I3MUY-cZZwc", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/Fjt46na_LGA", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/n-b_k0Nycaw", trueRank: "Masters", guesses: [] },
+    { link: "https://www.youtube.com/embed/MqhIpLk58tE", trueRank: "Diamond", guesses: [] },
 ];
 
-const videoDailyNumber = 69;
+const videoTrophyLinks = [
+    { link: "https://www.youtube.com/embed/-1EsK0iNE_8", trueTrophy: "38000", guesses: [] },
+    { link: "https://www.youtube.com/embed/OHNIK5hY884", trueTrophy: "32000", guesses: [] },
+    { link: "https://www.youtube.com/embed/dQw4w9WgXcQ", trueTrophy: "87000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Uq37V_N7VB8", trueTrophy: "90000", guesses: [] },
+    { link: "https://www.youtube.com/embed/WaKFkDs6uUc", trueTrophy: "75000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Qwhs0bA-bhw", trueTrophy: "70000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Diikb5VTVz0", trueTrophy: "25000", guesses: [] },
+    { link: "https://www.youtube.com/embed/8ODyf91sgqE", trueTrophy: "57000", guesses: [] },
+    { link: "https://www.youtube.com/embed/qvdgMBFnpPw", trueTrophy: "32000", guesses: [] },
+    { link: "https://www.youtube.com/embed/J4Cu2B4JybY", trueTrophy: "22000", guesses: [] },
+    { link: "https://www.youtube.com/embed/dQw4w9WgXcQ", trueTrophy: "100000", guesses: [] },
+    { link: "https://www.youtube.com/embed/LTYgmxyHcZg", trueTrophy: "140000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ay2dS6kshWA", trueTrophy: "25691", guesses: [] },
+    { link: "https://www.youtube.com/embed/XqDCeLydkhI", trueTrophy: "33995", guesses: [] },
+    { link: "https://www.youtube.com/embed/62_d3v5YNx0", trueTrophy: "33995", guesses: [] },
+    { link: "https://www.youtube.com/embed/kQRrHBP-veo", trueTrophy: "48000", guesses: [] },
+    { link: "https://www.youtube.com/embed/3MA9uzJVvGI", trueTrophy: "42000", guesses: [] },
+    { link: "https://www.youtube.com/embed/C0_OqjSocvA", trueTrophy: "38200", guesses: [] },
+    { link: "https://www.youtube.com/embed/yaFfh3DZZtE", trueTrophy: "43000", guesses: [] },
+    { link: "https://www.youtube.com/embed/IbLjFyxVRWo", trueTrophy: "23757", guesses: [] },
+    { link: "https://www.youtube.com/embed/mTc3O1smvRU", trueTrophy: "47094", guesses: [] },
+    { link: "https://www.youtube.com/embed/--8Ph4IB46Q", trueTrophy: "26083", guesses: [] },
+    { link: "https://www.youtube.com/embed/-1EsK0iNE_8", trueTrophy: "38000", guesses: [] },
+    { link: "https://www.youtube.com/embed/d3zpHzyF6d0", trueTrophy: "40000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ff5P6XanTQk", trueTrophy: "28000", guesses: [] },
+    { link: "https://www.youtube.com/embed/CUrbZ0Gny34", trueTrophy: "39000", guesses: [] },
+    { link: "https://www.youtube.com/embed/zTLw9wFIlF0", trueTrophy: "17132", guesses: [] },
+    { link: "https://www.youtube.com/embed/7ZH9DXWgIZA", trueTrophy: "55000", guesses: [] },
+    { link: "https://www.youtube.com/embed/7ZH9DXWgIZA", trueTrophy: "55000", guesses: [] },
+    { link: "https://www.youtube.com/embed/vyHfRwVceqo", trueTrophy: "25000", guesses: [] },
+    { link: "https://www.youtube.com/embed/2obdN4JsOYk", trueTrophy: "26973", guesses: [] },
+    { link: "https://www.youtube.com/embed/vEtQfLdpXMg", trueTrophy: "40000", guesses: [] },
+    { link: "https://www.youtube.com/embed/QLSfXF_Qt-8", trueTrophy: "37390", guesses: [] },
+    { link: "https://www.youtube.com/embed/PYiubkEhf1I", trueTrophy: "44000", guesses: [] },
+    { link: "https://www.youtube.com/embed/cj1XmlDxnDs", trueTrophy: "40", guesses: [] },
+    { link: "https://www.youtube.com/embed/QKCwEU8yI88", trueTrophy: "20000", guesses: [] },
+    { link: "https://www.youtube.com/embed/0i9gbTQrDN8", trueTrophy: "19555", guesses: [] },
+    { link: "https://www.youtube.com/embed/mTc3O1smvRU", trueTrophy: "47094", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueTrophy: "45000", guesses: [] },
+    { link: "https://www.youtube.com/embed/XTUnnIN0KG4", trueTrophy: "20771", guesses: [] },
+    { link: "https://www.youtube.com/embed/Mnn0g-orGHc", trueTrophy: "15000", guesses: [] },
+    { link: "https://www.youtube.com/embed/LTAQqRrSh94", trueTrophy: "58000", guesses: [] },
+    { link: "https://www.youtube.com/embed/j27YKvLKlXI", trueTrophy: "31256", guesses: [] },
+    { link: "https://www.youtube.com/embed/Dha7t8gnYe4", trueTrophy: "12000", guesses: [] },
+    { link: "https://www.youtube.com/embed/d69r2XjHe94", trueTrophy: "62454", guesses: [] },
+    { link: "https://www.youtube.com/embed/Rl6JiWFd5Z8", trueTrophy: "24485", guesses: [] },
+    { link: "https://www.youtube.com/embed/LQyU9QCH-vE", trueTrophy: "63000", guesses: [] },
+    { link: "https://www.youtube.com/embed/lZRrKYtmrZ0", trueTrophy: "63000", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueTrophy: "73000", guesses: [] },
+    { link: "https://www.youtube.com/embed/aU-8mt4t08E", trueTrophy: "40790", guesses: [] },
+    { link: "https://www.youtube.com/embed/u_4qGc4TwIs", trueTrophy: "8712", guesses: [] },
+    { link: "https://www.youtube.com/embed/Uec4kmcd8J4", trueTrophy: "24000", guesses: [] },
+    { link: "https://www.youtube.com/embed/LmLFWlHCPko", trueTrophy: "45000", guesses: [] },
+    { link: "https://www.youtube.com/embed/oJtsKjF78DQ", trueTrophy: "45000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Ye5DTeuOknc", trueTrophy: "45000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Xe3AuIcudVg", trueTrophy: "89000", guesses: [] },
+    { link: "https://www.youtube.com/embed/Xe3AuIcudVg", trueTrophy: "78000", guesses: [] },
+    { link: "https://www.youtube.com/embed/9vBXQAc8Gu4", trueTrophy: "39000", guesses: [] },
+    { link: "https://www.youtube.com/embed/fc_7Deq4oyw", trueTrophy: "40468", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueTrophy: "30129", guesses: [] },
+    { link: "https://www.youtube.com/embed/us--hJmbmBk", trueTrophy: "5976", guesses: [] },
+    { link: "https://www.youtube.com/embed/_s8LetmVB8E", trueTrophy: "67890", guesses: [] },
+    { link: "https://www.youtube.com/embed/iN5Pm6RCuU0", trueTrophy: "7000", guesses: [] },
+    { link: "https://www.youtube.com/embed/I3MUY-cZZwc", trueTrophy: "98000", guesses: [] },
+    { link: "https://www.youtube.com/embed/n-b_k0Nycaw", trueTrophy: "60000", guesses: [] },
+];
+
+const videoDailyNumber = 68;
+
 const videoLinksDaily = [
     videoLinks[videoDailyNumber],
 ]
@@ -122,8 +259,10 @@ const videoLinksDaily = [
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
 
 let currentVideoIndex = 0;
+let currentTrophyVideoIndex = 0;
 let selectedRank = null;
 let selectedRankName = null;
+let selectedTrophyCount = 100000;
 let streak = 0;
 
 function getRandomVideo() {
@@ -132,6 +271,19 @@ function getRandomVideo() {
     const rankDisplay = document.getElementById("rankDisplay");
     videoFrame.src = videoLinks[currentVideoIndex].link;
     rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
+}
+
+function getRandomTrophyVideo() {
+    currentTrophyVideoIndex = Math.floor(Math.random() * videoTrophyLinks.length);
+    const videoFrame = document.getElementById("videoFrameTrophy");
+    videoFrame.src = videoTrophyLinks[currentTrophyVideoIndex].link;
+}
+
+function updateTrophyValue() {
+    const slider = document.getElementById("trophyRange");
+    const output = document.getElementById("trophyValue");
+    output.innerHTML = slider.value;
+    selectedTrophyCount = slider.value;
 }
 
 function getVideoDaily() {
@@ -151,7 +303,34 @@ function selectRank(rank) {
     });
     buttons[rank - 1].classList.add('selected');
     // Record the guess
-    videoLinks[currentVideoIndex].guesses.push(selectedRankNameRankName);
+    videoLinks[currentVideoIndex].guesses.push(selectedRankName);
+}
+
+function submitTrophyGuess() {
+    const modal = document.getElementById("rankModal");
+    const modalText = document.getElementById("modalText");
+    const trueTrophy = videoTrophyLinks[currentVideoIndex].trueTrophy;
+    modalText.innerHTML = `
+        <p>You guessed: ${selectedTrophyCount} trophies</p>
+        <p>True Trophy Count: ${trueTrophy}</p>
+    `;
+    modal.style.display = "block";
+
+    if (selectedRankName === trueRank) {
+        streak++;
+    } else {
+        streak = 0;
+    }
+    updateStreakDisplay();
+
+    selectedRankName = null;
+    buttons.forEach(button => {
+        button.classList.remove('selected');
+    });
+    selectedTrophyCount = 1;
+    document.getElementById("trophyRange").value = 1;
+    document.getElementById("trophyValue").innerHTML = 1;
+    getRandomVideo();
 }
 
 function submitGuess() {
@@ -195,12 +374,12 @@ if (typeof Chart !== 'undefined') {
 
 
 function canSubmitGuess() {
-    /*
+    
     const lastGuessDate = localStorage.getItem('lastGuessDate');
     const today = new Date().toISOString().split('T')[0];
 
     return lastGuessDate !== today;
-    */
+    
    return true;
 }
 
@@ -381,11 +560,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
     }
-    else {
+    else if (document.getElementById("brawldle-unlimited")) {
         getRandomVideo();
+    }
+    else {
+        getRandomTrophyVideo();
     }
 });
 document.addEventListener("DOMContentLoaded", updateSubmitButton);
+document.getElementById("trophyRange").addEventListener("input", updateTrophyValue);
 
 updateTimer();
 setInterval(updateTimer, 1000);
