@@ -343,6 +343,7 @@ function submitGuess() {
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
+        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
     modal.style.display = "block";
 
@@ -352,6 +353,32 @@ function submitGuess() {
         streak = 0;
     }
     updateStreakDisplay();
+
+    console.log('Submitting guess:', {
+        video_id: videoLinks[currentVideoIndex].link,
+        guess: selectedRankName
+    });
+
+    fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            video_id: videoLinks[currentVideoIndex].link,
+            guess: selectedRankName
+        })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    }).then(data => {
+        console.log('Guess submitted:', data);
+        showGuessDistribution(videoLinks[currentVideoIndex].link);
+    }).catch(error => {
+        console.error('Error:', error);
+    });
 
     selectedRankName = null;
     buttons.forEach(button => {
