@@ -465,8 +465,15 @@ async function fetchGuessDistribution() {
 }
 
 async function showGuessDistribution() {
+    const videoId = getVideoIdFromLink(videoLink);
     const data = await fetchGuessDistribution();
     if (data) {
+        const videoData = data.find(item => item.VideoId === videoId);
+        if (!videoData) {
+            console.error(`No distribution data found for video_id: ${videoId}`);
+            return;
+        }
+
         const rankNames = ['Bronze', 'Silver', 'Gold', 'Diamond', 'Mythic', 'Legendary', 'Masters'];
         const counts = rankNames.map(rank => {
             return data[0][rank] || 0;

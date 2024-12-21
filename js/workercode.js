@@ -30,9 +30,9 @@ export default {
   
   async function handleGuessDistribution(request, env) {
     const db = env['guesses-db']
-    const result = await db.prepare('SELECT Bronze, Silver, Gold, Diamond, Mythic, Legendary, Masters FROM GUESSES').all()
+    const result = await db.prepare('SELECT VideoId, Bronze, Silver, Gold, Diamond, Mythic, Legendary, MASTERS FROM GUESSES').all()
     const distributionData = result.results
-    console.log('handguessdistribution done')
+    console.log('handleGuessDistribution done')
   
     const headers = {
       'Content-Type': 'application/json',
@@ -43,7 +43,15 @@ export default {
   }
   
   async function handleGuess(request, env) {
-    const { video_id, guess } = await request.json()
+    let requestBody;
+    try {
+      requestBody = await request.json()
+    } catch (error) {
+      console.error('Error parsing JSON:', error)
+      return new Response('Invalid JSON', { status: 400 })
+    }
+  
+    const { video_id, guess } = requestBody
     console.log(`Received guess: video_id=${video_id}, guess=${guess}`)
   
     const db = env['guesses-db']
@@ -51,7 +59,7 @@ export default {
     console.log(`Updating column: ${column} for video_id: ${video_id}`)
   
     try {
-      const updateResult = await db.prepare(`UPDATE GUESSES SET ${column} = ${column} + 1 WHERE VideoId = ?`).bind(video_id).run() // what is this doing: 
+      const updateResult = await db.prepare(`UPDATE GUESSES SET ${column} = ${column} + 1 WHERE VideoId = ?`).bind(video_id).run()
       console.log('Update result:', updateResult)
     } catch (error) {
       console.error('Error updating database:', error)
