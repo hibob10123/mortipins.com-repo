@@ -250,7 +250,7 @@ const videoTrophyLinks = [
     { link: "https://www.youtube.com/embed/n-b_k0Nycaw", trueTrophy: "60000", guesses: [] },
 ];
 
-const videoDailyNumber = 68;
+const videoDailyNumber = 66;
 
 const videoLinksDaily = [
     videoLinks[videoDailyNumber],
