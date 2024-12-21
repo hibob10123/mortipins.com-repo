@@ -465,7 +465,7 @@ async function fetchGuessDistribution() {
 }
 
 async function showGuessDistribution() {
-    const videoId = getVideoIdFromLink(videoLink);
+    const videoId = videoLinks[videoDailyNumber].link;
     const data = await fetchGuessDistribution();
     if (data) {
         const videoData = data.find(item => item.VideoId === videoId);
