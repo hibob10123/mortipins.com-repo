@@ -17,7 +17,7 @@ function off() {
 }
 
 const videoLinks = [
-    { link: "https://www.youtube.com/embed/28CkAruYONI", trueRank: "Legendary", guesses: [] },
+    { link: "https://www.youtube.com/embed/ZIEg0oT7Dsk", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/B79hw1wCoS0", trueRank: "Mythic", guesses: [] },
     { link: "https://www.youtube.com/embed/L99aHF0C_8c", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/MH1YnfTBF6I", trueRank: "Diamond", guesses: [] },
