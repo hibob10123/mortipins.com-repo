@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MortipinS Brawl Stars Guessing Game">
+    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="author" content="MortipinS">
+    <title>Brawldle</title>
+    <link rel="icon" type="image/png" href="../images/mortis5_mastery.png">
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css -->
+    <link href="../css/style.css" rel="stylesheet" >
+    <!-- js -->
+    <script src="../js/script.js" defer></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H31KKY28NR');
+</script>
+
+<body>
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="sidebar">
+            <button onclick="location.href='../index.html'" class="sidebar-button">Home</button>
+            <button onclick="location.href='../brawldle.html'" class="sidebar-button">Play Brawldle</button>
+            <button onclick="location.href='../videos.html'" class="sidebar-button">Videos</button>
+            <button onclick="location.href='../submit.html'" class="sidebar-button">Submit a Clip</button>
+            <button onclick="location.href='../blog.html'" class="sidebar-button">Blog</button>
+    </div>
+    </div>
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="../images/mortis5_mastery.png" alt="MortipinS Logo"  onclick="window.location.href='../index.html';">
+                <a href="../index.html" class="logo-text">Morti-Site</a>
+            </div>
+            <div class="header-items">
+                <a href="../index.html">Home</a>
+                <a href="../brawldle.html">Play Brawldle</a>
+                <a href="../videos.html">Videos</a>
+                <a href="../submit.html">Submit a Clip</a>
+                <a href="../blog.html">Blog</a>
+            </div>
+        </nav>
+
+        <!-- mobile-->
+        <nav class="nav mobile-nav">
+            <div>
+                <img style="margin-left: 25px;" src="../images/mortis5_mastery.png" alt="MortipinS Logo" >
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h1 class="mortiproxy-text">Mortiproxy - Singapore</h1>
+        <p class="mortiproxy-text2">Experience a seamless experience with minimal lag when playing with friends from far regions through Mortiproxy.</p>
+        <div class="page-container">
+            <!-- Left Column - Proxy Details -->
+            <div class="proxy-card">
+                <div class="proxy-title">Proxy Details</div>
+        
+                <div class="info-grid">
+                    <span class="label">Name:</span>
+                    <span class="value">Singapore Proxy</span>
+        
+                    <span class="label">Location:</span>
+                    <span class="value">Singapore</span>
+                </div>
+        
+                <div class="connection-info">
+                    <div class="connection-row">
+                        <div>
+                            <span class="label">IP: </span>
+                            <span class="ip-value">34.64.4.99</span>
+                        </div>
+                        <button class="copy-btn" id="copyIpBtn">Copy IP</button>
+                    </div>
+                    <div class="connection-row">
+                        <div>
+                            <span class="label">Port: </span>
+                            <span class="port-value">80</span>
+                        </div>
+                        <button class="copy-btn" id="copyPortBtn">Copy Port</button>
+                    </div>
+                </div>
+        
+                <div class="latency">
+                    <div class="latency-indicator"></div>
+                    <span class="value">Latency: 140ms</span>
+                </div>
+            </div>
+        
+            <div class="video-card">
+                <div class="proxy-title">How to Connect</div>
+                <iframe class="video-container" src="https://www.youtube.com/embed/BjDtf5DlTmA" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <script src="../js/script.js"></script>
+    </main>
+</body>
+</html>
