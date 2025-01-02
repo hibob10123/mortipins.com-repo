@@ -632,8 +632,9 @@ header {
     transform: translate(-50%, -50%);
     width: 100%; /* Full width */
     height: 100%; /* Full height */
+
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
     animation: fadeIn 0.3s ease-out forwards; /* Animation for showing the modal */
 }
 
@@ -643,13 +644,18 @@ header {
     margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     max-width: 600px; /* Maximum width */
-    border-radius: 10%;
+    border-radius: 0%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     text-align: center;
     animation: slideIn 0.3s ease-out forwards; /* Animation for showing the modal content */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+#guessDistributionChart {
+    max-width: 100%; /* Ensure the chart fits within the modal */
+    max-height: 45vh; /* Adjust height as needed */
 }
 
 .modal-content h1 {
@@ -850,6 +856,8 @@ header {
     color: #333;
 }
 
+/* blog */
+
  .blog-link {
     --text-color: hsl(231, 97%, 72%);
     --accent-color: hsl(231, 97%, 72%);
@@ -900,6 +908,49 @@ header {
     color: white;
     box-sizing: border-box;
 }
+
+/* From Uiverse.io by gharsh11032000 */ 
+.card {
+    width: 320px;
+    height: 350px;
+    padding: 20px;
+    color: white;
+    background: transparent;
+    border: 2px solid #ff6b00;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transform-origin: center center;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .card .card-main-content {
+    flex: 1;
+  }
+  
+  .card-header {
+    margin-bottom: 24px;
+  }
+  
+  .card .card-heading {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  
+  .card .card-footer {
+    font-weight: 400;
+    margin-right: 4px;
+  }
+  
+  .card:hover {
+    border-radius: 12px;
+    background-color: #ff6b00;
+    scale: 0.95;
+    rotate: 8deg;
+    box-shadow: 0px 3px 187.5px 7.5px rgba(255, 107, 0, 0.4);
+  }
+  
 
 @media (max-width: 768px) {
     .blog {
