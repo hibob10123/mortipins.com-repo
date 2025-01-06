@@ -11,7 +11,7 @@ function off() {
     // hide overlay
     const turnOff = document.getElementById("overlay");
     turnOff.style.display = "none";
-    // turn on vertical scroll
+    // turn on vertical scroll 
     const overflow = document.querySelector("body");
     overflow.style.overflow = "auto";
 }
