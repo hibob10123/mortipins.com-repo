@@ -624,8 +624,8 @@ header {
 /* Modal styles */
 .modal {
     overflow-y: auto;
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
+    display: none; 
+    position: fixed; 
     z-index: 2; /* Sit on top */
     left: 50%;
     top: 50%;
@@ -664,6 +664,12 @@ header {
     margin-bottom: 1rem;
 }
 
+.modal-content h2 {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
 .modal-content p {
     font-family: 'Lilita One', sans-serif;
     font-size: 1.5rem;
@@ -674,6 +680,7 @@ header {
     width: 100% !important;
     height: auto !important;
 }
+
 
 /* Responsive adjustments */
 @media screen and (max-width: 1145px) {
@@ -1310,4 +1317,17 @@ header {
     margin-bottom: 1rem;
     margin: 3rem;
     color: #ffffff;
+}
+
+.flash {
+    animation: flash 0.5s ease-out;
+}
+
+@keyframes flash {
+    from {
+        background-color: var(--flash-color);
+    }
+    to {
+        background-color: var(--gray10); /* End with the default background color */
+    }
 }
