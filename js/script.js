@@ -576,7 +576,7 @@ let selectedTrophyCount = 1;
 let streak = 0;
 
 function getRandomVideo() {
-    currentTrophyVideoIndex = Math.floor(Math.random() * videoLinks.length);
+    currentVideoIndex = Math.floor(Math.random() * videoLinks.length);
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
     videoFrame.src = videoLinks[currentVideoIndex].link;
@@ -623,11 +623,11 @@ function submitTrophyGuess() {
     const modalText = document.getElementById("modalText");
     const trueTrophy = videoTrophyLinks[currentTrophyVideoIndex].trueTrophy;
     const difference = Math.abs(selectedTrophyCount - trueTrophy);
-    const maxDifference = 20000; // Adjust based on range
-    const percentage = Math.min(difference / maxDifference, 1);
-    const red = Math.floor(255 * percentage);
-    const green = Math.floor(255 * (1 - percentage));
-    const flashColor = `rgba(${red}, ${green}, 0, 0.85)`;
+    if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.15 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.15) {
+        flashColor = 'rgba(0, 255, 0, 0.85)';
+    } else {
+        flashColor = 'rgba(255, 0, 0, 0.85)';
+    }
 
       modalText.innerHTML = `
         <div class="modal-content-wrapper">
@@ -655,7 +655,7 @@ function submitTrophyGuess() {
      }, 500);
  
 
-    if (selectedTrophyCount === trueTrophy) {
+    if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.15 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.15) {
         streak++;
     } else {
         streak = 0;
@@ -953,7 +953,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("trophies-unlimited")) {
         getRandomTrophyVideo();
     }
-    
+    getRandomVideo();
 });
 document.addEventListener("DOMContentLoaded", updateSubmitButton);
 document.getElementById("trophyRange").addEventListener("input", updateTrophyValue);
