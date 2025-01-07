@@ -1351,3 +1351,7 @@ header {
         background-color: var(--gray10); /* End with the default background color */
     }
 }
+
+.note {
+    color: #ffffff;
+}
