@@ -490,8 +490,9 @@ header {
     padding: 0.75rem 1.5rem;
     font-size: 1.2rem;
     color: #ffffff;
-    background-color: transparent;
-    border: 2px solid #fcff4a;
+    color: #000000;
+    background-color: #fcff4a;
+    border: 2px solid #000000;
     border-radius: 5px;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -499,6 +500,25 @@ header {
 
 .brawldle-button2:hover {
     background-color: #9b8f22;
+    transform: scale(1.05);
+}
+
+.trophyGuess-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.trophyGuess-button:hover {
+    background-color: #00448d;
     transform: scale(1.05);
 }
 
