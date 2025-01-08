@@ -559,10 +559,18 @@ function submitTrophyGuess() {
     const trueTrophy = videoTrophyLinks[currentTrophyVideoIndex].trueTrophy;
     const difference = Math.abs(selectedTrophyCount - trueTrophy);
     if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.15 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.15) {
-        flashColor = 'rgba(0, 255, 0, 0.85)';
+        flashColor = 'rgba(0, 255, 0, 0.6)';
     } else {
-        flashColor = 'rgba(255, 0, 0, 0.85)';
+        flashColor = 'rgba(255, 0, 0, 0.6)';
     }
+
+    document.documentElement.style.setProperty('--flash-color', flashColor);
+     document.body.classList.add('flash');
+     setTimeout(() => {
+         document.body.classList.remove('flash');
+         document.body.style.backgroundColor = 'var(--gray5)';
+     }, 500);
+ 
 
       modalText.innerHTML = `
         <div class="modal-content-wrapper">
@@ -582,13 +590,7 @@ function submitTrophyGuess() {
     `;
     modal.style.display = "block";
 
-     document.documentElement.style.setProperty('--flash-color', flashColor);
-     document.body.classList.add('flash');
-     setTimeout(() => {
-         document.body.classList.remove('flash');
-         document.body.style.backgroundColor = 'var(--gray5)';
-     }, 500);
- 
+     
 
     if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.15 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.15) {
         streak++;
@@ -610,6 +612,20 @@ function submitGuess() {
     const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
     const trueRank = videoLinks[currentVideoIndex].trueRank;
+    if (selectedRankName === trueRank) {
+        flashColor = 'rgba(0, 255, 0, 0.6)';
+    }
+    else {
+        flashColor = 'rgba(255, 0, 0, 0.6)';
+    }
+
+    document.documentElement.style.setProperty('--flash-color', flashColor);
+     document.body.classList.add('flash');
+     setTimeout(() => {
+         document.body.classList.remove('flash');
+         document.body.style.backgroundColor = 'var(--gray5)';
+     }, 500);
+
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
@@ -709,6 +725,21 @@ function submitGuessDaily() {
     const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
     const trueRank = videoLinks[currentVideoIndex].trueRank;
+
+    if (selectedRankName === trueRank) {
+        flashColor = 'rgba(0, 255, 0, 0.6)';
+    }
+    else {
+        flashColor = 'rgba(255, 0, 0, 0.6)';
+    }
+
+    document.documentElement.style.setProperty('--flash-color', flashColor);
+     document.body.classList.add('flash');
+     setTimeout(() => {
+         document.body.classList.remove('flash');
+         document.body.style.backgroundColor = 'var(--gray5)';
+     }, 500);
+
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
