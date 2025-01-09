@@ -560,21 +560,20 @@ function submitTrophyGuess() {
     const difference = Math.abs(selectedTrophyCount - trueTrophy);
 
     let inRange = false;
-    if (selectedTrophyCount >= 100000 && trueTrophy >= 100000) {
-        inRange = true;
+    if (trueTrophy >= 100000) {
+        if (selectedTrophyCount >= 100000) {
+            inRange = true;
+        }
     } else if (trueTrophy >= 50000) {
-        if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.1 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.1) {
+        if (difference <= 7500) {
             inRange = true;
-        }
-    } else if (trueTrophy >= 10000) {
-        if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.3 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.3) {
-            inRange = true;
-        }
-    } else {
-        if (selectedTrophyCount < 10000 && trueTrophy < 10000) {
-            inRange = true;
-        }
     }
+    } else{
+        if (difference <= 5000) {
+            inRange = true;
+    }
+    }
+
 
 
     if (inRange) {
