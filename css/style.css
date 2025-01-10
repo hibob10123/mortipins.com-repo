@@ -701,6 +701,38 @@ header {
     height: auto !important;
 }
 
+.loseModalText {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff0000;
+    text-align: center;
+}
+
+#loseModal .modal-content {
+    background-color: #f8d7da; /* Light red background */
+    border: 2px solid #f5c6cb; /* Slightly darker red border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+
+#loseModal button {
+    background-color: #f5c6cb; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#loseModal button:hover {
+    background-color: #f1b0b7; /* Slightly darker red on hover */
+}
+
 
 /* Responsive adjustments */
 @media screen and (max-width: 1145px) {
@@ -1355,3 +1387,12 @@ header {
 .note {
     color: #ffffff;
 }
+
+#hearts {
+    font-size: 36px;
+}
+
+.heart {
+    margin-right: 5px;
+}
+

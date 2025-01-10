@@ -509,6 +509,8 @@ let selectedRank = null;
 let selectedRankName = null;
 let selectedTrophyCount = 1;
 let streak = 0;
+let score = 0;
+let hearts = 3;
 
 function getRandomVideo() {
     currentVideoIndex = Math.floor(Math.random() * videoLinks.length);
@@ -574,14 +576,30 @@ function submitTrophyGuess() {
     }
     }
 
-
-
     if (inRange) {
         flashColor = 'rgba(0, 255, 0, 0.6)';
+        if (difference <= 2500) {
+            streak += 3;
+            if (hearts < 3) {
+                hearts++;
+                updateHearts();
+            }
+        }
+        else {
+            streak++;
+        }
     }
     else {
         flashColor = 'rgba(255, 0, 0, 0.6)';
+        hearts--;
+        updateHearts();
+        if (hearts === 0) {
+            modal.style.display = "none";
+            showLoseModal();
+            return;
+        }
     }
+    updateStreakDisplay();
 
     document.documentElement.style.setProperty('--flash-color', flashColor);
      document.body.classList.add('flash');
@@ -609,18 +627,37 @@ function submitTrophyGuess() {
     `;
     modal.style.display = "block";
 
-     
-
-    if (selectedTrophyCount >= trueTrophy - trueTrophy * 0.15 && selectedTrophyCount <= trueTrophy + trueTrophy * 0.15) {
-        streak++;
-    } else {
-        streak = 0;
-    }
-    updateStreakDisplay();
-
     selectedTrophyCount = 1;
     document.getElementById("trophyRange").value = 1;
     document.getElementById("trophyValue").innerHTML = 1;
+    getRandomTrophyVideo();
+}
+
+function updateHearts() {
+    for (let i = 1; i <= 3; i++) {
+        const heart = document.getElementById(`heart${i}`);
+        if (i <= hearts) {
+            heart.style.visibility = 'visible';
+        } else {
+            heart.style.visibility = 'hidden';
+        }
+    }
+}  
+
+function showLoseModal() {
+    const loseModal = document.getElementById("loseModal");
+    const loseModalText = document.getElementById("loseModalText");
+    loseModalText.innerHTML = `<p>You lost! Your score was ${streak}</p>`;
+    
+    loseModal.style.display = "block";
+}
+
+function restartGame() {
+    streak = 0;
+    hearts = 3;
+    updateHearts();
+    updateStreakDisplay();
+    document.getElementById("loseModal").style.display = "none";
     getRandomTrophyVideo();
 }
 
@@ -695,7 +732,7 @@ function submitGuess() {
 
 function updateStreakDisplay() {
     const streakElement = document.getElementById("streak");
-    streakElement.textContent = `Streak: ${streak}`;
+    streakElement.textContent = `Score: ${streak}`;
 }
 
 if (typeof Chart !== 'undefined') {

@@ -77,8 +77,13 @@
     <main>
         <section class="brawldle">
             <h1 class="brawldle-text">TrophyGuess UNLIMITED!</h1>
-            <div id="streak">Streak: 0</div>
-            <p style="color: var(--gray50)">Note: Streak +1 if within +/- 5000 trophies</p>
+            <div id="hearts">
+                <span class="heart" id="heart1">❤️</span>
+                <span class="heart" id="heart2">❤️</span>
+                <span class="heart" id="heart3">❤️</span>
+            </div>
+            <div id="streak">Score: 0</div>
+            <p style="color: var(--gray50)">Rules: <br>Score +1 if within +/- 5000<br>Score +3 and hearts +1 if within +/- 2500 trophies</p>
             <div class="brawldle-video">
                 <iframe id="videoFrameTrophy" src="" allowfullscreen></iframe>
                 <div class="trophy-slider">
@@ -96,9 +101,17 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h1>Results</h1>
-            <div id="modalText">
+            <div id="modalText"></div>
         </div>
     </div>
-    
+
+    <!-- You Lose modal structure-->
+    <div id="loseModal" class="modal">
+        <div class="modal-content">
+            <h1>You Lose!</h1>
+            <div id="loseModalText"></div>
+            <button onclick="restartGame()">Restart</button>
+        </div>
+</div>
 </body>
 </html>
