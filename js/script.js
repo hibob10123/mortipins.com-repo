@@ -566,12 +566,8 @@ function submitTrophyGuess() {
         if (selectedTrophyCount >= 100000) {
             inRange = true;
         }
-    } else if (trueTrophy >= 50000) {
-        if (difference <= 7500) {
-            inRange = true;
-    }
     } else{
-        if (difference <= 5000) {
+        if (difference <= 7500) {
             inRange = true;
     }
     }
