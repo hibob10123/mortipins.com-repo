@@ -941,6 +941,7 @@ function updateTimer() {
     timerElement.textContent = `Time until reset: ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
   }
 */
+
 document.addEventListener("DOMContentLoaded", () => { 
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
@@ -950,6 +951,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (document.getElementById("trophies-unlimited")) {
         getRandomTrophyVideo();
+    }
+    if (document.getElementById("leaderboard-content")) {
+        fetchLeaderboard();
     }
     getRandomVideo();
 });
@@ -1092,4 +1096,69 @@ function submitGuess() {
 function logout() {
     localStorage.removeItem('token');
     alert('Logged out successfully!');
+}
+
+async function fetchLeaderboard() {
+    const content = document.getElementById('leaderboard-content');
+    
+    try {
+        const response = await fetch('https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': window.location.origin,
+                'Referer': window.location.href
+            },
+            credentials: 'same-origin'
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Leaderboard data:', data);
+
+        if (data.success) {
+            const table = createLeaderboardTable(data.data);
+            content.innerHTML = '';
+            content.appendChild(table);
+        } else {
+            content.innerHTML = `<div class="error">${data.error || 'Failed to fetch leaderboard data'}</div>`;
+        }
+    } catch (error) {
+        console.error('Leaderboard error:', error);
+        content.innerHTML = `<div class="error">Failed to connect to the leaderboard server: ${error.message}</div>`;
+    }
+}
+
+function createLeaderboardTable(data) {
+    const table = document.createElement('table');
+    table.className = 'leaderboard-table';
+
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+        <tr>
+            <th class="rank">Rank</th>
+            <th class="username">Username</th>
+            <th class="points">Points</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    data.forEach(entry => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="rank">#${entry.rank}</td>
+            <td class="username">${entry.username}</td>
+            <td class="points">${entry.points.toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+
+    return table;
 }
