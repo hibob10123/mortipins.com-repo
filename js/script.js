@@ -631,6 +631,8 @@ function submitGuess() {
     let points = 0;
     if (isCorrect) {
         points = 100; // Correct rank guess
+    } else {
+        points = -40;
     }
 
     console.log('Points awarded:', points); // Log the points awarded
@@ -982,9 +984,11 @@ function checkLogin() {
 }
 
 function submitGuess() {
+    /*
     if (!checkLogin()) {
         return;
     }
+    */
 
     if (selectedRankName === null) {
         return;
