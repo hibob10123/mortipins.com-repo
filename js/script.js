@@ -583,25 +583,25 @@ function submitGuess() {
         return;
     }
     const token = localStorage.getItem('token');
+
+    /*
     if (!token) {
         alert('Please log in to earn points!');
         return;
     }
+    */
 
     const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
 
-    // Define the rank order
     const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
     
     const trueRankIndex = rankOrder.indexOf(videoLinks[currentVideoIndex].trueRank); // Find true rank index
     const selectedRankIndex = rankOrder.indexOf(selectedRankName); // Find selected rank index
     const isCorrect = selectedRankIndex === trueRankIndex; // Check if the guess is correct
 
-    // Log the indices for debugging
     console.log('True Rank Index:', trueRankIndex, 'Selected Rank Index:', selectedRankIndex);
 
-    // Set flash color based on correctness
     flashColor = isCorrect ? 'rgba(0, 255, 0, 0.6)' : 'rgba(255, 0, 0, 0.6)';
     
     // Flash the background color
@@ -612,25 +612,19 @@ function submitGuess() {
         document.body.style.backgroundColor = 'var(--gray5)';
     }, 500);
 
+    /*
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
         <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
     modal.style.display = "block";
+    */
 
-    // Update streak
-    if (isCorrect) {
-        streak++;
-    } else {
-        streak = 0;
-    }
-    updateStreakDisplay();
-
-    // Points calculation
+    
     let points = 0;
     if (isCorrect) {
-        points = 100; // Correct rank guess
+        points = 100;
     } else {
         points = -40;
     }
@@ -655,6 +649,7 @@ function submitGuess() {
         document.body.appendChild(pointsDisplay); // Append it to the body or a specific container
     }
 
+    
     Promise.all([
         fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
             method: 'POST',
@@ -693,6 +688,7 @@ function submitGuess() {
 
             // Update points display
             pointsDisplay.textContent = pointsData.points;
+            
         }
 
         return showGuessDistribution(videoLinks[currentVideoIndex].link);
@@ -705,6 +701,32 @@ function submitGuess() {
     }).catch(error => {
         console.error('Error:', error);
     });
+    
+    if (token) {
+        modalText.innerHTML = `
+                    <p>ELO ${points >= 0 ? 'gained' : 'lost'}: ${points}</p>
+                    <p>You guessed: ${selectedRankName}</p>
+                    <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
+                    <canvas id="guessDistributionChart" width="400" height="400"></canvas>
+                `;
+                modal.style.display = "block";
+    } else {
+        modalText.innerHTML = `
+            <p>Please log in to earn points!</p>
+            <p>You guessed: ${selectedRankName}</p>
+            <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
+            <canvas id="guessDistributionChart" width="400" height="400"></canvas>
+        `;
+        modal.style.display = "block";
+    }
+
+    if (isCorrect) {
+        streak++;
+    } else {
+        streak = 0;
+    }
+    updateStreakDisplay();
+
 }
 
 
@@ -983,119 +1005,7 @@ function checkLogin() {
     return true;
 }
 
-function submitGuess() {
-    /*
-    if (!checkLogin()) {
-        return;
-    }
-    */
 
-    if (selectedRankName === null) {
-        return;
-    }
-    
-    const token = localStorage.getItem('token');
-    
-    const modal = document.getElementById("rankModal");
-    const modalText = document.getElementById("modalText");
-
-    const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
-    
-    const trueRankIndex = rankOrder.indexOf(videoLinks[currentVideoIndex].trueRank);
-    const selectedRankIndex = rankOrder.indexOf(selectedRankName);
-    const isCorrect = selectedRankIndex === trueRankIndex;
-
-    flashColor = isCorrect ? 'rgba(0, 255, 0, 0.6)' : 'rgba(255, 0, 0, 0.6)';
-    
-    document.documentElement.style.setProperty('--flash-color', flashColor);
-    document.body.classList.add('flash');
-    setTimeout(() => {
-        document.body.classList.remove('flash');
-        document.body.style.backgroundColor = 'var(--gray5)';
-    }, 500);
-
-    modalText.innerHTML = `
-        <p>You guessed: ${selectedRankName}</p>
-        <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
-        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-    `;
-    modal.style.display = "block";
-
-    if (isCorrect) {
-        streak++;
-    } else {
-        streak = 0;
-    }
-    updateStreakDisplay();
-
-    let points = 0;
-    if (isCorrect) {
-        points = 100;
-    }
-
-    if (streak >= 10) {
-        points += 1000;
-    } else if (streak >= 5) {
-        points *= 2;
-    }
-
-    let pointsDisplay = document.getElementById('points-display');
-    if (!pointsDisplay) {
-        pointsDisplay = document.createElement('span');
-        pointsDisplay.id = 'points-display';
-        pointsDisplay.textContent = '0';
-        document.body.appendChild(pointsDisplay);
-    }
-
-    Promise.all([
-        fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                video_id: videoLinks[currentVideoIndex].link,
-                guess: selectedRankName
-            })
-        }),
-        fetch('https://mortipins-dashboard.imenkei64.workers.dev/update-points', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                points: points,
-                correctRank: videoLinks[currentVideoIndex].trueRank,
-                guessedRank: selectedRankName,
-                winStreak: streak
-            })
-        })
-    ]).then(async ([guessResponse, pointsResponse]) => {
-        if (!guessResponse.ok) {
-            throw new Error(`HTTP error! status: ${guessResponse.status}`);
-        }
-        const guessData = await guessResponse.json();
-        console.log('Guess submitted:', guessData);
-
-        if (pointsResponse) {
-            const pointsData = await pointsResponse.json();
-            console.log('Points updated:', pointsData);
-
-            pointsDisplay.textContent = pointsData.points;
-        }
-
-        return showGuessDistribution(videoLinks[currentVideoIndex].link);
-    }).then(() => {
-        selectedRankName = null;
-        buttons.forEach(button => {
-            button.classList.remove('selected');
-        });
-        getRandomVideo();
-    }).catch(error => {
-        console.error('Error:', error);
-    });
-}
 
 function logout() {
     localStorage.removeItem('token');
