@@ -624,9 +624,9 @@ function submitGuess() {
     
     let points = 0;
     if (isCorrect) {
-        points = 100;
+        points = 212210;
     } else {
-        points = -40;
+        points = -12;
     }
 
     console.log('Points awarded:', points); // Log the points awarded
@@ -686,9 +686,50 @@ function submitGuess() {
             const pointsData = await pointsResponse.json();
             console.log('Points updated:', pointsData);
 
+            // Extract the points value
+            const updatedPoints = parseInt(pointsData.points, 10);
+            console.log('Updated Points:', updatedPoints);
+
             // Update points display
-            pointsDisplay.textContent = pointsData.points;
-            
+            pointsDisplay.textContent = updatedPoints;
+            points = updatedPoints;
+
+            let pointsDelta = 0;
+            if (points<=250) {
+                pointsDelta = isCorrect ? 20 : -1;
+            } else if (points<=500) {
+                pointsDelta = isCorrect ? 18 : -2;
+            } else if (points<=750) {
+                pointsDelta = isCorrect ? 16 : -3;
+            } else if (points<=1000) {
+                pointsDelta = isCorrect ? 14 : -4;
+            } else if (points<=2000) {
+                pointsDelta = isCorrect ? 10 : -5;
+            } else if (points<=2500) {
+                pointsDelta = isCorrect ? 7 : -6;
+            } else {
+                pointsDelta = isCorrect ? 5 : -5;
+            }
+            console.log('Points Delta:', pointsDelta);
+
+            if (token) {
+                console.log('Pointewews:', points);
+                modalText.innerHTML = `
+                            <p>ELO ${pointsDelta >= 0 ? 'gained' : 'lost'}: ${pointsDelta}</p>
+                            <p>You guessed: ${selectedRankName}</p>
+                            <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
+                            <canvas id="guessDistributionChart" width="400" height="400"></canvas>
+                        `;
+                        modal.style.display = "block";
+            } else {
+                modalText.innerHTML = `
+                    <p>LOGIN TO EARN POINTS!</p> 
+                    <p>You guessed: ${selectedRankName}</p>
+                    <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
+                    <canvas id="guessDistributionChart" width="400" height="400"></canvas>
+                `;
+                modal.style.display = "block";
+            }
         }
 
         return showGuessDistribution(videoLinks[currentVideoIndex].link);
@@ -702,23 +743,7 @@ function submitGuess() {
         console.error('Error:', error);
     });
     
-    if (token) {
-        modalText.innerHTML = `
-                    <p>ELO ${points >= 0 ? 'gained' : 'lost'}: ${points}</p>
-                    <p>You guessed: ${selectedRankName}</p>
-                    <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
-                    <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-                `;
-                modal.style.display = "block";
-    } else {
-        modalText.innerHTML = `
-            <p>Please log in to earn points!</p>
-            <p>You guessed: ${selectedRankName}</p>
-            <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
-            <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-        `;
-        modal.style.display = "block";
-    }
+    
 
     if (isCorrect) {
         streak++;
