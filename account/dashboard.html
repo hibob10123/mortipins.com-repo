@@ -81,6 +81,12 @@
         </div>
         <p class="account-text" style="color: white; font-size: 20px;">Points are earned by playing Brawldle Unlimited! Top 10 users with the highest points will be shown on the leaderboard.</p>
         <button onclick="location.href='../brawldle.html#leaderboard-content'" class="leaderboard-button">Leaderboard</button>
+        <div id="update-email-container" style="display: none; text-align: center;">
+            <p class="account-text" style="color: white; font-size: 18px;">Please update your email:</p>
+            <input type="email" id="email-input" class="email-input" placeholder="Enter your email" required>
+            <button onclick="updateEmail()" class="update-email-button">Update Email</button>
+        </div>
+        
         <button id="logoutButton" class="logout-button">Log out</button>
     </div>
     <script src="dashboard.js"></script>
