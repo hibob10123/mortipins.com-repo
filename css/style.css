@@ -448,7 +448,7 @@ header {
     align-items: center;
     transform: translate(0, 30%);
     justify-content: center;
-    padding: 4rem 1rem;
+    padding: 1rem 1rem;
     background: linear-gradient(135deg, var(--gray10), var(--gray5));
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -461,7 +461,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translate(0, 30%);
+    transform: translate(0, 20%);
     justify-content: center;
     padding: 4rem 1rem;
     background: linear-gradient(135deg, var(--gray10), var(--gray5));
@@ -1664,3 +1664,28 @@ header {
     }
 }
 
+.update-email-button {
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.update-email-button:hover {
+    background-color: #e6b800;
+}
+
+.email-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
