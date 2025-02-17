@@ -438,7 +438,7 @@ function getRandomVideo() {
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
     videoFrame.src = videoLinks[currentVideoIndex].link;
-    console.log('Current video:', videoLinks[currentVideoIndex]);
+    // console.log('Current video:', videoLinks[currentVideoIndex]);
     rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
 }
 
