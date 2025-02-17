@@ -707,8 +707,10 @@ function submitGuess() {
                 pointsDelta = isCorrect ? 10 : -5;
             } else if (points<=2500) {
                 pointsDelta = isCorrect ? 7 : -6;
-            } else {
+            } else if (points<=3000) {
                 pointsDelta = isCorrect ? 5 : -5;
+            } else {
+                pointsDelta = isCorrect ? 3 : -7;
             }
             console.log('Points Delta:', pointsDelta);
 
