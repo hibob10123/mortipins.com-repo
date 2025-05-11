@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MortipinS Brawl Stars Guessing Game">
-    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="description" content="Morti-Site Stats - Brawl Stars Statistics">
+    <meta name="keywords" content="Morti-Site, Stats, Brawl Stars, Brawlers, Maps, Game Modes, Events">
     <meta name="author" content="MortipinS">
-    <title>Brawldle</title>
+    <title>Stats - Morti-Site</title>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
     <!-- google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <!--font awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- css -->
-    <link href="css/style.css" rel="stylesheet" >
-    <!-- js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/script.js" defer></script>
+    <script src="js/stats.js" defer></script>
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -32,8 +30,8 @@
 </script>
 
 <body>
-   <!-- overlay for mobile-->
-   <div id="overlay">
+    <!-- overlay for mobile-->
+    <div id="overlay">
         <div>
             <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
         </div>
@@ -61,41 +59,51 @@
                 <a href="account/signin.html">Account</a>
             </div>
         </nav>
-
-        <!-- mobile-->
         <nav class="nav mobile-nav">
             <div>
-                <img style="margin-left: 25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo" >
+                <img style="margin-left: 25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo">
             </div>
             <div>
                 <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
             </div>
         </nav>
     </header>
-    
     <main>
-        <div class="leaderboard-section">
-            <div class="leaderboard-header">
-                <h1 style="font-size: 50px;">BRAWLDLE Leaderboard</h1>
-            </div>
-            <button onclick="location.href='brawldle.html'" class="submit-button">Back to Brawldle</button>
-            <p style="font-size: 20px; color: rgb(208, 208, 208); margin-bottom: 0;">Your account will get banned from playing Brawldle if you cheat.<br>3 users have been banned.</p>
-            <p style="font-size: 20px; color: rgb(208, 208, 208);">Top 1 Gets a Brawl Pass+</p>
-            <div id="leaderboard-content">
-                <div class="loading">Loading leaderboard... (check your internet connection)</div>
-            </div>
-            <p style="font-size: 20px; color: rgb(208, 208, 208);">Updates every minute*</p>
+        <div class="stats-container">
+            <section id="events-section" class="stats-section">
+                <h2>Current Events</h2>
+                <div id="events-grid" class="grid-container">
+                    <p class="loading-text">Loading events...</p>
+                </div>
+            </section>
+
+            <section id="brawlers-section" class="stats-section">
+                <h2>Brawlers</h2>
+                <div id="brawlers-grid" class="grid-container brawler-grid">
+                    <p class="loading-text">Loading brawlers...</p>
+                </div>
+            </section>
+
+            <section id="maps-section" class="stats-section">
+                <h2>Maps</h2>
+                <div id="maps-grid" class="grid-container">
+                    <p class="loading-text">Loading maps...</p>
+                </div>
+            </section>
+
+            <section id="gamemodes-section" class="stats-section">
+                <h2>Game Modes</h2>
+                <div id="gamemodes-grid" class="grid-container">
+                    <p class="loading-text">Loading game modes...</p>
+                </div>
+            </section>
         </div>
     </main>
-
-    <!-- modal structure-->
-    <div id="rankModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h1>Results</h1>
-            <div id="modalText">
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" class="footer-link">Join Discord</a>
+            <p>&copy; MortipinS 2025. All rights reserved.</p>
         </div>
-    </div>
-    </div>
+    </footer>
 </body>
-</html>
+</html> 
