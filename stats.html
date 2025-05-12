@@ -70,31 +70,53 @@
     </header>
     <main>
         <div class="stats-container">
-            <section id="events-section" class="stats-section">
-                <h2>Current Events</h2>
-                <div id="events-grid" class="grid-container">
-                    <p class="loading-text">Loading events...</p>
+            <section id="active-events-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Active Events</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="active-events-grid" class="grid-container section-content">
+                    <p class="loading-text">Loading active events...</p>
+                </div>
+            </section>
+
+            <section id="upcoming-events-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="upcoming-events-grid" class="grid-container section-content">
+                    <p class="loading-text">Loading upcoming events...</p>
                 </div>
             </section>
 
             <section id="brawlers-section" class="stats-section">
-                <h2>Brawlers</h2>
-                <div id="brawlers-grid" class="grid-container brawler-grid">
+                <div class="section-header">
+                    <h2>Brawlers</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="brawlers-grid" class="grid-container brawler-grid section-content">
                     <p class="loading-text">Loading brawlers...</p>
                 </div>
             </section>
 
-            <section id="maps-section" class="stats-section">
-                <h2>Maps</h2>
-                <div id="maps-grid" class="grid-container">
-                    <p class="loading-text">Loading maps...</p>
+            <section id="player-data-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Player Data (Coming Soon)</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
                 </div>
-            </section>
-
-            <section id="gamemodes-section" class="stats-section">
-                <h2>Game Modes</h2>
-                <div id="gamemodes-grid" class="grid-container">
-                    <p class="loading-text">Loading game modes...</p>
+                <div id="player-data-grid" class="grid-container section-content">
+                    <div class="player-search">
+                        <h3>Look up player stats</h3>
+                        <p>Enter a player tag to view their stats</p>
+                        <div class="player-search-form">
+                            <input type="text" id="player-tag-input" placeholder="#XXXXXXXXX" class="player-tag-input">
+                            <button id="search-player-btn" class="search-player-btn">Search</button>
+                        </div>
+                        <div id="player-results" class="player-results">
+                            <p class="info-text">Player data will appear here</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

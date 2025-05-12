@@ -2,12 +2,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const BRAWLAPI_BASE_URL = 'https://api.brawlapi.com/v1'; // brawlapi.com
     const BRAWLIFY_API_BASE_URL = 'https://api.brawlify.com/v1'; // brawlify.com
 
+    function initCollapsibleSections() {
+        const sectionHeaders = document.querySelectorAll('.section-header');
+        
+        if (sectionHeaders.length > 0) {
+            const firstHeader = sectionHeaders[0];
+            const firstContent = firstHeader.nextElementSibling;
+            
+            firstHeader.classList.add('active');
+            firstContent.classList.add('active');
+        }
+        
+        sectionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                const content = header.nextElementSibling;
+                
+                header.classList.toggle('active');
+                
+                content.classList.toggle('active');
+            });
+        });
+    }
+
     // fetch+display brawlers
     async function fetchBrawlers() {
         const brawlersGrid = document.getElementById('brawlers-grid');
         const loadingText = brawlersGrid.querySelector('.loading-text');
         try {
-            const response = await fetch(`${BRAWLAPI_BASE_URL}/brawlers`);
+            const response = await fetch('https://api.brawlapi.com/v1/brawlers');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -48,29 +71,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // fetch and display events
+    // Fetch and display events
     async function fetchEvents() {
-        const eventsSection = document.getElementById('events-section');
-        const eventsGridContainer = document.getElementById('events-grid');
-        const loadingText = eventsGridContainer.querySelector('.loading-text');
+        const activeEventsGrid = document.getElementById('active-events-grid');
+        const upcomingEventsGrid = document.getElementById('upcoming-events-grid');
+        const activeLoadingText = activeEventsGrid.querySelector('.loading-text');
+        const upcomingLoadingText = upcomingEventsGrid.querySelector('.loading-text');
 
         try {
-            const response = await fetch(`${BRAWLIFY_API_BASE_URL}/events`);
+            const response = await fetch('https://api.brawlify.com/v1/events');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
 
-            if (loadingText) {
-                loadingText.remove();
-            }
+            if (activeLoadingText) activeLoadingText.remove();
+            if (upcomingLoadingText) upcomingLoadingText.remove();
 
-            eventsGridContainer.innerHTML = '';
+            activeEventsGrid.innerHTML = '';
+            upcomingEventsGrid.innerHTML = '';
 
-            const credit = document.createElement('p');
-            credit.className = 'api-credit';
-            credit.innerHTML = 'Event stats powered by <a href="https://brawlify.com" target="_blank">Brawlify.com</a>';
-            eventsSection.insertBefore(credit, eventsGridContainer);
+            const createApiCredit = () => {
+                const credit = document.createElement('div');
+                credit.className = 'api-credit';
+                credit.innerHTML = 'Event stats powered by <a href="https://brawlify.com" target="_blank">Brawlify.com</a>';
+                return credit;
+            };
+
+            activeEventsGrid.appendChild(createApiCredit());
+            upcomingEventsGrid.appendChild(createApiCredit());
 
             function createEventCard(event) {  
                 const card = document.createElement('div');
@@ -89,11 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameModeImage.alt = event.map.gameMode.name;
                 gameModeImage.className = 'event-gamemode-icon';
 
-                const timeDetails = document.createElement('p');
+                const timeDetails = document.createElement('div');
+                timeDetails.className = 'event-time';
+                
                 const startTime = new Date(event.startTime).toLocaleString();
                 const endTime = new Date(event.endTime).toLocaleString();
-                timeDetails.textContent = `Starts: ${startTime} - Ends: ${endTime}`;
-                timeDetails.className = 'event-time';
+                timeDetails.textContent = `${startTime} - ${endTime}`;
                 
                 card.appendChild(gameModeImage);
                 card.appendChild(title);
@@ -102,60 +132,101 @@ document.addEventListener('DOMContentLoaded', () => {
                 return card;
             }
 
-            if (data.active && data.active.length > 0) {
-                const activeEventsTitle = document.createElement('h3');
-                activeEventsTitle.textContent = 'Active Events';
-                activeEventsTitle.className = 'event-type-title';
-                eventsGridContainer.appendChild(activeEventsTitle);
+            const activeCardsWrapper = document.createElement('div');
+            activeCardsWrapper.className = 'event-cards-wrapper';
 
-                const activeCardsWrapper = document.createElement('div');
-                activeCardsWrapper.className = 'event-cards-wrapper';
+            // active events
+            if (data.active && data.active.length > 0) {
                 data.active.forEach(event => {
                     activeCardsWrapper.appendChild(createEventCard(event));
                 });
-                eventsGridContainer.appendChild(activeCardsWrapper);
+                activeEventsGrid.appendChild(activeCardsWrapper);
+            } else {
+                activeEventsGrid.innerHTML = '<p>No active events found.</p>';
+                activeEventsGrid.appendChild(createApiCredit());
             }
 
-            if (data.upcoming && data.upcoming.length > 0) {
-                const upcomingEventsTitle = document.createElement('h3');
-                upcomingEventsTitle.textContent = 'Upcoming Events';
-                upcomingEventsTitle.className = 'event-type-title';
-                eventsGridContainer.appendChild(upcomingEventsTitle);
+            const upcomingCardsWrapper = document.createElement('div');
+            upcomingCardsWrapper.className = 'event-cards-wrapper';
 
-                const upcomingCardsWrapper = document.createElement('div');
-                upcomingCardsWrapper.className = 'event-cards-wrapper';
+            // upcoming events
+            if (data.upcoming && data.upcoming.length > 0) {
                 data.upcoming.forEach(event => {
                     upcomingCardsWrapper.appendChild(createEventCard(event));
                 });
-                eventsGridContainer.appendChild(upcomingCardsWrapper);
-            }
-
-            if ((!data.active || data.active.length === 0) && (!data.upcoming || data.upcoming.length === 0)) {
-                eventsGridContainer.innerHTML = '<p>No current or upcoming events found.</p>';
+                upcomingEventsGrid.appendChild(upcomingCardsWrapper);
+            } else {
+                upcomingEventsGrid.innerHTML = '<p>No upcoming events found.</p>';
+                upcomingEventsGrid.appendChild(createApiCredit());
             }
 
         } catch (error) {
             console.error('Error fetching events:', error);
-            if (document.getElementById('events-grid').querySelector('.loading-text')) {
-                 document.getElementById('events-grid').querySelector('.loading-text').textContent = 'Failed to load events. See console for details.';
-            } else if (eventsGridContainer.innerHTML === '') {
-                eventsGridContainer.innerHTML = '<p>Failed to load events. See console for details.</p>';
+            
+            if (activeLoadingText) {
+                activeLoadingText.textContent = 'Failed to load active events. See console for details.';
+            } else if (activeEventsGrid.innerHTML === '') {
+                activeEventsGrid.innerHTML = '<p>Failed to load active events. See console for details.</p>';
+            }
+            
+            if (upcomingLoadingText) {
+                upcomingLoadingText.textContent = 'Failed to load upcoming events. See console for details.';
+            } else if (upcomingEventsGrid.innerHTML === '') {
+                upcomingEventsGrid.innerHTML = '<p>Failed to load upcoming events. See console for details.</p>';
             }
         }
     }
 
-    async function fetchMaps() {
-        const mapsGrid = document.getElementById('maps-grid');
-        mapsGrid.innerHTML = '<p>Map loading implemented soon...</p>';
-    }
+    function initPlayerSearch() {
+        const searchButton = document.getElementById('search-player-btn');
+        const playerTagInput = document.getElementById('player-tag-input');
+        const playerResults = document.getElementById('player-results');
 
-    async function fetchGameModes() {
-        const gameModesGrid = document.getElementById('gamemodes-grid');
-        gameModesGrid.innerHTML = '<p>Game Mode loading implemented soon...</p>';
+        searchButton.addEventListener('click', () => {
+            const playerTag = playerTagInput.value.trim();
+            
+            if (!playerTag) {
+                playerResults.innerHTML = '<p class="info-text">Please enter a player tag</p>';
+                return;
+            }
+            
+            let formattedTag = playerTag;
+            if (!playerTag.startsWith('#')) {
+                formattedTag = '#' + playerTag;
+            }
+            
+            playerResults.innerHTML = `
+                <div class="player-stats">
+                    <div class="player-stat-card">
+                        <h4>Player Tag</h4>
+                        <div class="stat-value">${formattedTag}</div>
+                    </div>
+                    <div class="player-stat-card">
+                        <h4>Trophies</h4>
+                        <div class="stat-value">24,568</div>
+                    </div>
+                    <div class="player-stat-card">
+                        <h4>Level</h4>
+                        <div class="stat-value">248</div>
+                    </div>
+                    <div class="player-stat-card">
+                        <h4>3v3 Victories</h4>
+                        <div class="stat-value">12,345</div>
+                    </div>
+                </div>
+                <p class="api-credit">Note: This is placeholder data. Real API integration coming soon.</p>
+            `;
+        });
+
+        playerTagInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
     }
 
     fetchBrawlers();
     fetchEvents();
-    fetchMaps();
-    fetchGameModes();
+    initPlayerSearch();
+    initCollapsibleSections();
 });
