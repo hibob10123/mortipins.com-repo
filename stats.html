@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Morti-Site Stats - Brawl Stars Statistics">
+    <meta name="keywords" content="Morti-Site, Stats, Brawl Stars, Brawlers, Maps, Game Modes, Events">
+    <meta name="author" content="MortipinS">
+    <title>Stats - Morti-Site</title>
+    <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/script.js" defer></script>
+    <script src="js/stats.js" defer></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H31KKY28NR');
+</script>
+
+<body>
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="sidebar">
+            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
+            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
+            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
+            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
+            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+        </div>
+    </div>
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
+                <span class="logo-text">Morti-Site</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brawldle.html">Minigames</a>
+                <a href="stats.html">Stats</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="account">
+                <a href="account/signin.html">Account</a>
+            </div>
+        </nav>
+        <nav class="nav mobile-nav">
+            <div>
+                <img style="margin-left: 25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo">
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="stats-container">
+            <section id="active-events-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Active Events</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="active-events-grid" class="grid-container section-content">
+                    <p class="loading-text">Loading active events...</p>
+                </div>
+            </section>
+
+            <section id="upcoming-events-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="upcoming-events-grid" class="grid-container section-content">
+                    <p class="loading-text">Loading upcoming events...</p>
+                </div>
+            </section>
+
+            <section id="brawlers-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Brawlers</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="brawlers-grid" class="grid-container brawler-grid section-content">
+                    <p class="loading-text">Loading brawlers...</p>
+                </div>
+            </section>
+
+            <section id="player-data-section" class="stats-section">
+                <div class="section-header">
+                    <h2>Player Data (Coming Soon)</h2>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+                <div id="player-data-grid" class="grid-container section-content">
+                    <div class="player-search">
+                        <h3>Look up player stats</h3>
+                        <p>Enter a player tag to view their stats</p>
+                        <div class="player-search-form">
+                            <input type="text" id="player-tag-input" placeholder="#XXXXXXXXX" class="player-tag-input">
+                            <button id="search-player-btn" class="search-player-btn">Search</button>
+                        </div>
+                        <div id="player-results" class="player-results">
+                            <p class="info-text">Player data will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" class="footer-link">Join Discord</a>
+            <p>&copy; MortipinS 2025. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
