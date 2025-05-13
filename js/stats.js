@@ -5,14 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function initCollapsibleSections() {
         const sectionHeaders = document.querySelectorAll('.section-header');
         
-        if (sectionHeaders.length > 0) {
-            const firstHeader = sectionHeaders[0];
-            const firstContent = firstHeader.nextElementSibling;
-            
-            firstHeader.classList.add('active');
-            firstContent.classList.add('active');
-        }
-        
         sectionHeaders.forEach(header => {
             header.addEventListener('click', () => {
                 const section = header.parentElement;
