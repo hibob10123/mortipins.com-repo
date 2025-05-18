@@ -1103,3 +1103,70 @@ function createLeaderboardTable(data) {
 
     return table;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("brawldle-multiplayer")) initMultiplayer();
+});
+
+function initMultiplayer() {
+    const loadingEl = document.querySelector("#matchmaking-section .loading");
+    const cancelBtn = document.getElementById("cancel-match");
+    const manualBtn = document.getElementById("manual-check");
+    let lobbyId, countdown = 5, interval;
+    fetch("https://mortipins-multiplayer.imenkei64.workers.dev/matchmaking/join", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({player: localStorage.getItem("username") || "guest"})
+    }).then(r => r.json()).then(data => {
+        lobbyId = data.lobby_id;
+        if (data.status === "waiting") {
+            loadingEl.querySelector("p").textContent = "1 Player in lobby";
+            manualBtn.style.display = "inline-block";
+            interval = setInterval(() => {
+                countdown--;
+                manualBtn.textContent = `Check (${countdown}s)`;
+                if (countdown === 0) {
+                    countdown = 5;
+                    checkLobby();
+                }
+            }, 1000);
+        } else {
+            startGame();
+        }
+    });
+    manualBtn.onclick = checkLobby;
+    cancelBtn.onclick = () => { window.location.href = "brawldle.html"; };
+    function checkLobby() {
+        fetch(`https://mortipins-multiplayer.imenkei64.workers.dev/matchmaking/status?lobby_id=${lobbyId}`)
+            .then(r => r.json())
+            .then(res => {
+                if (res.status === "waiting") {
+                    loadingEl.querySelector("p").textContent = "1 Player in lobby";
+                } else {
+                    loadingEl.querySelector("p").textContent = "2 Players in lobby";
+                    clearInterval(interval);
+                    startGame();
+                }
+            });
+    }
+    function startGame() {
+        document.getElementById("matchmaking-section").style.display = "none";
+        document.getElementById("multiplayer-game").style.display = "block";
+        startTimer();
+    }
+    function startTimer() {
+        let time = 60;
+        let game = 1;
+        const timerEl = document.getElementById("timer");
+        const countEl = document.getElementById("game-count");
+        countEl.textContent = `Game ${game} of 5`;
+        timerEl.textContent = `1:00`;
+        const tInt = setInterval(() => {
+            time--;
+            const m = Math.floor(time/60);
+            const s = time%60;
+            timerEl.textContent = `${m}:${s<10?`0${s}`:s}`;
+            if (time <= 0) clearInterval(tInt);
+        },1000);
+    }
+}

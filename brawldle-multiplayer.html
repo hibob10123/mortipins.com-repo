@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="MortipinS Brawl Stars Guessing Game">
-    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle Multiplayer">
     <meta name="author" content="MortipinS">
-    <title>Brawldle</title>
+    <title>Brawldle Multiplayer</title>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
     <!-- google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,9 @@
     <!--font awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css -->
-    <link href="css/style.css" rel="stylesheet" >
+    <link href="css/style.css" rel="stylesheet">
+    <!-- chart (for result distribution) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- js -->
     <script src="js/script.js" defer></script>
 </head>
@@ -27,11 +29,10 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body>
+<body id="brawldle-multiplayer">
     <!-- overlay for mobile-->
     <div id="overlay">
         <div>
@@ -61,72 +62,56 @@
                 <a href="account/signin.html">Account</a>
             </div>
         </nav>
-
         <!-- mobile-->
         <nav class="nav mobile-nav">
             <div>
-                <img style="margin-left: 25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo" >
+                <img style="margin-left: 25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo">
             </div>
             <div>
                 <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
             </div>
         </nav>
     </header>
-    
     <main>
-        <div class="hero">
-            <div class="intro">
-                <div class="intro-text">
-                    <h1>Play Brawldle</h1>
-                    <p>Test your skills and guess the rank of Brawl Stars players based on their clips.<br> Are you up for the challenge?</p>
-                    <a href="brawldle-daily.html" class="brawldle-button">Daily Game</a>
-                    <a href="brawldle-unlimited.html" class="brawldle-button2">Play Unlimited</a>
-                    <a href="brawldle-multiplayer.html" class="brawldle-button2">Play Multiplayer</a>
-                    <a href="leaderboard.html" class="brawldle-button2">Leaderboard</a>
-                    <a href="trophies-unlimited.html" class="trophyGuess-button">TrophyGuess</a>
-                </div>
-                <img class="intro-img" src="images/brawldle-icon.jpg" alt="MortipinS Logo">
+        <!-- Matchmaking Screen -->
+        <section id="matchmaking-section" class="brawldle">
+            <h1 class="brawldle-text">Brawldle Multiplayer</h1>
+            <div class="loading">
+                <i class="fa-solid fa-spinner fa-spin fa-3x" style="color:white;"></i>
+                <p style="color: white; margin-top:1rem;">Looking for player...</p>
             </div>
-        </div>
-
-        <div class="brawldle-section how-to-play-detailed">
-            <h2>How to Play Brawldle</h2>
-            
-            <h3>Unlimited Mode (Elo Ranking)</h3>
-            <p>This is where you climb the leaderboard!</p>
-            <ul>
-                <li><strong>Watch & Guess:</strong> You'll see a gameplay clip. Guess the player's rank in that clip.</li>
-                <li><strong>Ranks:</strong> The possible ranks are: Bronze, Silver, Gold, Diamond, Mythic, Legendary, and Masters.</li>
-                <li><strong>Scoring (Elo System):</strong>
-                    <ul>
-                        <li><strong>Correct Guess:</strong> Gain Elo points.</li>
-                        <li><strong>Incorrect Guess:</strong> Lose Elo points.</li>
-                        <li><strong>The Challenge:</strong> As your total Elo score increases, you'll gain fewer points for correct guesses and lose more for incorrect ones. This makes reaching higher Elo tiers a true test of skill!</li>
-                    </ul>
-                </li>
-                <li><strong>Leaderboard:</strong> Compete for the top spot! Your Elo score is tracked on the global leaderboard.</li>
-                <li><strong>Login to Save:</strong> Remember to log in to save your Elo points and appear on the leaderboard.</li>
-            </ul>
-
-            <h3>Daily Game Mode</h3>
-            <p>A fresh challenge every day!</p>
-            <ul>
-                <li><strong>One Clip, One Guess:</strong> You get one featured clip per day.</li>
-                <li><strong>No Points, Just Pride:</strong> Guess the rank. There's no Elo awarded in this mode, but you can see how your guess compares to others with a distribution chart!</li>
-                <li><strong>Come Back Daily:</strong> A new clip awaits you each day.</li>
-            </ul>
-            <p>Ready to play? Choose your mode and show off your Brawldle expertise!</p>
-        </div>
+            <a href="brawldle.html" class="submit-button" id="cancel-match">Cancel</a>
+            <button id="manual-check" class="submit-button" style="display:none; margin-left:1rem;">Check (5s)</button>
+        </section>
+        <!-- Multiplayer Game Screen (hidden until match found) -->
+        <section id="multiplayer-game" class="brawldle" style="display: none;">
+            <h1 class="brawldle-text">Brawldle Multiplayer!</h1>
+            <div id="timer">1:00</div>
+            <div id="game-count" style="color:white; margin-top:0.5rem; font-size:1.5rem;">Game 1 of 5</div>
+            <div class="brawldle-video">
+                <iframe id="videoFrame" src="" allowfullscreen></iframe>
+                <div class="rank-buttons">
+                    <img src="images/icon_ranked_bronze.png" alt="Bronze Rank" onclick="selectRank(1)">
+                    <img src="images/icon_ranked_silver.png" alt="Silver Rank" onclick="selectRank(2)">
+                    <img src="images/icon_ranked_gold.png" alt="Gold Rank" onclick="selectRank(3)">
+                    <img src="images/icon_ranked_diamond.png" alt="Diamond Rank" onclick="selectRank(4)">
+                    <img src="images/icon_ranked_mythic.png" alt="Mythic Rank" onclick="selectRank(5)">
+                    <img src="images/icon_ranked_legendary.png" alt="Legendary Rank" onclick="selectRank(6)">
+                    <img src="images/icon_ranked_masters.png" alt="Masters Rank" onclick="selectRank(7)">
+                </div>
+            </div>
+            <a href="#" class="submit-button" onclick="submitGuess()">Submit Guess</a>
+        </section>
     </main>
-
     <!-- modal structure-->
     <div id="rankModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h1>Results</h1>
-            <div id="modalText">
+            <div id="modalText"></div>
+            <button onclick="location.href='leaderboard.html'" class="submit-button">See Leaderboard</button>
         </div>
     </div>
-    </div>
 </body>
-</html>
+
+</html> 
