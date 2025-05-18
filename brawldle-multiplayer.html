@@ -21,6 +21,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- js -->
     <script src="js/script.js" defer></script>
+    <style>
+      @keyframes spin360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .loading img { animation: spin360 2s linear infinite; }
+      .clip-winners { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+      .clip-winners p { margin: .5rem 1rem; }
+    </style>
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -77,16 +83,19 @@
         <section id="matchmaking-section" class="brawldle">
             <h1 class="brawldle-text">Brawldle Multiplayer</h1>
             <div class="loading">
-                <i class="fa-solid fa-spinner fa-spin fa-3x" style="color:white;"></i>
+                <img src="images/mortis5_mastery.png" alt="loading" style="width:60px;height:60px;">
                 <p style="color: white; margin-top:1rem;">Looking for player...</p>
             </div>
-            <a href="brawldle.html" class="submit-button" id="cancel-match">Cancel</a>
-            <button id="manual-check" class="submit-button" style="display:none; margin-left:1rem;">Check (5s)</button>
+            <div style="text-align: center; margin-top: 1rem;">
+                <a href="brawldle.html" class="submit-button" id="cancel-match" style="margin-right: 0.5rem;">Cancel</a>
+                <button id="manual-check-lobby" class="submit-button" style="display:none; margin-left: 0.5rem;">Check Status</button>
+            </div>
         </section>
         <!-- Multiplayer Game Screen (hidden until match found) -->
         <section id="multiplayer-game" class="brawldle" style="display: none;">
             <h1 class="brawldle-text">Brawldle Multiplayer!</h1>
-            <div id="timer">1:00</div>
+            <p id="mp-status" style="color:white; margin:1rem 0;"></p>
+            <div id="timer">0:30</div>
             <div id="game-count" style="color:white; margin-top:0.5rem; font-size:1.5rem;">Game 1 of 5</div>
             <div class="brawldle-video">
                 <iframe id="videoFrame" src="" allowfullscreen></iframe>
@@ -100,7 +109,7 @@
                     <img src="images/icon_ranked_masters.png" alt="Masters Rank" onclick="selectRank(7)">
                 </div>
             </div>
-            <a href="#" class="submit-button" onclick="submitGuess()">Submit Guess</a>
+            <a href="#" class="submit-button" onclick="submitMultiplayerGuess()">Submit Guess</a>
         </section>
     </main>
     <!-- modal structure-->
