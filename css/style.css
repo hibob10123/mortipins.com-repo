@@ -559,10 +559,10 @@ header {
 }
 
 .brawldle-section p, .leaderboard-section p {
-    font: var(--h4);
-    margin-bottom: 2rem;
-    text-align: center;
-    color: #fff;
+    font-size: var(--p);
+    line-height: 1.6;
+    margin-bottom: var(--margin-l);
+    color: var(--gray70);
 }
 
 .brawldle-button, .brawldle-button2 {
@@ -2306,4 +2306,61 @@ header {
     .player-results {
         padding: 1rem;
     }
+}
+
+/* Styles for the detailed How to Play section */
+.how-to-play-detailed {
+    text-align: left; /* Override center alignment for this section */
+    transform: none; /* Reset transform from .brawldle-section to bring it up */
+    margin-top: var(--margin-xl); /* Reduce top margin to bring it further up */
+}
+
+.how-to-play-detailed h3 {
+    font-size: var(--h3); /* Use existing h3 variable */
+    color: var(--colora); /* Accent color for subheadings */
+    margin-top: var(--margin-xl);
+    margin-bottom: var(--margin-m);
+}
+
+.how-to-play-detailed ul {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0; /* Remove default padding */
+    margin-bottom: var(--margin-l);
+}
+
+.how-to-play-detailed ul li {
+    font-size: var(--p);
+    color: var(--gray90);
+    margin-bottom: var(--margin-s);
+    padding-left: var(--margin-m); /* Indent list items */
+    position: relative;
+}
+
+.how-to-play-detailed ul li::before {
+    content: "▶"; /* Custom bullet */
+    position: absolute;
+    left: 0;
+    color: var(--colora); /* Accent color for bullets */
+    font-size: 0.8em;
+    top: 2px; /* Adjust vertical alignment if needed */
+}
+
+/* Styling for nested ULs within how-to-play for Elo specifics */
+.how-to-play-detailed ul ul {
+    margin-top: var(--margin-xs);
+    margin-bottom: var(--margin-s);
+    padding-left: var(--margin-m); /* Further indent nested list */
+}
+
+.how-to-play-detailed ul ul li::before {
+    content: "▪"; /* Different bullet for sub-items */
+    font-size: 0.9em;
+    top: 1px;
+}
+
+.how-to-play-detailed > p:last-of-type { /* The "Ready to play?" paragraph */
+    font-weight: bold;
+    color: white;
+    text-align: center; /* Center the final call to action */
+    margin-top: var(--margin-xl);
 }
