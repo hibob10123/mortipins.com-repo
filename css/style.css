@@ -42,6 +42,8 @@
     --margin-l: 1.25rem;
     --margin-xl: 1.75rem;
     --margin-xxl: 2.5rem;
+    --explore-duration: 60s;
+    --explore-duration-hover: 100s;
 }
 
 body {
@@ -227,6 +229,13 @@ header {
     
     .hero .intro-text h1.hero-title {
         font: bold clamp(2.5rem, 8vw, 8rem)/1.1 var(--ff);
+    }
+
+    .hero-logo-mobile {
+        display: block;
+        width: 150px;
+        height: auto;
+        margin: 0 auto var(--margin-s);
     }
 }
 
@@ -463,45 +472,77 @@ header {
 
 /* flex cards */
 .flex-cards img {
-    height: 225px;
+    width: 100%;
+    height: auto;
     border-radius: 10%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
 }
 
+.explore-banner {
+    overflow: hidden;
+    width: 100%;
+    margin: clamp(1rem, 3vw, 2rem) 0;
+    position: relative;
+}
+
+.explore-track {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding-right: 80px;
+    padding-left: 5px;
+    animation: scroll var(--explore-duration) linear infinite;
+    will-change: transform;
+}
+
+.explore-item {
+    font-family: 'SF Pro Display', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 5rem);
+    text-decoration: none;
+    background: linear-gradient(90deg, lightgrey, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 clamp(1rem, 2vw, 2rem);
+    display: inline-block;
+}
+
+.explore-item:hover {
+    background: linear-gradient(90deg, #FF7F00, #FFE600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.explore-banner:hover .explore-track {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(5px); }
+    100% { transform: translateX(calc(-50% - 40px)); }
+}
+
 .flex-cards {
-    display: flex;
-    transform: translate(0, 20%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
     width: 90%;
     max-width: 1800px;
-    gap: 20px;
-    margin: 100px auto;
-    border-radius: 10%;
-    flex-wrap: wrap;
-    justify-content: center;
+    margin: clamp(2rem, 5vw, 6rem) auto 0;
+    padding-bottom: 30px;
     animation: fadeIn 1.75s ease-in-out;
-    padding-bottom: 100px;
 }
 
 .flex-cards > div {
-    flex: 1;
-    transition: all 0.3s ease, color 0.3s ease;
-}/*
+    display: flex;
+}
 .card {
-    min-width: 330px;
-    background: linear-gradient(135deg, var(--gray10), var(--gray5));
-    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.7);
-    height: 420px;
-    border-radius: 10px;
-    padding: 1rem;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0px;
-    align-items: center;
-    justify-items: center;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
-*/
 
 .flex-cards :hover {
     transform: scale(1.02);
@@ -2363,4 +2404,17 @@ header {
     color: white;
     text-align: center; /* Center the final call to action */
     margin-top: var(--margin-xl);
+}
+
+.hero-logo-mobile {
+    display: none;
+}
+
+@media (max-width: 1145px) {
+    .hero-logo-mobile {
+        display: block;
+        width: 150px;
+        height: auto;
+        margin: 0 auto var(--margin-s);
+    }
 }

@@ -18,6 +18,24 @@
     <link href="css/style.css" rel="stylesheet" >
     <!-- js -->
     <script src="js/script.js" defer></script>
+    <script>
+      // Function to ensure the explore banner loops properly
+      document.addEventListener('DOMContentLoaded', function() {
+        const exploreTrack = document.querySelector('.explore-track');
+        if (exploreTrack) {
+          // Clone all items to ensure seamless looping
+          const items = exploreTrack.querySelectorAll('.explore-item');
+          const trackWidth = exploreTrack.scrollWidth;
+          const viewWidth = window.innerWidth;
+          
+          // If track width is greater than view width, we need to ensure a seamless loop
+          if (trackWidth > viewWidth) {
+            // We already have 2 sets of items, which should be enough for most screens
+            // The CSS animation will handle the actual looping
+          }
+        }
+      });
+    </script>
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -75,6 +93,7 @@
         <div class="hero">
             <div class="intro">
                 <div class="intro-text">
+                    <img src="images/mortis5_mastery.png" alt="MortipinS Logo" class="hero-logo-mobile">
                     <h1 class="hero-title">Morti-Site</h1>
                     <p class="tagline">A Brawl Stars website created by YouTuber MortipinS.</p>
                     <div class="intro-button-container">
@@ -86,6 +105,21 @@
             </div>
         </div>
 
+        <div class="explore-banner">
+            <div class="explore-track">
+                <a href="brawldle-daily.html" class="explore-item">Play Brawldle Daily</a>
+                <a href="brawldle-unlimited.html" class="explore-item">Play Brawldle Unlimited</a>
+                <a href="trophies-unlimited.html" class="explore-item">Play TrophyGuess</a>
+                <a href="blog.html" class="explore-item">Read Blogs</a>
+                <a href="stats.html" class="explore-item">View Stats</a>
+                
+                <a href="brawldle-daily.html" class="explore-item">Play Brawldle Daily</a>
+                <a href="brawldle-unlimited.html" class="explore-item">Play Brawldle Unlimited</a>
+                <a href="trophies-unlimited.html" class="explore-item">Play TrophyGuess</a>
+                <a href="blog.html" class="explore-item">Read Blogs</a>
+                <a href="stats.html" class="explore-item">View Stats</a>
+            </div>
+        </div>
         <div class="flex-cards">
             <div class="c1">
                 <div class="card" onclick="window.location.href='brawldle.html';">
