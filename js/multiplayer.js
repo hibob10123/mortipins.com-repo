@@ -1,4 +1,4 @@
-const SOCKET_URL = `${window.location.protocol}//enkeiserver.duckdns.org:25565`;
+const SOCKET_URL = `${window.location.protocol}//${window.location.hostname}:25565`;
 console.log('Socket connecting to', SOCKET_URL);
 const socket = io(SOCKET_URL);
 let roomId;
