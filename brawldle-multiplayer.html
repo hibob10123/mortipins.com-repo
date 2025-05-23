@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawldle Multiplayer</title>
+    <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
+    <!-- core script for videoLinks and overlay -->
+    <script src="js/script.js" defer></script>
+    <!-- multiplayer script -->
+    <script src="js/multiplayer.js" defer></script>
+</head>
+<body id="brawldle-multiplayer">
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="sidebar">
+            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
+            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
+            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
+            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
+            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+        </div>
+    </div>
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
+                <span class="logo-text">Morti-Site</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brawldle.html">Minigames</a>
+                <a href="stats.html">Stats</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="account">
+                <a href="account/signin.html">Account</a>
+            </div>
+        </nav>
+        <nav class="nav mobile-nav">
+            <div>
+                <img style="margin-left:25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo">
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="matchmakingScreen" class="matchmaking-screen">
+            <h2>Looking for players...</h2>
+            <i class="fa-solid fa-spinner fa-spin fa-3x"></i>
+            <p id="lobbyCount" class="status-message">1 of 2 players in lobby</p>
+            <button id="leaveQueueButton" class="submit-button">Leave</button>
+        </div>
+        <div id="countdownScreen" class="matchmaking-screen" style="display:none;">
+            <h2>Game starting in <span id="countdown">5</span>...</h2>
+        </div>
+        <div id="gameScreen" style="display:none;">
+            <section class="brawldle">
+                <h1 class="brawldle-text">Multiplayer Match</h1>
+                <div id="playerInfo"></div>
+                <div id="timer">Waiting for match...</div>
+                <p id="statusMessage" class="status-message"></p>
+                <div class="brawldle-video">
+                    <iframe id="videoFrame" src="" allowfullscreen></iframe>
+                    <div class="rank-buttons">
+                        <img src="images/icon_ranked_bronze.png" alt="Bronze Rank" onclick="selectRank('Bronze')">
+                        <img src="images/icon_ranked_silver.png" alt="Silver Rank" onclick="selectRank('Silver')">
+                        <img src="images/icon_ranked_gold.png" alt="Gold Rank" onclick="selectRank('Gold')">
+                        <img src="images/icon_ranked_diamond.png" alt="Diamond Rank" onclick="selectRank('Diamond')">
+                        <img src="images/icon_ranked_mythic.png" alt="Mythic Rank" onclick="selectRank('Mythic')">
+                        <img src="images/icon_ranked_legendary.png" alt="Legendary Rank" onclick="selectRank('Legendary')">
+                        <img src="images/icon_ranked_masters.png" alt="Masters Rank" onclick="selectRank('Masters')">
+                    </div>
+                </div>
+                <a href="#" id="submitButton" class="submit-button" onclick="submitGuess()">Submit Guess</a>
+            </section>
+        </div>
+    </main>
+    <div id="roundModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeRound">&times;</span>
+            <h1>Round Result</h1>
+            <p id="correctAnswer" class="status-message"></p>
+            <canvas id="roundResultChart"></canvas>
+        </div>
+    </div>
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeGameOver">&times;</span>
+            <h1>Game Over</h1>
+            <div id="gameOverResults"></div>
+            <canvas id="gameOverChart"></canvas>
+        </div>
+    </div>
+    <!-- Opponent left modal -->
+    <div id="opponentLeftModal" class="modal">
+        <div class="modal-content">
+            <h1>Opponent Left</h1>
+            <p>Your opponent has disconnected.</p>
+            <button id="returnHomeBtn" class="submit-button">Return to Brawldle</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" class="footer-link">Join Discord</a>
+            <p>&copy; MortipinS 2025. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

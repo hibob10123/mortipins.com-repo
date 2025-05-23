@@ -19,19 +19,14 @@
     <!-- js -->
     <script src="js/script.js" defer></script>
     <script>
-      // Function to ensure the explore banner loops properly
       document.addEventListener('DOMContentLoaded', function() {
         const exploreTrack = document.querySelector('.explore-track');
         if (exploreTrack) {
-          // Clone all items to ensure seamless looping
           const items = exploreTrack.querySelectorAll('.explore-item');
           const trackWidth = exploreTrack.scrollWidth;
           const viewWidth = window.innerWidth;
           
-          // If track width is greater than view width, we need to ensure a seamless loop
           if (trackWidth > viewWidth) {
-            // We already have 2 sets of items, which should be enough for most screens
-            // The CSS animation will handle the actual looping
           }
         }
       });

@@ -1006,10 +1006,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("leaderboard-content")) {
         fetchLeaderboard();
     }
-    getRandomVideo();
 });
-document.addEventListener("DOMContentLoaded", updateSubmitButton);
-document.getElementById("trophyRange").addEventListener("input", updateTrophyValue);
+// Only update the submit button on daily page
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("brawldle-daily")) {
+        updateSubmitButton();
+    }
+});
+// Only attach trophy slider listener if element exists
+const trophyRangeEl = document.getElementById("trophyRange");
+if (trophyRangeEl) {
+    trophyRangeEl.addEventListener("input", updateTrophyValue);
+}
 
 //updateTimer();
 //setInterval(updateTimer, 1000);
