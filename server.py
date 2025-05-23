@@ -18,11 +18,13 @@ def serve(path):
 def handle_join_queue():
     sid = request.sid
     queue.append(sid)
+    # Notify all in queue of current count
     for qsid in queue:
         socketio.emit('lobby_update', {'count': len(queue)}, to=qsid)
     if len(queue) >= 2:
         p1 = queue.pop(0)
         p2 = queue.pop(0)
+        # Update remaining queue count
         for qsid in queue:
             socketio.emit('lobby_update', {'count': len(queue)}, to=qsid)
         room_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -94,4 +96,5 @@ def handle_disconnect():
         rooms.pop(rid, None)
 
 if __name__ == '__main__':
+    # Disable auto-reloader to avoid binding port twice
     socketio.run(app, host='0.0.0.0', port=25565, use_reloader=False) 
