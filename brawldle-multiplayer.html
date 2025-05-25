@@ -71,6 +71,14 @@
         <div id="countdownScreen" class="matchmaking-screen" style="display:none;">
             <h2>Game starting in <span id="countdown">5</span>...</h2>
         </div>
+
+        <!-- New Round Countdown Overlay -->
+        <div id="roundCountdownOverlay" class="matchmaking-screen" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; flex-direction: column;">
+            <h2>Next round starting in...</h2>
+            <h1 id="roundCountdownValue" style="font-size: 4rem; margin-top: 1rem;">5</h1>
+        </div>
+        <!-- End New Round Countdown Overlay -->
+
         <div id="gameScreen" style="display:none;">
             <section class="brawldle">
                 <h1 class="brawldle-text">Multiplayer Match</h1>
@@ -98,6 +106,7 @@
             <span class="close" id="closeRound">&times;</span>
             <h1>Round Result</h1>
             <p id="correctAnswer" class="status-message"></p>
+            <p id="resultScreenTimer" class="status-message" style="font-size: 1.5rem; margin-top: 10px;"></p>
             <canvas id="roundResultChart"></canvas>
         </div>
     </div>

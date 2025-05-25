@@ -59,6 +59,10 @@ socket.on('round_result', data => {
   showResultChart(data.video_index, data.guesses);
 });
 
+socket.on('start_next_round_timer', () => {
+  initiateRoundCountdown();
+});
+
 socket.on('game_over', data => {
   showGameOver(data.guesses);
 });
@@ -96,10 +100,49 @@ document.addEventListener('DOMContentLoaded', () => {
 function showRound(index) {
   currentIndex = index;
   selectedGuess = null;
-  document.getElementById('timer').textContent = `Time: 30s`;
+  const submitBtn = document.getElementById('submitButton');
+  if (submitBtn) {
+    submitBtn.classList.remove('disabled');
+    submitBtn.textContent = 'Submit Guess';
+  }
+  const status = document.getElementById('statusMessage');
+  if (status) status.textContent = '';
+  
   const video = videoList[index];
   document.getElementById('videoFrame').src = video.link;
-  startTimer();
+}
+
+function initiateRoundCountdown() {
+  const overlay = document.getElementById('roundCountdownOverlay');
+  const countdownValueEl = document.getElementById('roundCountdownValue');
+  const gameScreen = document.getElementById('gameScreen');
+
+  if (!overlay || !countdownValueEl) {
+    console.error("Countdown overlay elements not found! Starting round timer directly.");
+    startTimer();
+    return;
+  }
+
+  let countdown = 5;
+  countdownValueEl.textContent = countdown;
+  overlay.style.display = 'flex';
+  
+  document.querySelectorAll('.rank-buttons img').forEach(img => img.style.pointerEvents = 'none');
+  const submitButton = document.getElementById('submitButton');
+  if (submitButton) submitButton.classList.add('disabled');
+
+  const countdownInterval = setInterval(() => {
+    countdown--;
+    countdownValueEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      overlay.style.display = 'none';
+      document.querySelectorAll('.rank-buttons img').forEach(img => img.style.pointerEvents = 'auto');
+      if (submitButton) submitButton.classList.remove('disabled');
+      
+      startTimer();
+    }
+  }, 1000);
 }
 
 function startTimer() {
@@ -108,6 +151,8 @@ function startTimer() {
   if (timerInterval) {
     clearInterval(timerInterval);
   }
+  timerEl.textContent = `Time: ${timeLeft}s`;
+
   const interval = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `Time: ${timeLeft}s`;
@@ -155,6 +200,7 @@ function showResultChart(index, guesses) {
     submitBtn.classList.remove('disabled');
     submitBtn.textContent = 'Submit Guess';
   }
+
   const you = guesses[playerNumber];
   const opp = guesses[playerNumber === 1 ? 2 : 1];
   const labels = ['Bronze','Silver','Gold','Diamond','Mythic','Legendary','Masters'];
@@ -162,11 +208,21 @@ function showResultChart(index, guesses) {
   const oppData = labels.map(l => l === opp ? 1 : 0);
   const correctRank = videoList[index].trueRank;
   const correctData = labels.map(l => l === correctRank ? 1 : 0);
-  document.getElementById('roundModal').style.display = 'block';
+  
+  const roundModal = document.getElementById('roundModal');
   const correctEl = document.getElementById('correctAnswer');
+  const closeButton = document.getElementById('closeRound');
+  const resultScreenTimerEl = document.getElementById('resultScreenTimer');
+
   if (correctEl) correctEl.textContent = `Correct Answer: ${correctRank}`;
+  if(closeButton) closeButton.style.display = 'none';
+  roundModal.style.display = 'block';
+
   const ctx = document.getElementById('roundResultChart').getContext('2d');
-  new Chart(ctx, {
+  if (window.currentRoundChart) {
+    window.currentRoundChart.destroy();
+  }
+  window.currentRoundChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -178,9 +234,21 @@ function showResultChart(index, guesses) {
     },
     options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
-  document.getElementById('closeRound').onclick = () => {
-    document.getElementById('roundModal').style.display = 'none';
-  };
+
+  let resultTimeLeft = 5;
+  if (resultScreenTimerEl) resultScreenTimerEl.textContent = `Next round in: ${resultTimeLeft}s`;
+
+  const resultInterval = setInterval(() => {
+    resultTimeLeft--;
+    if (resultScreenTimerEl) resultScreenTimerEl.textContent = `Next round in: ${resultTimeLeft}s`;
+    if (resultTimeLeft <= 0) {
+      clearInterval(resultInterval);
+      if(closeButton) closeButton.style.display = 'block';
+      roundModal.style.display = 'none';
+      if (resultScreenTimerEl) resultScreenTimerEl.textContent = '';
+      socket.emit('request_next_round', { room: roomId, player_number: playerNumber, video_index: currentIndex });
+    }
+  }, 1000);
 }
 
 function showGameOver(guesses) {
