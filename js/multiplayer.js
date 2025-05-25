@@ -140,7 +140,7 @@ function initiateRoundCountdown() {
       document.querySelectorAll('.rank-buttons img').forEach(img => img.style.pointerEvents = 'auto');
       if (submitButton) submitButton.classList.remove('disabled');
       
-      startTimer();
+  startTimer();
     }
   }, 1000);
 }
@@ -156,6 +156,17 @@ function startTimer() {
   const interval = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `Time: ${timeLeft}s`;
+
+    // Red flash when 10 seconds left, and at 5,4,3,2,1 seconds
+    if (timeLeft === 10 || (timeLeft <= 5 && timeLeft >= 1)) {
+      document.documentElement.style.setProperty('--flash-color', 'rgba(255, 0, 0, 0.6)');
+      document.body.classList.add('flash');
+      setTimeout(() => {
+        document.body.classList.remove('flash');
+        document.body.style.backgroundColor = 'var(--gray5)';
+      }, 500);
+    }
+
     if (timeLeft <= 0) {
       clearInterval(interval);
       timerInterval = null;
@@ -253,33 +264,56 @@ function showResultChart(index, guesses) {
 
 function showGameOver(guesses) {
   document.getElementById('gameOverModal').style.display = 'block';
-  const labels = ['Round 1','Round 2','Round 3','Round 4','Round 5'];
-  const youData = labels.map((_, i) => guesses[i][playerNumber] === videoList[i].trueRank ? 1 : 0);
-  const oppData = labels.map((_, i) => guesses[i][playerNumber === 1 ? 2 : 1] === videoList[i].trueRank ? 1 : 0);
-  const ctx = document.getElementById('gameOverChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        { label: 'You', data: youData, backgroundColor: 'rgba(54, 162, 235, 0.5)' },
-        { label: 'Opponent', data: oppData, backgroundColor: 'rgba(255, 99, 132, 0.5)' }
-      ]
-    },
-    options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-  });
-  document.getElementById('closeGameOver').onclick = () => {
-    socket.emit('leave_room', { room: roomId });
-    window.location.reload();
+  const resultsContainer = document.getElementById('gameOverResults');
+  resultsContainer.innerHTML = ''; // Clear previous results
+
+  // Define a mapping from rank name to image path
+  const rankImagePaths = {
+    'Bronze': 'images/icon_ranked_bronze.png',
+    'Silver': 'images/icon_ranked_silver.png',
+    'Gold': 'images/icon_ranked_gold.png',
+    'Diamond': 'images/icon_ranked_diamond.png',
+    'Mythic': 'images/icon_ranked_mythic.png',
+    'Legendary': 'images/icon_ranked_legendary.png',
+    'Masters': 'images/icon_ranked_masters.png',
+    // Add any other rank names if they exist, or a default/placeholder
   };
 
-  const resultsContainer = document.getElementById('gameOverResults');
-  let resultsHtml = '<ul>';
+  let resultsHtml = '<div class="game-over-summary-grid">'; // Using a div for flex/grid layout
+
   for (let i = 0; i < videoList.length; i++) {
-    const youGuess = guesses[i][playerNumber] || 'No Guess';
-    const oppGuess = guesses[i][playerNumber === 1 ? 2 : 1] || 'No Guess';
-    resultsHtml += `<li>Round ${i+1}: You guessed ${youGuess}, Opponent guessed ${oppGuess}</li>`;
+    const youGuess = guesses[i] ? guesses[i][playerNumber] : 'No Guess';
+    const oppPlayerNumber = playerNumber === 1 ? 2 : 1;
+    const oppGuess = guesses[i] ? guesses[i][oppPlayerNumber] : 'No Guess';
+    const trueRank = videoList[i].trueRank; // Get the true rank for this round
+
+    const youGuessImgSrc = rankImagePaths[youGuess];
+    const oppGuessImgSrc = rankImagePaths[oppGuess];
+    const trueRankImgSrc = rankImagePaths[trueRank];
+
+    resultsHtml += `
+      <div class="round-summary-row">
+        <div class="round-label">Round ${i + 1}</div>
+        <div class="guess-details">
+          <span class="player-label">You:</span>
+          ${youGuessImgSrc ? `<img src="${youGuessImgSrc}" alt="${youGuess}" class="rank-icon-summary">` : '<span class="no-guess-text">(No Guess)</span>'}
+        </div>
+        <div class="guess-details">
+          <span class="player-label">Opponent:</span>
+          ${oppGuessImgSrc ? `<img src="${oppGuessImgSrc}" alt="${oppGuess}" class="rank-icon-summary">` : '<span class="no-guess-text">(No Guess)</span>'}
+        </div>
+        <div class="guess-details correct-answer-summary">
+          <span class="player-label">Correct:</span>
+          ${trueRankImgSrc ? `<img src="${trueRankImgSrc}" alt="${trueRank}" class="rank-icon-summary">` : '<span class="no-guess-text">(Unknown)</span>'}
+        </div>
+      </div>
+    `;
   }
-  resultsHtml += '</ul>';
+  resultsHtml += '</div>'; // Close game-over-summary-grid
   resultsContainer.innerHTML = resultsHtml;
+
+  document.getElementById('closeGameOver').onclick = () => {
+    socket.emit('leave_room', { room: roomId });
+    window.location.href = 'brawldle.html';
+  };
 } 

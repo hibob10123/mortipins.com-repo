@@ -206,7 +206,7 @@ def handle_disconnect():
 
             # Notify other players in that room
             for other_sid in other_player_sids_in_room:
-                socketio.emit('opponent_left', room=other_sid) 
+                socketio.emit('opponent_left', to=other_sid) 
 
             # If the disconnected player was the only one left, or if it makes the room invalid
             if len(other_player_sids_in_room) < 1 and room_id_player_left in rooms: # Check if room still exists
