@@ -2463,3 +2463,57 @@ header {
     margin: 0.5rem 0;
     color: #fff;
 }
+
+.game-over-summary-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Space between round rows */
+    margin-top: 1rem;
+}
+
+.round-summary-row {
+    display: flex; /* Arrange round label, your guess, opp guess, correct answer in a row */
+    justify-content: space-between; /* Distribute items in the row */
+    align-items: center;
+    padding: 0.75rem;
+    background-color: rgba(0,0,0,0.1); /* Light background for each row */
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.round-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    flex-basis: 15%; /* Give some base width to round label */
+    color: #fff;
+}
+
+.guess-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between label like "You:" and the icon */
+    flex-basis: 25%; /* Base width for each guess section */
+    color: #ddd;
+}
+.guess-details.correct-answer-summary {
+    /* slightly different styling if needed */
+}
+
+
+.player-label {
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+.rank-icon-summary {
+    width: 40px; /* Adjust size as needed */
+    max-width: 40px;
+    max-height: 40px;
+    height: auto;
+    border-radius: 5px; /* Optional: slightly rounded corners for icons */
+}
+
+.no-guess-text {
+    font-style: italic;
+    color: #aaa;
+}
