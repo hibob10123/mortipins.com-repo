@@ -2225,7 +2225,7 @@ header {
 }
 
 /* Player Data Section */
-.player-search, .club-search {
+.player-search {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2233,470 +2233,391 @@ header {
     padding: 1rem;
 }
 
-.player-search h3, .club-search h3 {
+.player-search h3 {
     font-family: var(--ff);
     font-size: 1.8rem;
     color: #fff;
     margin-bottom: 0.5rem;
 }
 
-.player-search p, .club-search p {
+.player-search p {
     font-size: 1rem;
     color: var(--gray70);
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
-.player-search-form, .club-search-form {
+.player-search-form {
     display: flex;
     width: 100%;
     max-width: 500px;
-    margin-bottom: 1.5rem;
-    gap: 0.75rem;
+    margin-bottom: 2rem;
+    gap: 0.5rem;
 }
 
-.player-tag-input, .club-tag-input { /* Combined for shared styling */
-    flex-grow: 1;
-    padding: 0.8rem 1rem;
+.player-tag-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--gray30);
     border-radius: 8px;
     background-color: var(--gray15);
     color: #fff;
     font-family: var(--ff);
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
-.player-tag-input:focus, .club-tag-input:focus {
+.player-tag-input:focus {
     outline: none;
     border-color: var(--colora);
-    box-shadow: 0 0 0 3px rgba(255, 229, 55, 0.3);
 }
 
-.player-tag-input::placeholder, .club-tag-input::placeholder {
+.player-tag-input::placeholder {
     color: var(--gray50);
 }
 
-/* Results Area - Contains Player/Club Cards */
-.results-area {
-    margin-top: 1rem;
-    padding: 0;
-    background-color: transparent;
-    border-radius: 8px;
-    color: var(--gray90);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.results-area .info-text {
-    color: var(--gray70);
-    font-style: italic;
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Player Card Styles */
-.player-card {
-    background-color: var(--gray15);
-    border: 1px solid var(--gray30);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-in-out;
-    flex: 1 1 660px;
-    min-width: 600px;
-    max-width: 750px;
-}
-
-.player-card:hover {
-    transform: translateY(-5px);
-}
-
-.player-card h3 {
-    color: var(--colora); 
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.7rem;
-    border-bottom: 2px solid var(--colora2);
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.player-card p.player-club-info {
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: var(--gray80);
-    font-size: 1rem;
-    text-align: center;
-}
-
-.player-club-link {
-    color: var(--colora2);
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.player-club-link:hover {
-    color: var(--colora);
-}
-
-.player-card .stats-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.stat { 
-    background-color: var(--gray10); 
-    padding: 25px 20px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid var(--gray30);
-    width: 275px;
-}
-
-.stat .value {
-    display: block;
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-.stat .label {
-    font-size: 1rem;
-    color: var(--gray50);
-    line-height: 1.2;
-}
-
-/* Club Card Styles */
-.club-result-card {
-    background-color: var(--gray15);
-    border: 1px solid var(--gray30);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-in-out;
-    flex: 1 1 660px;
-    min-width: 600px;
-    max-width: 750px;
-    display: flex;
-    flex-direction: column;
-}
-
-.club-result-card:hover {
-    transform: translateY(-5px);
-}
-
-.club-result-card h3 {
-    color: var(--colora2); 
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.7rem;
-    border-bottom: 2px solid var(--colora);
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.club-result-card p.club-description {
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: var(--gray80);
-    font-size: 0.95rem;
-    text-align: left;
-}
-
-.club-result-card .club-stats-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.club-actions {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.view-members-btn {
-    padding: 10px 20px;
+.search-player-btn {
+    padding: 0.75rem 1.5rem;
     background-color: var(--colora2);
-    color: #fff;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
+    color: #fff;
+    font-family: var(--ff);
     font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-player-btn:hover {
+    background-color: #4267c9;
+    transform: translateY(-2px);
+}
+
+.search-player-btn:active {
+    transform: translateY(0);
+}
+
+.player-results {
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    background-color: var(--gray15);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-results .info-text {
+    color: var(--gray70);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.player-stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.player-stat-card {
+    background-color: var(--gray10);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-stat-card h4 {
+    font-family: var(--ff);
+    font-size: 1.2rem;
+    color: var(--gray90);
+    margin-bottom: 0.5rem;
+}
+
+.player-stat-card .stat-value {
+    font-family: var(--ff);
+    font-size: 1.8rem;
+    color: var(--colora);
+    margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .player-search-form {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    
+    .search-player-btn {
+        width: 100%;
+    }
+    
+    .player-results {
+        padding: 1rem;
+    }
+}
+
+/* Styles for the detailed How to Play section */
+.how-to-play-detailed {
+    text-align: left; /* Override center alignment for this section */
+    transform: none; /* Reset transform from .brawldle-section to bring it up */
+    margin-top: var(--margin-xl); /* Reduce top margin to bring it further up */
+}
+
+.how-to-play-detailed h3 {
+    font-size: var(--h3); /* Use existing h3 variable */
+    color: var(--colora); /* Accent color for subheadings */
+    margin-top: var(--margin-xl);
+    margin-bottom: var(--margin-m);
+}
+
+.how-to-play-detailed ul {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0; /* Remove default padding */
+    margin-bottom: var(--margin-l);
+}
+
+.how-to-play-detailed ul li {
+    font-size: var(--p);
+    color: var(--gray90);
+    margin-bottom: var(--margin-s);
+    padding-left: var(--margin-m); /* Indent list items */
+    position: relative;
+}
+
+.how-to-play-detailed ul li::before {
+    content: "▶"; /* Custom bullet */
+    position: absolute;
+    left: 0;
+    color: var(--colora); /* Accent color for bullets */
+    font-size: 0.8em;
+    top: 2px; /* Adjust vertical alignment if needed */
+}
+
+/* Styling for nested ULs within how-to-play for Elo specifics */
+.how-to-play-detailed ul ul {
+    margin-top: var(--margin-xs);
+    margin-bottom: var(--margin-s);
+    padding-left: var(--margin-m); /* Further indent nested list */
+}
+
+.how-to-play-detailed ul ul li::before {
+    content: "▪"; /* Different bullet for sub-items */
+    font-size: 0.9em;
+    top: 1px;
+}
+
+.how-to-play-detailed > p:last-of-type { /* The "Ready to play?" paragraph */
     font-weight: bold;
-    transition: background-color 0.2s ease-in-out, opacity 0.2s ease;
+    color: white;
+    text-align: center; /* Center the final call to action */
+    margin-top: var(--margin-xl);
 }
 
-.view-members-btn:hover {
-    background-color: var(--colora);
-    color: var(--gray5);
+.hero-logo-mobile {
+    display: none;
 }
 
-.view-members-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+@media (max-width: 1145px) {
+    .hero-logo-mobile {
+        display: block;
+        width: 150px;
+        height: auto;
+        margin: 0 auto var(--margin-s);
+    }
 }
 
-.club-members-container {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid var(--gray30);
+/* Multiplayer matchmaking screen */
+.matchmaking-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 160px);
+    text-align: center;
+    color: #fff;
+}
+
+.matchmaking-screen h2 {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* End screen results list */
+.modal-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.modal-content ul li {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #fff;
+}
+
+.game-over-summary-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Space between round rows */
+    margin-top: 1rem;
+}
+
+.round-summary-row {
+    display: flex; /* Arrange round label, your guess, opp guess, correct answer in a row */
+    justify-content: space-between; /* Distribute items in the row */
+    align-items: center;
+    padding: 0.75rem;
+    background-color: rgba(0,0,0,0.1); /* Light background for each row */
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.round-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    flex-basis: 15%; /* Give some base width to round label */
+    color: #fff;
+}
+
+.guess-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between label like "You:" and the icon */
+    flex-basis: 25%; /* Base width for each guess section */
+    color: #ddd;
+}
+.guess-details.correct-answer-summary {
+    /* slightly different styling if needed */
+}
+
+
+.player-label {
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+.rank-icon-summary {
+    width: 40px; /* Adjust size as needed */
+    max-width: 40px;
+    max-height: 40px;
+    height: auto;
+    border-radius: 5px; /* Optional: slightly rounded corners for icons */
+}
+
+.no-guess-text {
+    font-style: italic;
+    color: #aaa;
+}
+
+/* Brawldle + TrophyGuess intro sections */
+.intro-container {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
     width: 100%;
 }
 
-.club-members-header {
-    font-size: 1.3rem;
-    color: var(--colora);
-    margin-top: 0;
-    margin-bottom: 15px;
-    text-align: center;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--gray50);
-}
-
-.club-member-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.club-member-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.club-member-list::-webkit-scrollbar-track {
-    background: var(--gray10);
-    border-radius: 4px;
-}
-
-.club-member-list::-webkit-scrollbar-thumb {
-    background: var(--gray50);
-    border-radius: 4px;
-}
-
-.club-member-list::-webkit-scrollbar-thumb:hover {
-    background: var(--gray70);
-}
-
-.club-member-item {
+.brawldle-intro,
+.trophyguess-intro {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 30px;
+    flex: 1 1 calc(50% - 10px);
+    min-width: 300px;
+    max-width: calc(50% - 10px);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 10px 5px;
-    border-bottom: 1px solid var(--gray20);
-    font-size: 0.95rem;
-    color: var(--gray90);
-}
-
-.club-member-item:last-child {
-    border-bottom: none;
-}
-
-.club-member-item .member-rank {
-    color: var(--colora);
-    font-weight: bold;
-    min-width: 35px;
-    text-align: right;
-    margin-right: 10px;
-}
-
-.club-member-item .member-name {
-    flex-grow: 1;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.club-member-item .member-role {
-    color: var(--gray70);
-    min-width: 80px;
     text-align: center;
-    margin-left: 10px;
-}
-
-.club-member-item .member-trophies {
-    font-weight: bold;
-    color: #fff;
-    min-width: 70px;
-    text-align: right;
-    margin-left: 10px;
-}
-
-.club-member-item.no-members {
-    justify-content: center;
-    font-style: italic;
-    color: var(--gray70);
-}
-
-.club-stat {
-    background-color: var(--gray10); 
-    padding: 25px 20px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid var(--gray30);
-    width: 275px;
     box-sizing: border-box;
 }
 
-.club-stat .value {
-    display: block;
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #fff;
+.brawldle-intro .intro-text h1,
+.trophyguess-intro .intro-text h1 {
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
-.club-stat .label {
+.brawldle-intro .intro-text p,
+.trophyguess-intro .intro-text p {
     font-size: 1rem;
-    color: var(--gray50);
-    line-height: 1.2;
+    margin-bottom: 15px;
 }
 
-
-.leaderboard {
-    background-color: var(--gray15);
-    border: 1px solid var(--gray30);
-    border-radius: 12px;
-    padding: 20px;
+.brawldle-intro .intro-img,
+.trophyguess-intro .intro-img {
+    max-width: 80%;
+    height: auto;
+    border-radius: 10px;
     margin-top: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.leaderboard h3 {
-    color: var(--colora);
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-.rank-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 15px;
-    border-bottom: 1px solid var(--gray30);
-    transition: background-color 0.2s ease-in-out;
-}
-
-.rank-item:last-child {
-    border-bottom: none;
-}
-
-.rank-item:hover {
-    background-color: var(--gray10);
-}
-
-.rank-item .rank {
-    font-size: 1.2rem;
+.brawldle-intro .brawldle-button,
+.brawldle-intro .brawldle-button2,
+.trophyguess-intro .trophyGuess-button {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
     font-weight: bold;
-    color: var(--colora2);
-    min-width: 40px;
 }
 
-.rank-item .name {
-    font-size: 1.1rem;
-    color: var(--gray90);
-    flex-grow: 1;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.rank-item .trophies {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #fff;
-}
-
-.player-search-form input[type="text"],
-.club-search-form input[type="text"] {
-    padding: 12px 15px;
-    border: 1px solid var(--gray30);
-    background-color: var(--gray10);
-    color: var(--gray90);
-    border-radius: 6px;
-    font-size: 1rem;
-    flex-grow: 1;
-    margin-right: 10px;
-}
-
-.search-btn {
-    padding: 12px 20px;
+.brawldle-intro .brawldle-button {
     background-color: var(--colora);
-    color: var(--gray5);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.2s ease-in-out;
 }
 
-.search-btn:hover {
-    background-color: #ffd700;
+.brawldle-intro .brawldle-button2 {
+    background-color: rgb(116, 116, 253);
 }
 
-.club-search {
-    margin-top: 0;
+.trophyguess-button {
+    border-color: #4CAF50;
 }
 
-
-@media (max-width: 768px) {
-    .player-card h3, .club-result-card h3, .leaderboard h3 {
-        font-size: 1.5rem; 
+@media (max-width: 1075px) { 
+    .intro-container {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .player-card .stats-grid, .club-result-card .club-stats-grid {
-        gap: 10px; 
-    }
-
-    .stat, .club-stat {
-        padding: 15px 10px;
-        width: 225px;
-    }
-
-    .stat .value, .club-stat .value {
-        font-size: 1.8rem;
-    }
-
-    .stat .label, .club-stat .label {
-        font-size: 0.85rem;
-    }
-
-    .results-area {
-        gap: 15px; 
-        justify-content: center;
-    }
-
-    .player-card, .club-result-card {
-        flex-basis: calc(100% - 20px); 
-        min-width: 300px;
-        max-width: 100%;
-        margin-left: auto; 
-        margin-right: auto;
+    .brawldle-intro,
+    .trophyguess-intro {
+        width: 95%;
+        max-width: none; 
+        flex-basis: auto;
     }
 }
 
-.club-member-link {
-    color: var(--gray90);
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
+.minigame-intro-img {
+    max-width: 100%;
+    width: 520px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 15px;
 }
 
-.club-member-link:hover {
-    color: var(--colora2);
-    text-decoration: underline;
+.brawldle-intro .intro-text,
+.trophyguess-intro .intro-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }

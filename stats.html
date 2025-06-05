@@ -84,46 +84,6 @@
     </header>
     <main>
         <div class="stats-container">
-            <section id="player-stats-section" class="stats-section">
-                <div class="section-header">
-                    <h2>Player Stats</h2>
-                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
-                </div>
-                <div id="player-stats-content" class="section-content">
-                    <div class="player-search">
-                        <h3>Look up player stats</h3>
-                        <p>Enter a player tag to view their stats (e.g., #R9RG2LLLL)</p>
-                        <div class="player-search-form">
-                            <input type="text" id="player-tag-input" placeholder="#XXXXXXXXX" class="player-tag-input">
-                            <button id="search-player-btn" class="search-btn">Search</button>
-                        </div>
-                        <div id="player-results" class="results-area">
-                            <p class="info-text">Player data will appear here</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="club-stats-section" class="stats-section">
-                <div class="section-header">
-                    <h2>Club Stats</h2>
-                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
-                </div>
-                <div id="club-stats-content" class="section-content">
-                    <div class="club-search">
-                        <h3>Look up club stats</h3>
-                        <p>Enter a club tag to view its stats (e.g., #2VVCCL0CV)</p>
-                        <div class="club-search-form">
-                            <input type="text" id="club-tag-input" placeholder="#XXXXXXXXX" class="club-tag-input">
-                            <button id="search-club-btn" class="search-btn">Search</button>
-                        </div>
-                        <div id="club-results" class="results-area">
-                            <p class="info-text">Club data will appear here</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section id="active-events-section" class="stats-section">
                 <div class="section-header">
                     <h2>Active Events</h2>
@@ -154,13 +114,23 @@
                 </div>
             </section>
 
-            <section id="leaderboard-section" class="stats-section">
+            <section id="player-data-section" class="stats-section">
                 <div class="section-header">
-                    <h2>Global Leaderboard</h2>
+                    <h2>Players and Clubs</h2>
                     <i class="fa-solid fa-chevron-down collapse-icon"></i>
                 </div>
-                <div id="leaderboard-content" class="section-content">
-                    <p class="loading-text">Loading leaderboard...</p>
+                <div id="player-data-grid" class="grid-container section-content">
+                    <div class="player-search">
+                        <h3>Look up player stats</h3>
+                        <p>Enter a player tag to view their stats</p>
+                        <div class="player-search-form">
+                            <input type="text" id="player-tag-input" placeholder="#XXXXXXXXX" class="player-tag-input">
+                            <button id="search-player-btn" class="search-player-btn">Search</button>
+                        </div>
+                        <div id="player-results" class="player-results">
+                            <p class="info-text">Player data will appear here</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
