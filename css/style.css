@@ -44,6 +44,7 @@
     --margin-xxl: 2.5rem;
     --explore-duration: 60s;
     --explore-duration-hover: 100s;
+    --nav-height: 5rem;
 }
 
 body {
@@ -56,6 +57,7 @@ body {
 
 main {
     flex: 1;
+    padding-top: var(--nav-height); /* ensure main content starts below fixed nav */
 }
 
 body::before {
@@ -82,11 +84,11 @@ header {
     background-color: var(--gray10);
     color: #fff;
     text-align: center;
-    padding: var(--margin-s) 0;
+    padding: calc(var(--margin-s) * 2) 0;
     font-family: var(--ff);
-    position: static;
+    position: relative;
     width: 100%;
-    margin-top: auto;
+    margin-top: 2rem;
 }
 
 .footer-content {
@@ -119,8 +121,9 @@ header {
     align-items: center;
     padding: var(margin-xxs);
     position: fixed;
-    height: 5rem;
+    height: var(--nav-height);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    z-index: 9999; /* ensure nav always sits above page content */
 }
 
 .logo{
@@ -136,7 +139,7 @@ header {
 }
 
 .nav .logo-text {
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: var(--ff);
     color: #fff;
     text-decoration: none;
     margin-left: 1rem;
@@ -341,6 +344,80 @@ header {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Scroll snap between major sections */
+html, body, main {
+    height: 100%;
+}
+
+/* snap-page namespace handled below via `body.snap-page` */
+
+/* Styles applied only when a page opts-in and runtime allows snap behavior */
+body.snap-page.snap-enabled {
+    scroll-behavior: smooth;
+    overflow: hidden; /* let main handle scrolling */
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-top: var(--nav-height); /* account for fixed nav */
+}
+
+body.snap-page.snap-enabled main {
+    scroll-snap-type: y mandatory;
+    height: calc(100vh - var(--nav-height)); /* fill viewport below nav */
+    overflow-y: auto;
+}
+
+.hero, .flex-cards {
+    scroll-snap-align: start;
+    min-height: calc(100vh - var(--nav-height));
+}
+
+/* when using snap-page, ensure flex-cards sit below the fixed nav */
+body.snap-page .flex-cards {
+    /* stronger offset to ensure no overlap with fixed nav across viewports */
+    margin-top: calc(var(--nav-height) + clamp(2rem, 8vh, 14rem));
+    padding-top: 1.25rem;
+    gap: clamp(.6rem, 1.0vw, 1rem); /* slightly tighter grid gap */
+}
+
+/* Slightly smaller cards on the homepage so they feel less tall */
+body.snap-page .flex-cards .card {
+    padding: calc(var(--margin-m) * 0.65);
+}
+
+/* Reveal-on-scroll */
+.reveal, .card, .intro-img, .flex-cards > div {
+    opacity: 0;
+    transform: translateY(18px) scale(0.995);
+    transition: opacity 650ms var(--transition), transform 650ms var(--transition), box-shadow 500ms ease;
+    will-change: transform, opacity;
+}
+
+.in-view {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Smooth parallax for hero background and image */
+.hero {
+    background-attachment: fixed;
+    transition: background-position 0.2s linear;
+}
+
+.intro-img {
+    transition: transform 300ms cubic-bezier(.2,.8,.2,1), box-shadow 300ms ease;
+}
+
+/* Explore track visual polish */
+.explore-track {
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.6));
+    transform-origin: left center;
+}
+
+.explore-item {
+    transition: transform 300ms ease, text-shadow 300ms ease;
+}
+
+.explore-item:hover { transform: translateY(-6px) scale(1.02); text-shadow: 0 6px 24px rgba(0,0,0,0.6); }
+
 .intro-text {
     flex: 1;
     margin-left: auto;
@@ -505,6 +582,7 @@ header {
     font-size: clamp(3rem, 8vw, 5rem);
     text-decoration: none;
     background: linear-gradient(90deg, lightgrey, white);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0 clamp(1rem, 2vw, 2rem);
@@ -513,6 +591,7 @@ header {
 
 .explore-item:hover {
     background: linear-gradient(90deg, #FF7F00, #FFE600);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -536,7 +615,8 @@ header {
     max-width: 1800px;
     margin: clamp(2rem, 5vw, 6rem) auto 0;
     padding-bottom: 30px;
-    box-shadow: inset 0 80px 120px -60px #000, inset 0 -80px 120px -60px #000, inset 0 0 1000px rgba(0, 0, 0, 1);
+    /* remove heavy inset shadows so individual cards control their own shadows */
+    box-shadow: none;
     animation: fadeIn 1.75s ease-in-out;
 }
 
@@ -548,10 +628,61 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: var(--gray10);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+    transition: transform 320ms cubic-bezier(.2,.9,.3,1), box-shadow 320ms ease, filter 320ms ease;
+    will-change: transform, box-shadow;
+    cursor: pointer;
 }
 
-.flex-cards :hover {
-    transform: scale(1.02);
+/* Scope hover to the card itself for a modern lift + soft shadow */
+.flex-cards .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.35);
+    filter: drop-shadow(0 12px 24px rgba(0,0,0,0.25));
+}
+
+/* Subtle image scale on card hover */
+.flex-cards .card img {
+    width: 100%;
+    height: 220px; /* uniform image height for visual consistency */
+    object-fit: cover;
+    display: block;
+    transition: transform 420ms cubic-bezier(.2,.9,.3,1), filter 320ms ease;
+}
+.flex-cards .card:hover img { transform: scale(1.03); filter: brightness(1.02); }
+
+/* Subtle overlay to improve contrast on dark backgrounds */
+.flex-cards .card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 46%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0));
+    pointer-events: none;
+    transition: opacity 260ms ease, transform 320ms ease;
+    opacity: 0.65;
+}
+.flex-cards .card:hover::after {
+    opacity: 1;
+    transform: translateY(-6px);
+}
+
+/* Slight card rim to separate cards from very dark page backgrounds */
+.flex-cards .card {
+    border: 1px solid rgba(255,255,255,0.03);
+}
+
+@media (max-width: 768px) {
+    .flex-cards .card img {
+        height: auto;
+        object-fit: cover;
+    }
 }
 
 .card-title {
@@ -1189,11 +1320,9 @@ header {
     box-sizing: border-box;
 }
 
-/* From Uiverse.io by gharsh11032000 */ 
+/* From Uiverse.io by gharsh11032000 (simplified to avoid duplicates) */ 
 .card {
     min-width: 240px;
-    background-color: var(--gray10);
-    box-shadow: 0 7px 10px rgba(0,0,0,0.7);
     border-radius: 10px;
     padding: var(--margin-m);
     flex: 1;
@@ -1201,12 +1330,6 @@ header {
     flex-direction: column;
     align-items: center;
     gap: var(--margin-xs);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.8);
 }
 
 .card .card-main-content {
@@ -1583,20 +1706,19 @@ header {
     }
 }
 
-.note {
-    color: #ffffff;
-}
-
-#hearts {
-    font-size: 36px;
-}
-
-.heart {
-    margin-right: 5px;
+.footer {
+    background-color: var(--gray10);
+    color: #fff;
+    text-align: center;
+    padding: var(--margin-s) 0;
+    font-family: var(--ff);
+    position: relative;
+    width: 100%;
+    margin-top: 1.5rem;
 }
 
 .background-image {
-    background-image: url('../account/background.png');
+    background-image: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ21rZHh5aW9zMTY3c2t6cWtmMnQyNjhnYjRxOGEwdnNmOTduNzh3MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ov9k1173PdfJWRsoE/giphy.gif');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -2511,9 +2633,7 @@ header {
     flex-basis: 25%; /* Base width for each guess section */
     color: #ddd;
 }
-.guess-details.correct-answer-summary {
-    /* slightly different styling if needed */
-}
+
 
 
 .player-label {
