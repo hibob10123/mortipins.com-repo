@@ -51,13 +51,26 @@ body {
     background-color: var(--gray5);
     margin: 0;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: var(--nav-height) 1fr; /* reserve top row for nav */
 }
 
 main {
-    flex: 1;
-    padding-top: var(--nav-height); /* ensure main content starts below fixed nav */
+    /* occupy second row of body grid */
+    display: flex;
+    flex-direction: column;
+    /* Ensure main fills the remaining viewport space so footer can
+       be pushed to the bottom on short pages. When snap is enabled
+       the explicit `height` rule will take precedence and preserve
+       the snap scrolling behavior. */
+    min-height: calc(100vh - var(--nav-height));
+    padding-top: 0; /* nav is now in document flow */
+}
+
+/* Keep the footer pinned to the bottom of the page when content is short.
+   On long pages the footer will naturally follow content. */
+.footer {
+    margin-top: auto;
 }
 
 body::before {
@@ -76,8 +89,8 @@ body::before {
 
 header {
     position: relative;
-    z-index: 1;
-    height: 2rem;
+    z-index: 2;
+    height: auto;
 }
 
 .footer {
@@ -120,10 +133,10 @@ header {
     display: flex;
     align-items: center;
     padding: var(margin-xxs);
-    position: fixed;
+    position: sticky; /* stay visible but participate in layout */
+    top: 0;
     height: var(--nav-height);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    z-index: 9999; /* ensure nav always sits above page content */
 }
 
 .logo{
@@ -354,26 +367,29 @@ html, body, main {
 /* Styles applied only when a page opts-in and runtime allows snap behavior */
 body.snap-page.snap-enabled {
     scroll-behavior: smooth;
-    overflow: hidden; /* let main handle scrolling */
     -webkit-overflow-scrolling: touch;
-    scroll-padding-top: var(--nav-height); /* account for fixed nav */
+    scroll-padding-top: var(--nav-height); /* account for sticky nav */
 }
 
 body.snap-page.snap-enabled main {
     scroll-snap-type: y mandatory;
-    height: calc(100vh - var(--nav-height)); /* fill viewport below nav */
+    height: 100%; /* fill the remaining grid row */
     overflow-y: auto;
 }
 
-.hero, .flex-cards {
+.hero {
     scroll-snap-align: start;
     min-height: calc(100vh - var(--nav-height));
+}
+.flex-cards {
+    scroll-snap-align: start;
+    min-height: auto; /* allow cards to size to content so they don't overlap nav */
 }
 
 /* when using snap-page, ensure flex-cards sit below the fixed nav */
 body.snap-page .flex-cards {
     /* stronger offset to ensure no overlap with fixed nav across viewports */
-    margin-top: calc(var(--nav-height) + clamp(2rem, 8vh, 14rem));
+    margin-top: calc(var(--nav-height) + clamp(2rem, 12vh, 18rem)) !important;
     padding-top: 1.25rem;
     gap: clamp(.6rem, 1.0vw, 1rem); /* slightly tighter grid gap */
 }
@@ -613,7 +629,8 @@ body.snap-page .flex-cards .card {
     background-size: cover;
     width: 90%;
     max-width: 1800px;
-    margin: clamp(2rem, 5vw, 6rem) auto 0;
+    margin: 0 auto; /* top spacing handled per-page (e.g. body.snap-page) */
+    padding-top: 30px;
     padding-bottom: 30px;
     /* remove heavy inset shadows so individual cards control their own shadows */
     box-shadow: none;
@@ -648,7 +665,7 @@ body.snap-page .flex-cards .card {
 /* Subtle image scale on card hover */
 .flex-cards .card img {
     width: 100%;
-    height: 220px; /* uniform image height for visual consistency */
+    height: 300px; /* uniform image height for visual consistency */
     object-fit: cover;
     display: block;
     transition: transform 420ms cubic-bezier(.2,.9,.3,1), filter 320ms ease;
@@ -1170,6 +1187,12 @@ body.snap-page .flex-cards .card {
         text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
     }
 }
+
+/* Debug helpers — toggle by adding `debug-layout` class to the body (for inspection only) */
+body.debug-layout .nav { outline: 3px solid rgba(255,0,0,0.9) !important; }
+body.debug-layout .hero { outline: 3px dashed rgba(0,200,255,0.9) !important; }
+body.debug-layout .flex-cards { outline: 3px solid rgba(255,0,200,0.85) !important; }
+body.debug-layout main { background: rgba(255,255,255,0.02); }
 
 
 
@@ -1714,7 +1737,7 @@ body.snap-page .flex-cards .card {
     font-family: var(--ff);
     position: relative;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: auto; /* let main's flex layout push footer to bottom when possible */
 }
 
 .background-image {
