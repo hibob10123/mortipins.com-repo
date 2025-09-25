@@ -21,15 +21,23 @@
   // Parallax effect for hero background and hero image
   const hero = document.querySelector('.hero');
   const heroImg = document.querySelector('.intro-img');
-  window.addEventListener('mousemove', (e)=>{
-    if(!hero) return;
-    const rect = hero.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+  // Only apply mousemove parallax on devices with a fine pointer (mouse).
+  // This avoids mobile/touch devices receiving large transforms that can
+  // contribute to layout/overflow issues.
+  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('mousemove', (e)=>{
+      if(!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-    // subtle transform
-    if(heroImg) heroImg.style.transform = `translate(${x*6}px, ${y*6}px) scale(1.01)`;
-  });
+      // subtle transform
+      if(heroImg) heroImg.style.transform = `translate(${x*6}px, ${y*6}px) scale(1.01)`;
+    });
+  } else {
+    // Ensure hero image has no transform on touch devices
+    if(heroImg) heroImg.style.transform = 'none';
+  }
 
   // Parallax on scroll for hero background
   window.addEventListener('scroll', ()=>{
