@@ -71,7 +71,7 @@
         </nav>
         <nav class="nav mobile-nav">
             <div>
-                <img style="margin-left:25px;" src="images/mortis5_mastery.png" alt="MortipinS Logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
             </div>
             <div>
                 <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
@@ -90,7 +90,7 @@
         </div>
 
         <!-- New Round Countdown Overlay -->
-        <div id="roundCountdownOverlay" class="matchmaking-screen" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; flex-direction: column;">
+        <div id="roundCountdownOverlay" class="matchmaking-screen full-overlay" style="display:none;">
             <h2>Next round starting in...</h2>
             <h1 id="roundCountdownValue" style="font-size: 4rem; margin-top: 1rem;">5</h1>
         </div>
@@ -148,11 +148,6 @@
             <button id="returnHomeBtn" class="submit-button">Return to Brawldle</button>
         </div>
     </div>
-    <footer class="footer">
-        <div class="footer-content">
-            <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" class="footer-link">Join Discord</a>
-            <p>&copy; MortipinS 2025. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- single footer retained below -->
 </body>
 </html> 

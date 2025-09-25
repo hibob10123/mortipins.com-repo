@@ -47,6 +47,11 @@
     --nav-height: 5rem;
 }
 
+/* Blog-specific heading utilities (used to replace inline styles) */
+.blog-h1 { color: white; font-family: var(--ff); font-size: 2.5rem; }
+.blog-h2 { color: white; font-family: var(--ff); font-size: 1.5rem; }
+.blog-p  { color: white; }
+
 body {
     background-color: var(--gray5);
     margin: 0;
@@ -140,8 +145,10 @@ header {
 }
 
 .logo{
-    position: absolute;
-    left: 30px;
+    /* keep logo in the normal flow so flex alignment can center the nav correctly */
+    position: relative;
+    left: auto;
+    margin-left: var(--margin-m);
 }
 
 .nav .logo {
@@ -197,14 +204,22 @@ header {
 }
 
 @media (min-width: 1145px) {
+    /* Desktop and wide screens: show full-nav, hide mobile nav */
     .mobile-nav {
-        display: none;
+        display: none !important;
+    }
+    .full-nav {
+        display: flex !important;
     }
 }
 
 @media (max-width: 1145px) {
+    /* Small screens: hide full-nav, show mobile nav */
     .full-nav {
-        display: none;
+        display: none !important;
+    }
+    .mobile-nav {
+        display: flex !important;
     }
 
     .mobile-nav {
@@ -388,10 +403,18 @@ body.snap-page.snap-enabled main {
 
 /* when using snap-page, ensure flex-cards sit below the fixed nav */
 body.snap-page .flex-cards {
-    /* stronger offset to ensure no overlap with fixed nav across viewports */
-    margin-top: calc(var(--nav-height) + clamp(2rem, 12vh, 18rem)) !important;
-    padding-top: 1.25rem;
+    /* default small offset so content is not pushed too far on mobile */
+    margin-top: calc(var(--nav-height) + 1rem) !important;
+    padding-top: 1rem;
     gap: clamp(.6rem, 1.0vw, 1rem); /* slightly tighter grid gap */
+}
+
+@media (min-width: 1024px) {
+    /* larger offset only on wide viewports where there's room */
+    body.snap-page .flex-cards {
+        margin-top: calc(var(--nav-height) + clamp(2rem, 12vh, 18rem)) !important;
+        padding-top: 1.25rem;
+    }
 }
 
 /* Slightly smaller cards on the homepage so they feel less tall */
@@ -416,6 +439,16 @@ body.snap-page .flex-cards .card {
 .hero {
     background-attachment: fixed;
     transition: background-position 0.2s linear;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll; /* avoid fixed backgrounds on mobile */
+    }
+    .brawldle-text {
+        margin-top: 2.5rem; /* reduce large top spacing on small screens */
+        font-size: 2.2rem;
+    }
 }
 
 .intro-img {
@@ -719,14 +752,14 @@ body.snap-page .flex-cards .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translate(0, 30%);
+    transform: none;
     justify-content: center;
     padding: 1rem 1rem;
     background: linear-gradient(135deg, var(--gray10), var(--gray5));
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     max-width: 1200px;
-    margin: 4rem auto;
+    margin: 3rem auto;
     animation: fadeIn 1s ease-in-out;
     text-align: center;
 }
@@ -735,14 +768,14 @@ body.snap-page .flex-cards .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translate(0, 20%);
+    transform: none;
     justify-content: center;
     padding: 4rem 1rem;
     background: linear-gradient(135deg, var(--gray10), var(--gray5));
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     max-width: 1200px;
-    margin: -30rem auto;
+    margin: 3rem auto;
     animation: fadeIn 1s ease-in-out;
     text-align: center;
 }
@@ -833,8 +866,42 @@ body.snap-page .flex-cards .card {
     
     body {
         min-height: 100vh;
+        /* Keep the grid layout on small screens so the nav row is reserved
+           and sticky nav participates in layout instead of overlapping content. */
+        display: grid;
+        grid-template-rows: var(--nav-height) 1fr;
+    }
+
+    /* Mobile nav / header adjustments */
+    .nav {
+        padding: 0.25rem 0.5rem;
+    }
+    .nav .logo {
+        position: relative;
+        left: auto;
+        margin-left: 0.5rem;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .nav img {
+        width: 44px;
+        height: 44px;
+    }
+    .account { display: none; }
+
+    /* Make intro cards stack and fill width on small screens */
+    .brawldle-intro, .trophyguess-intro {
+        min-width: auto;
+        max-width: 95%;
+        width: 95%;
+        padding: 18px;
+    }
+
+    /* Reduce snap offset on small screens so content isn't pushed too far down */
+    body.snap-page .flex-cards {
+        margin-top: calc(var(--nav-height) + 1.25rem) !important;
+        padding-top: 0.75rem;
     }
 }
 
@@ -994,16 +1061,39 @@ body.snap-page .flex-cards .card {
     overflow-y: auto;
     display: none; 
     position: fixed; 
-    z-index: 2; /* Sit on top */
+    z-index: 1200; /* Sit on top */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    border-radius: 8px;
 
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
     animation: fadeIn 0.3s ease-out forwards; /* Animation for showing the modal */
+}
+
+@media (max-width: 768px) {
+    .modal {
+        position: absolute; /* allow modal to flow within main on small screens */
+        left: 0;
+        top: 0;
+        transform: none;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        border-radius: 0;
+        background-color: rgba(0,0,0,0.95);
+    }
+    .modal-content {
+        margin: 0.5rem;
+        width: calc(100% - 1rem);
+        max-width: none;
+        padding: 16px;
+        box-sizing: border-box;
+    }
 }
 
 .modal-content {
@@ -1993,21 +2083,25 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 }
 
 .account {
-    position: absolute;
-    right: 30px;
+    /* position account in-flow and let flex/margin handle alignment */
+    position: relative;
+    right: auto;
+    margin-left: auto; /* push account to the far right within the nav */
 }
 
 .nav.full-nav {
-    top: var(--margin-m);
-    left: 50%;
-    transform: translateX(-50%);
+    /* center nav container using auto margins instead of absolute/transform centering */
+    margin: var(--margin-m) auto;
     padding: var(--margin-l) var(--margin-l);
     border-radius: 25px;
     height: auto;
     width: 90%;
     max-width: 1200px;
-    position: fixed;
+    position: sticky; /* participate in layout, don't remove flow */
     border: 2px solid var(--gray15);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* Account link styling */
@@ -2027,21 +2121,22 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 }
 
 .nav.mobile-nav {
-    top: var(--margin-m);
-    left: 50%;
-    transform: translateX(-50%);
+    /* center mobile nav similarly and rely on flex for spacing */
+    margin: var(--margin-m) auto;
     padding: var(--margin-l) 10px;
     border-radius: 25px;
     height: 70px;
     width: 95%;
-    position: fixed;
+    position: sticky; /* keep in flow so grid reserves space */
     justify-content: space-between;
     z-index: 999;
     border: 2px solid var(--gray15);
+    display: flex;
+    align-items: center;
 }
 
 .nav.mobile-nav img {
-    margin-left: 10px;
+    margin-left: 0; /* reset any inline offsets; mobile spacing controlled here */
 }
 
 .nav.mobile-nav .fa-bars {
@@ -2605,6 +2700,30 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     color: #fff;
 }
 
+/* full-screen overlay used by multiplayer countdowns */
+.full-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .full-overlay {
+        position: absolute; /* let it flow inside main on small screens */
+        height: auto;
+        min-height: calc(100vh - var(--nav-height));
+        padding: 2rem 1rem;
+    }
+}
+
 .matchmaking-screen h2 {
     font-family: 'Lilita One', sans-serif;
     font-size: 2rem;
@@ -2766,8 +2885,9 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 
 .minigame-intro-img {
     max-width: 100%;
-    width: 520px;
-    height: 300px;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
     margin-top: 15px;
