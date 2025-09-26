@@ -416,11 +416,10 @@ const videoTrophyLinks = [
     { link: "https://www.youtube.com/embed/awUls0cfWpE", trueTrophy: "30254", guesses: [] },
 ];
 
-const videoDailyNumber = 238;
+// Remove hard-coded daily video index and use a deterministic date-based selector.
+// We'll compute the daily index as (days since epoch UTC) % videoLinks.length
 
-const videoLinksDaily = [
-    videoLinks[videoDailyNumber],
-]
+const videoLinksDaily = videoLinks; // alias - we'll pick by date from the full list
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
 
@@ -457,11 +456,25 @@ function updateTrophyValue() {
 }
 
 function getVideoDaily() {
-    currentVideoIndex = Math.floor(Math.random() * videoLinksDaily.length);
+    // Deterministic selection based on current UTC day
+    const now = new Date();
+    // compute days since epoch in UTC
+    const utcYear = now.getUTCFullYear();
+    const utcMonth = now.getUTCMonth();
+    const utcDate = now.getUTCDate();
+    const utcMidnight = Date.UTC(utcYear, utcMonth, utcDate);
+    const daysSinceEpoch = Math.floor(utcMidnight / (1000 * 60 * 60 * 24));
+    const index = daysSinceEpoch % videoLinksDaily.length;
+    currentVideoIndex = index;
+
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
-    videoFrame.src = videoLinksDaily[currentVideoIndex].link;
-    rankDisplay.textContent = `True Rank: ${videoLinksDaily[currentVideoIndex].trueRank}`;
+    if (videoFrame && videoLinksDaily[currentVideoIndex]) {
+        videoFrame.src = videoLinksDaily[currentVideoIndex].link;
+    }
+    if (rankDisplay && videoLinksDaily[currentVideoIndex]) {
+        rankDisplay.textContent = `True Rank: ${videoLinksDaily[currentVideoIndex].trueRank}`;
+    }
 }
 
 function selectRank(rank) {
@@ -831,7 +844,7 @@ function submitGuessDaily() {
     modal.style.display = "block";
 
     console.log('Submitting guess:', {
-        video_id: videoLinks[videoDailyNumber].link,
+        video_id: videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null,
         guess: selectedRankName
     });
 
@@ -841,7 +854,7 @@ function submitGuessDaily() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            video_id: videoLinks[videoDailyNumber].link,
+            video_id: videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null,
             guess: selectedRankName
         })
     }).then(response => {
@@ -851,7 +864,7 @@ function submitGuessDaily() {
         return response.json();
     }).then(data => {
         console.log('Guess submitted:', data);
-        showGuessDistribution(videoLinks[videoDailyNumber].link);
+        showGuessDistribution(videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null);
 
         const today = new Date().toISOString().split('T')[0];
         localStorage.setItem('lastGuessDate', today);
@@ -996,6 +1009,9 @@ function updateTimer() {
 document.addEventListener("DOMContentLoaded", () => { 
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
+        // start timer for daily page
+        updateTimer();
+        setInterval(updateTimer, 1000);
     }
     if (document.getElementById("brawldle-unlimited")) {
         getRandomVideo();
@@ -1021,6 +1037,37 @@ if (trophyRangeEl) {
 
 //updateTimer();
 //setInterval(updateTimer, 1000);
+
+// Timer: countdown to next UTC midnight and refresh daily video at rollover
+function getNextUtcMidnight() {
+    const now = new Date();
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth();
+    const day = now.getUTCDate();
+    // next midnight is the start of the next day in UTC
+    return new Date(Date.UTC(year, month, day + 1, 0, 0, 0, 0));
+}
+
+function updateTimer() {
+    const timerElement = document.getElementById('timer');
+    if (!timerElement) return;
+
+    const now = new Date();
+    const nextMidnight = getNextUtcMidnight();
+    let diff = nextMidnight - now;
+
+    if (diff <= 0) {
+        // Rollover: refresh daily selection
+        getVideoDaily();
+        diff = nextMidnight - now; // recompute
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    timerElement.textContent = `Next daily in ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')} (UTC)`;
+}
 
 
 // Close the modal when the user clicks anywhere outside of it
