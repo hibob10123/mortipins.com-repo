@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css -->
     <link href="css/style.css" rel="stylesheet" >
+    <link href="css/blog.css" rel="stylesheet" >
     <!-- js -->
     <script src="js/script.js" defer></script>
 </head>
@@ -87,19 +88,56 @@
     </header>
     <main>
         <div class="blog">
-            <h1 class="blog-h1">All Blog Posts</h1>
-            <div class="blog-item">
-            </div>
-            <div class="blog-item">
-                <h2 class="blog-h2">Brawliversary and Brawlidays Events! (By Supercell)</h2>
-                <p class="blog-p">Brawliversary and Brawlidays Events!
-                    Happy Birthday to all of us! It's Brawl Stars' 6th birthday since our global launch! So as always, we'll celebrate from today, until the Brawlidays! Which means… PRESENTS! Here's what you should know about it!</p>
-                <a href="brawlidays-2024.html" class="blog-link">
-                    <span class="link-content">
-                        <span>Read more</span>
-                    </span>
-                </a>
-            </div>
+            <section class="blog-hero">
+                <div class="hero-inner">
+                    <h1 class="hero-title">Morti-Site Blog</h1>
+                    <p class="hero-sub">News, updates, and guides for Brawldle, TrophyGuess, and MortipinS projects.</p>
+                    <div class="hero-actions">
+                        <input type="search" class="blog-search" placeholder="Search posts..." aria-label="Search posts">
+                    </div>
+                </div>
+            </section>
+
+            <section class="posts">
+                <div class="posts-grid">
+                    <article class="post-card">
+                        <img src="images/brawldle-icon.jpg" alt="Brawldle event image" class="post-image">
+                        <div class="post-body">
+                            <h2 class="post-title">Brawliversary and Brawlidays Events! (By Supercell)</h2>
+                            <p class="post-excerpt">Happy Birthday to all of us! It's Brawl Stars' 6th birthday since our global launch! So as always, we'll celebrate from today, until the Brawlidays! Which means… PRESENTS! Here's what you should know about it!</p>
+                            <a href="brawlidays-2024.html" class="post-cta">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <img src="images/Intro-image.png" alt="Trophy tips" class="post-image">
+                        <div class="post-body">
+                            <h2 class="post-title">Top 10 Trophy Climbing Tips</h2>
+                            <p class="post-excerpt">A quick guide to help you climb the ladder faster — from team comps to optimal play windows. Improve your runs with simple habits.</p>
+                            <a href="#" class="post-cta">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <img src="images/play_brawdle.png" alt="Brawldle strategies" class="post-image">
+                        <div class="post-body">
+                            <h2 class="post-title">Brawldle: Strategy & How to Guess Ranks</h2>
+                            <p class="post-excerpt">Learn how to recognize player patterns and clues to guess ranks more accurately in Brawldle. Helpful for both beginners and pros.</p>
+                            <a href="#" class="post-cta">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <img src="images/stats.jpg" alt="Site updates" class="post-image">
+                        <div class="post-body">
+                            <h2 class="post-title">Site Update: Leaderboards & New Stats</h2>
+                            <p class="post-excerpt">We've rolled out a major update to the stats page and leaderboards. Here's what's changed and how to use the new filters.</p>
+                            <a href="#" class="post-cta">Read more →</a>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
         </div>
         <footer class="footer">
             <div class="footer-content">

@@ -578,6 +578,45 @@ body.snap-page .flex-cards .card {
     color: #fff;
 }
 
+/* Make submit-clip-button match hero buttons when placed next to them */
+.intro-button-container .submit-clip-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--ff);
+    font-size: 1.2rem;
+    color: white;
+    background-color: transparent;
+    border: 2px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease, color 0.3s ease;
+    margin: 0;
+}
+.intro-button-container .submit-clip-button:hover{
+    background-color: white;
+    color: black;
+    transform: scale(1.03);
+}
+
+/* When used in the Brawldle hero, match the yellow action buttons */
+.brawldle-intro .submit-clip-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    color: #000000;
+    background-color: #fcff4a;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0.5rem 0 0 0.5rem;
+}
+.brawldle-intro .submit-clip-button:hover{
+    background-color: #cec045;
+    transform: scale(1.05);
+}
+
 /* From Uiverse.io by vinodjangid07 */ 
 .Btn {
     width: 45px;
@@ -818,7 +857,7 @@ body.snap-page .flex-cards .card {
 /* Subtle image scale on card hover */
 .flex-cards .card img {
     width: 100%;
-    height: 300px; /* uniform image height for visual consistency */
+    height: 450px; /* uniform image height for visual consistency */
     object-fit: cover;
     display: block;
     transition: transform 420ms cubic-bezier(.2,.9,.3,1), filter 320ms ease;
