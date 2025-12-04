@@ -414,8 +414,8 @@ const videoTrophyLinks = [
     { link: "https://www.youtube.com/embed/fOzL2M-Rs1M", trueTrophy: "43000", guesses: [] },
     { link: "https://www.youtube.com/embed/ZKkrBi6fbDw", trueTrophy: "17243", guesses: [] },
     { link: "https://www.youtube.com/embed/lslQSk5M2cI", trueTrophy: "75600", guesses: [] },
-    { link: "https://www.youtube.com/embed/awUls0cfWpE", trueTrophy: "30254", guesses: [] }
-    { link: "https://www.youtube.com/embed/mQbs_2fvNMo", trueTrophy: "65915", guesses: [] },
+    { link: "https://www.youtube.com/embed/awUls0cfWpE", trueTrophy: "30254", guesses: [] },
+    { link: "https://www.youtube.com/embed/mQbs_2fvNMo", trueTrophy: "65915", guesses: [] }
 ];
 
 // Remove hard-coded daily video index and use a deterministic date-based selector.
