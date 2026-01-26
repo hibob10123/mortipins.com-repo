@@ -1022,7 +1022,8 @@ document.addEventListener("DOMContentLoaded", () => {
         getRandomTrophyVideo();
     }
     if (document.getElementById("leaderboard-content")) {
-        fetchLeaderboard();
+        fetchLeaderboard('alltime');
+        fetchLeaderboard('daily');
     }
 });
 // Only update the submit button on daily page
@@ -1096,11 +1097,18 @@ function logout() {
     alert('Logged out successfully!');
 }
 
-async function fetchLeaderboard() {
-    const content = document.getElementById('leaderboard-content');
+async function fetchLeaderboard(type = 'alltime') {
+    const contentId = type === 'alltime' ? 'leaderboard-content' : 'leaderboard-content-daily';
+    const content = document.getElementById(contentId);
+    
+    if (!content) return;
     
     try {
-        const response = await fetch('https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard', {
+        const endpoint = type === 'alltime'
+            ? 'https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard'
+            : 'https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard/daily';
+        
+        const response = await fetch(endpoint, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -1110,14 +1118,14 @@ async function fetchLeaderboard() {
             credentials: 'same-origin'
         });
         
-        console.log('Response status:', response.status);
+        console.log(`Response status (${type}):`, response.status);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('Leaderboard data:', data);
+        console.log(`Leaderboard data (${type}):`, data);
 
         if (data.success) {
             const table = createLeaderboardTable(data.data);
@@ -1127,7 +1135,7 @@ async function fetchLeaderboard() {
             content.innerHTML = `<div class="error">${data.error || 'Failed to fetch leaderboard data'}</div>`;
         }
     } catch (error) {
-        console.error('Leaderboard error:', error);
+        console.error(`Leaderboard error (${type}):`, error);
         content.innerHTML = `<div class="error">Failed to connect to the leaderboard server: ${error.message}</div>`;
     }
 }
@@ -1159,4 +1167,24 @@ function createLeaderboardTable(data) {
     table.appendChild(tbody);
 
     return table;
+}
+
+function switchLeaderboard(type) {
+    // Hide all leaderboard content
+    document.getElementById('alltime-leaderboard').classList.remove('active');
+    document.getElementById('daily-leaderboard').classList.remove('active');
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected leaderboard
+    if (type === 'alltime') {
+        document.getElementById('alltime-leaderboard').classList.add('active');
+        document.querySelectorAll('.tab-button')[0].classList.add('active');
+    } else {
+        document.getElementById('daily-leaderboard').classList.add('active');
+        document.querySelectorAll('.tab-button')[1].classList.add('active');
+    }
 }
