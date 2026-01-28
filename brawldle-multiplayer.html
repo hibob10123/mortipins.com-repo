@@ -30,19 +30,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css -->
     <link href="css/style.css" rel="stylesheet">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
+         crossorigin="anonymous"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Socket.IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1838097737199304"
-         crossorigin="anonymous"></script>
     <!-- core script for videoLinks and overlay -->
     <script src="js/script.js" defer></script>
     <!-- multiplayer script -->
     <script src="js/multiplayer.js" defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
-         crossorigin="anonymous"></script>
 </head>
 <body id="brawldle-multiplayer">
     <!-- overlay for mobile-->
@@ -108,7 +106,7 @@
                 <div id="timer">Waiting for match...</div>
                 <p id="statusMessage" class="status-message"></p>
                 <div class="brawldle-video">
-                    <iframe id="videoFrame" src="" allowfullscreen></iframe>
+                    <iframe id="videoFrame" title="Brawldle Multiplayer clip" src="" allowfullscreen></iframe>
                     <div class="rank-buttons">
                         <img src="images/icon_ranked_bronze.png" alt="Bronze Rank" onclick="selectRank('Bronze')">
                         <img src="images/icon_ranked_silver.png" alt="Silver Rank" onclick="selectRank('Silver')">
@@ -122,10 +120,38 @@
                 <a href="#" id="submitButton" class="submit-button" onclick="submitGuess()">Submit Guess</a>
             </section>
         </div>
+
+        <div class="legal-page" style="margin-top: 2rem;">
+            <h2>Brawldle Multiplayer (Beta)</h2>
+            <p>
+                Experience Brawldle in real-time with other players! Our multiplayer mode pits you against an opponent
+                where you both watch the same clips and compete to guess the ranks faster and more accurately.
+            </p>
+            <h3>How Multiplayer works</h3>
+            <ul>
+                <li><strong>Matchmaking:</strong> Join the queue and we'll find an opponent for you.</li>
+                <li><strong>Rounds:</strong> You'll go through a series of clips together.</li>
+                <li><strong>Scoring:</strong> Points are awarded based on how close your guess is to the actual rank.</li>
+            </ul>
+            <p>
+                As this is currently in Beta, we are constantly working to improve the experience. If you encounter
+                any issues or have suggestions, please join our Discord and let us know!
+            </p>
+        </div>
+
         <footer class="footer">
             <div class="footer-content">
-                <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" class="footer-link">Join Discord</a>
-                <p>&copy; MortipinS 2025. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                    <a href="terms.html" class="footer-link">Terms</a>
+                    <a href="community-guidelines.html" class="footer-link">Guidelines</a>
+                </div>
+                <div class="footer-meta">
+                    <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" rel="noopener" class="footer-link">Join Discord</a>
+                    <p>&copy; MortipinS 2026. All rights reserved.</p>
+                </div>
             </div>
         </footer>
     </main>

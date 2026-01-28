@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Utility / account pages (avoid thin-content indexing)
+Disallow: /account/
+Disallow: /submit.html
+Disallow: /thankyou.html
+Disallow: /comingsoon.html
+
+Sitemap: https://mortipins.com/sitemap.xml

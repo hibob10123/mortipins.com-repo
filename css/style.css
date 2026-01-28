@@ -1,5 +1,4 @@
 * {
-    font-family: "Lilita One", sans-serif;
     box-sizing: border-box;
 }
 
@@ -10,6 +9,10 @@
 }
 
 :root {
+
+    /* Font stacks */
+    --ff-heading: "Lilita One", sans-serif;
+    --ff-body: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
     /* Colors */
     --gray5: hsl(0, 0%, 5%);
@@ -23,13 +26,13 @@
     --colora2: #537fe7;
 
     /* landing page */
-    --ff: "Lilita One", sans-serif;
+    --ff: var(--ff-heading);
     --h1: bold max(4rem)/1em var(--ff); 
     --h2: bold 3rem/1.2em var(--ff);
     --h3: bold 2.25rem/1.2em var(--ff);
     --h4: 1.5rem/1.6em var(--ff);
     --big: 1.25rem/1.6em var(--ff);
-    --p: 1rem/1.6em var(--ff);
+    --p: 1rem/1.6em var(--ff-body);
     --small: 0.75rem/1.6em var(--ff);
 
     --transition: 0.3s ease-in-out;
@@ -67,6 +70,7 @@ body {
     display: grid;
     grid-template-rows: var(--nav-height) 1fr; /* reserve top row for nav */
     max-width: 100%; /* ensure body never exceeds the viewport width */
+    font-family: var(--ff-body);
 }
 
 main {
@@ -125,6 +129,29 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--margin-l);
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+}
+
+.footer-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+
+@media (max-width: 600px) {
+    .footer-meta {
+        align-items: flex-start;
+        width: 100%;
+    }
 }
 
 .footer-link {
@@ -136,6 +163,34 @@ header {
 
 .footer-link:hover {
     color: white;
+}
+
+/* Accessibility */
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-120%);
+    background: var(--gray10);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray30);
+    border-radius: 10px;
+    z-index: 2000;
+    transition: transform 200ms ease;
+    text-decoration: none;
+}
+.skip-link:focus {
+    transform: translateY(12px);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--colora);
+    outline-offset: 3px;
 }
 
 .nav {
@@ -1455,6 +1510,54 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 /*-------------------*/
 /*-------------------*/
 /*-------------------*/
+.legal-page {
+    width: 95%;
+    max-width: 900px;
+    margin: 6rem auto 3rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--gray10), var(--gray5));
+    border: 1px solid var(--gray15);
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    color: var(--gray90);
+}
+
+.legal-title {
+    font: var(--h2);
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    text-align: left;
+}
+
+.legal-lead {
+    font: var(--p);
+    color: var(--gray70);
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+}
+
+.legal-page h2 {
+    font: var(--h4);
+    color: #fff;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.legal-page p,
+.legal-page li {
+    font: var(--p);
+    color: var(--gray90);
+}
+
+.legal-page a {
+    color: var(--colora2);
+}
+
+.legal-page a:hover {
+    color: var(--colora);
+}
+
 .submit-clip {
     display: flex;
     flex-direction: column;
@@ -2123,11 +2226,18 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 
 .leaderboard-header h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.75rem;
     font-family: 'Lilita One', sans-serif;
     letter-spacing: 1px;
     color: white;
     padding-bottom: 10px;
+}
+
+.leaderboard-note {
+    font-family: var(--ff-body);
+    font-size: 1rem;
+    color: var(--gray70);
+    margin: 1rem 0 0 0;
 }
 
 .leaderboard-table {
@@ -2195,7 +2305,7 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     }
 
     .leaderboard-header h1 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 }
 

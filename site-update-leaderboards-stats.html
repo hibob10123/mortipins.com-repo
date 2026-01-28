@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MortipinS">
+    <meta name="description" content="Morti-Site update: leaderboards and new stats features — what changed and how to use them.">
+    <meta name="author" content="MortipinS">
+    <title>Site Update: Leaderboards & New Stats - Morti-Site</title>
+
+    <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
+    <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- css -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
+         crossorigin="anonymous"></script>
+
+    <!-- js -->
+    <script src="js/script.js" defer></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H31KKY28NR');
+</script>
+
+<body>
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="sidebar">
+            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
+            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
+            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
+            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
+            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+        </div>
+    </div>
+
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
+                <span class="logo-text">Brawldle</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brawldle.html">Minigames</a>
+                <a href="stats.html">Stats</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="account">
+                <a href="account/signin.html">Account</a>
+            </div>
+        </nav>
+
+        <nav class="nav mobile-nav">
+            <div>
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="blog">
+            <section class="blog-hero">
+                <div class="hero-inner">
+                    <h1 class="hero-title">Site Update: Leaderboards & New Stats</h1>
+                    <p class="hero-sub">A quick overview of what’s new and how to use the improved Stats experience.</p>
+                </div>
+            </section>
+
+            <section class="posts">
+                <div class="posts-grid" style="grid-template-columns: 1fr; max-width: 900px;">
+                    <article class="post-card">
+                        <img src="images/stats.jpg" alt="Stats update" class="post-image" style="height: 260px;">
+                        <div class="post-body">
+                            <p class="post-excerpt" style="font-size: 1rem;">
+                                We’ve been improving the site’s stats and competitive features so it’s easier to find useful info quickly —
+                                and so leaderboards feel cleaner and more reliable.
+                            </p>
+
+                            <h2 class="post-title">What changed</h2>
+                            <ul class="post-excerpt" style="margin-top: 0;">
+                                <li><strong>Stats sections</strong> are organized into collapsible panels so you can focus on what you need.</li>
+                                <li><strong>Player + Club lookup</strong> are designed to be fast and readable.</li>
+                                <li><strong>Events + Brawlers</strong> sections load dynamic information and keep the page content-rich.</li>
+                            </ul>
+
+                            <h2 class="post-title">How to use the Stats page</h2>
+                            <p class="post-excerpt">
+                                Visit the <a href="stats.html" class="post-cta">Stats</a> page and expand the section you want:
+                                Player Stats, Club Stats, Active Events, Upcoming Events, Brawlers, or the Global Leaderboard panel.
+                            </p>
+                            <p class="post-excerpt">
+                                Tip: If you’re on mobile, expanding only one section at a time keeps scrolling smooth and makes the page easier
+                                to navigate.
+                            </p>
+
+                            <h2 class="post-title">Leaderboards</h2>
+                            <p class="post-excerpt">
+                                Leaderboards are evolving. As we refine score integrity and anti-abuse protections, we’ll keep updating the
+                                display and the rules so it’s fair and fun.
+                            </p>
+
+                            <h2 class="post-title">What’s next</h2>
+                            <ul class="post-excerpt" style="margin-top: 0;">
+                                <li>More blog posts (guides, patch notes summaries, and community highlights)</li>
+                                <li>Better clip discovery + a simple rating flow</li>
+                                <li>UI polish for cleaner, consistent design across pages</li>
+                            </ul>
+
+                            <p class="post-excerpt" style="margin-top: 12px; color: var(--muted);">
+                                Published: January 28, 2026
+                            </p>
+                            <p class="post-excerpt" style="margin-top: 0;">
+                                Back to <a href="blog.html" class="post-cta">Blog</a>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                    <a href="terms.html" class="footer-link">Terms</a>
+                    <a href="community-guidelines.html" class="footer-link">Guidelines</a>
+                </div>
+                <div class="footer-meta">
+                    <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" rel="noopener" class="footer-link">Join Discord</a>
+                    <p>&copy; MortipinS 2026. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
