@@ -48,7 +48,7 @@
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body>
+<body class="snap-page">
     <a class="skip-link" href="#main">Skip to content</a>
     <!-- overlay for mobile-->
     <div id="overlay">
@@ -99,11 +99,11 @@
                     <div class="intro-text">
                         <h1>Play Brawldle</h1>
                         <p>Test your skills and guess the rank of Brawl Stars players based on their clips.<br> Are you up for the challenge?</p>
-                        <a href="brawldle-daily.html" class="brawldle-button">Daily Game</a>
+                        <a href="brawldle-daily.html" class="brawldle-button2">Daily Game</a>
                         <a href="brawldle-unlimited.html" class="brawldle-button2">Play Unlimited</a>
                         <a href="brawldle-multiplayer.html" class="brawldle-button2">Multiplayer (Beta)</a>
                         <a href="leaderboard.html" class="brawldle-button2">Leaderboard</a>
-                        <a href="https://forms.gle/BN5McResZmoGCF3C6" class="submit-clip-button" target="_blank" rel="noopener">Submit a clip</a>
+                        <a href="https://forms.gle/BN5McResZmoGCF3C6" class="brawldle-button" target="_blank" rel="noopener">Submit a clip</a>
                     </div>
                     <img class="minigame-intro-img" src="images/brawldle-icon.jpg" alt="Brawldle Game">
                 </div>
@@ -112,6 +112,8 @@
                         <h1>Play TrophyGuess</h1>
                         <p>Guess the trophy range of the player in the video. <br>How well do you know Brawl Stars progression?</p>
                         <a href="trophies-unlimited.html" class="trophyGuess-button">Play TrophyGuess</a>
+                        <a href="https://forms.gle/BN5McResZmoGCF3C6" class="brawldle-button" target="_blank" rel="noopener">Submit a clip</a>
+
                     </div>
                     <img class="minigame-intro-img" src="images/trophyguess-icon.png" alt="TrophyGuess Game">
                 </div>
@@ -168,7 +170,8 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h1>Results</h1>
-            <div id="modalText">
+            <div id="modalText"></div>
+            <button onclick="closeModal()" class="submit-button" aria-label="Close modal">Close</button>
         </div>
     </div>
     </div>

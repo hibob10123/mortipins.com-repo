@@ -599,13 +599,6 @@ function submitGuess() {
     }
     const token = localStorage.getItem('token');
 
-    /*
-    if (!token) {
-        alert('Please log in to earn points!');
-        return;
-    }
-    */
-
     const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
 

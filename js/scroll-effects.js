@@ -57,8 +57,8 @@
     });
   }
 
-  // Snap-on-wheel / touch support between main sections (.hero and .flex-cards)
-  const sections = Array.from(document.querySelectorAll('.hero, .flex-cards'));
+  // Snap-on-wheel / touch support between main sections (.hero, .flex-cards, and .brawldle-section)
+  const sections = Array.from(document.querySelectorAll('.hero, .flex-cards, .brawldle-section'));
   let isScrolling = false;
 
   // Runtime snap enabling: only enable on devices with fine pointer, sufficient viewport,
