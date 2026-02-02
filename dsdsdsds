@@ -1,0 +1,90 @@
+warning: in the working copy of 'workers/dashboard/wrangler.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'workers/dashboard_update_points.js', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/workers/dashboard/wrangler.toml b/workers/dashboard/wrangler.toml[m
+[1mindex 2ac340b..2b8b02e 100644[m
+[1m--- a/workers/dashboard/wrangler.toml[m
+[1m+++ b/workers/dashboard/wrangler.toml[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-name = "dashboard_update_points"[m
+[32m+[m[32mname = "mortipins-dashboard"[m
+ main = "../dashboard_update_points.js"[m
+ compatibility_date = "2026-02-02"[m
+ [m
+[1mdiff --git a/workers/dashboard_update_points.js b/workers/dashboard_update_points.js[m
+[1mindex e2bba5d..c1b925e 100644[m
+[1m--- a/workers/dashboard_update_points.js[m
+[1m+++ b/workers/dashboard_update_points.js[m
+[36m@@ -15,6 +15,15 @@[m [mfunction weekIdForDate(d = new Date()) {[m
+   return monday.toISOString().slice(0,10);[m
+ }[m
+ [m
+[32m+[m[32m// Helper: add CORS headers[m
+[32m+[m[32mfunction corsHeaders() {[m
+[32m+[m[32m  return {[m
+[32m+[m[32m    'Access-Control-Allow-Origin': '*',[m
+[32m+[m[32m    'Access-Control-Allow-Methods': 'POST, OPTIONS',[m
+[32m+[m[32m    'Access-Control-Allow-Headers': 'Content-Type, Authorization',[m
+[32m+[m[32m  };[m
+[32m+[m[32m}[m
+[32m+[m
+ // Session-based token verification using the `sessions` table.[m
+ // Returns `{ username }` on success or `null` on failure.[m
+ async function verifyToken(env, token) {[m
+[36m@@ -31,12 +40,17 @@[m [masync function verifyToken(env, token) {[m
+ }[m
+ [m
+ export async function handleUpdatePoints(request, env) {[m
+[32m+[m[32m  // Handle CORS preflight[m
+[32m+[m[32m  if (request.method === 'OPTIONS') {[m
+[32m+[m[32m    return new Response(null, { headers: corsHeaders() });[m
+[32m+[m[32m  }[m
+[32m+[m
+   const auth = request.headers.get('Authorization') || '';[m
+   const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;[m
+[31m-  if (!token) return new Response('Unauthorized', { status: 401 });[m
+[32m+[m[32m  if (!token) return new Response('Unauthorized', { status: 401, headers: corsHeaders() });[m
+ [m
+   const user = await verifyToken(env, token);[m
+[31m-  if (!user) return new Response('Unauthorized', { status: 401 });[m
+[32m+[m[32m  if (!user) return new Response('Unauthorized', { status: 401, headers: corsHeaders() });[m
+   const username = user.username;[m
+ [m
+   const body = await request.json();[m
+[36m@@ -72,21 +86,32 @@[m [mexport async function handleUpdatePoints(request, env) {[m
+ [m
+     // Return updated points[m
+     const updated = await env.DB.prepare('SELECT points FROM users WHERE username = ?').bind(username).first();[m
+[31m-    return new Response(JSON.stringify({ points: updated ? updated.points : null }), { status: 200, headers: { 'Content-Type': 'application/json' } });[m
+[32m+[m[32m    return new Response(JSON.stringify({ points: updated ? updated.points : null, message: 'Points updated successfully' }), {[m[41m [m
+[32m+[m[32m      status: 200,[m[41m [m
+[32m+[m[32m      headers: {[m[41m [m
+[32m+[m[32m        'Content-Type': 'application/json',[m
+[32m+[m[32m        ...corsHeaders()[m
+[32m+[m[32m      }[m[41m [m
+[32m+[m[32m    });[m
+   } catch (err) {[m
+     await env.DB.exec('ROLLBACK');[m
+     console.error('update-points error', err);[m
+[31m-    return new Response('Internal Server Error', { status: 500 });[m
+[32m+[m[32m    return new Response('Internal Server Error', { status: 500, headers: corsHeaders() });[m
+   }[m
+ }[m
+ [m
+ // ES module worker entry: export default fetch handler[m
+ export default {[m
+   async fetch(request, env) {[m
+[32m+[m[32m    // Handle CORS preflight for all routes[m
+[32m+[m[32m    if (request.method === 'OPTIONS') {[m
+[32m+[m[32m      return new Response(null, { headers: corsHeaders() });[m
+[32m+[m[32m    }[m
+[32m+[m
+     const url = new URL(request.url);[m
+[31m-    if (request.method === 'POST' && url.pathname === '/update-points') {[m
+[32m+[m[32m    if ((request.method === 'POST' || request.method === 'OPTIONS') && url.pathname === '/update-points') {[m
+       return handleUpdatePoints(request, env);[m
+     }[m
+[31m-    return new Response('Not Found', { status: 404 });[m
+[32m+[m[32m    return new Response('Not Found', { status: 404, headers: corsHeaders() });[m
+   }[m
+ };[m
+\ No newline at end of file[m
