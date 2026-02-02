@@ -440,7 +440,9 @@ function getRandomVideo() {
     const rankDisplay = document.getElementById("rankDisplay");
     videoFrame.src = videoLinks[currentVideoIndex].link;
     // console.log('Current video:', videoLinks[currentVideoIndex]);
-    rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
+    if (rankDisplay) {
+        rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
+    }
 }
 
 function getRandomTrophyVideo() {
@@ -687,7 +689,8 @@ function submitGuess() {
                 correctRank: trueRank,
                 guessedRank: guessedRank,
                 isCorrect: isCorrect,
-                winStreak: streak
+                winStreak: streak,
+                delta: points
             })
         })
     ]).then(async ([guessResponse, pointsResponse]) => {
