@@ -1,4 +1,4 @@
-name = "dashboard_update_points"
+name = "mortipins-dashboard"
 main = "../dashboard_update_points.js"
 compatibility_date = "2026-02-02"
 
