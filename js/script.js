@@ -1234,7 +1234,7 @@ async function fetchLeaderboard(type = 'alltime') {
     
     try {
         const endpoint = type === 'alltime'
-            ? 'https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard'
+            ? 'https://leaderboard_fetch.imenkei64.workers.dev/leaderboard/alltime'
             : 'https://leaderboard_fetch.imenkei64.workers.dev/leaderboard/weekly';
         
         const response = await fetch(endpoint, {
