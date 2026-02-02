@@ -82,7 +82,7 @@ main {
        the explicit `height` rule will take precedence and preserve
        the snap scrolling behavior. */
     min-height: calc(100vh - var(--nav-height));
-    padding-top: 0; /* nav is now in document flow */
+    padding-top: 0.5rem; /* Small padding for banner visibility */
 }
 
 /* Keep the footer pinned to the bottom of the page when content is short.
@@ -375,6 +375,58 @@ select:focus-visible {
     font-size: 1.5rem;
     padding: .5rem 2rem;
     transition: all 200ms ease-in-out;
+}
+
+/* Update Banner */
+.update-banner {
+    background: #2a2d35;
+    background: linear-gradient(135deg, #2a2d35 0%, #2e3241 100%);
+    border-left: 3px solid #537fe7;
+    padding: 0.75rem 1.5rem;
+    margin: 0.5rem auto 1rem;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    scroll-snap-align: start; /* Make banner the first snap target */
+    scroll-margin-top: var(--nav-height); /* Snap below nav */
+}
+
+.update-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--ff-body);
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+}
+
+.update-content i {
+    font-size: 1rem;
+    color: #537fe7;
+}
+
+.update-content a {
+    font-weight: 600;
+    color: #6b9eff;
+}
+
+.update-content a:hover {
+    color: #8bb4ff;
+}
+
+@media (max-width: 768px) {
+    .update-banner {
+        margin: 0.75rem 1rem;
+        padding: 0.65rem 1rem;
+    }
+    
+    .update-content {
+        font-size: 0.875rem;
+    }
 }
 
 /* hero */
@@ -1266,11 +1318,34 @@ body.snap-page .flex-cards .card {
     border-radius: 10px;
 }
 
+/* Reduce top margin on desktop so video is visible immediately */
+@media (min-width: 769px) {
+    .brawldle-video iframe {
+        margin-top: 0.5rem;
+    }
+}
+
 #streak {
     font-family: var(--ff);
     font-size: 1.5rem;
     color: var(--gray70);
     margin-top: 1rem;
+}
+
+/* Fade-in animations for brawldle video and ranks */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#videoFrame.fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 .rank-buttons {
@@ -1281,6 +1356,10 @@ body.snap-page .flex-cards .card {
     flex-wrap: wrap;
     gap: 1rem;
     max-width: 90%;
+}
+
+.rank-buttons img.fade-in {
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 .rank-buttons img {
@@ -2230,10 +2309,6 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     font-family: 'Lilita One', sans-serif;
 }
 
-.points {
-    font-family: 'Lilita One', sans-serif;
-}
-
 .error-message {
     color: #ff4a3d;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -2299,6 +2374,16 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     padding-bottom: 10px;
 }
 
+.leaderboard-description {
+    font-family: var(--ff-body);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    margin: 1rem auto 0;
+    line-height: 1.6;
+    text-align: center;
+}
+
 .leaderboard-note {
     font-family: var(--ff-body);
     font-size: 1rem;
@@ -2338,6 +2423,12 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 
 .points {
     color: #ffd700;
+    font-family: 'Lilita One', sans-serif;
+}
+
+.correct {
+    color: #ffd700;
+    font-family: 'Lilita One', sans-serif;
 }
 
 .loading {
@@ -2406,6 +2497,15 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     background-color: #537fe7;
     color: #fff;
     border-color: #537fe7;
+}
+
+.leaderboard-panel {
+    display: none;
+}
+
+.leaderboard-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .leaderboard-tab-content {

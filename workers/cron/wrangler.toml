@@ -1,0 +1,24 @@
+name = "cron_publish_weekly"
+main = "../cron_publish_weekly.js"
+compatibility_date = "2026-02-02"
+
+# Bind your D1 database here
+[[d1_databases]]
+binding = "DB"
+database_name = "mortipins"
+database_id = "9f64aa01-a10f-4409-bccb-a38a97946f4d"
+
+# Bind your KV namespace here (for cached weekly top-10)
+[[kv_namespaces]]
+binding = "LEADERBOARD_KV"
+# replace with the KV namespace ID you got from `wrangler kv namespace list`
+id = "3da377bde72646f283be382f1a461227"
+
+[triggers]
+# Cron schedule for weekly publish (Mon 05:00 UTC). Adjust as needed.
+crons = ["0 5 * * MON"]
+
+# Optional: secrets
+# Use `wrangler secret put JWT_SECRET` to add secrets referenced in your worker code
+# [env.production]
+#  "JWT_SECRET" = "..."

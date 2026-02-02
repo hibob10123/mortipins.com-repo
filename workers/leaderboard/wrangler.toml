@@ -1,0 +1,14 @@
+name = "leaderboard_fetch"
+main = "../leaderboard_fetch.js"
+compatibility_date = "2026-02-02"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mortipins"
+database_id = "9f64aa01-a10f-4409-bccb-a38a97946f4d"
+
+[[kv_namespaces]]
+binding = "LEADERBOARD_KV"
+id = "3da377bde72646f283be382f1a461227"
+
+# Optional: configure env-specific settings or secrets as needed

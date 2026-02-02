@@ -1001,22 +1001,52 @@ function updateTimer() {
   }
 */
 
+// Animate video and rank buttons sequentially
+function animateBrawldleElements() {
+    const videoFrame = document.getElementById('videoFrame');
+    const rankButtons = document.querySelectorAll('.rank-buttons img');
+    
+    // Start elements invisible
+    if (videoFrame) {
+        videoFrame.style.opacity = '0';
+    }
+    rankButtons.forEach(button => {
+        button.style.opacity = '0';
+    });
+    
+    // Animate video first
+    if (videoFrame) {
+        setTimeout(() => {
+            videoFrame.classList.add('fade-in');
+        }, 100);
+    }
+    
+    // Animate rank buttons one by one
+    rankButtons.forEach((button, index) => {
+        setTimeout(() => {
+            button.classList.add('fade-in');
+        }, 700 + (index * 100)); // Start after video, 100ms between each
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => { 
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
+        setTimeout(() => animateBrawldleElements(), 100);
         // start timer for daily page
         updateTimer();
         setInterval(updateTimer, 1000);
     }
     if (document.getElementById("brawldle-unlimited")) {
         getRandomVideo();
+        setTimeout(() => animateBrawldleElements(), 200);
     }
     if (document.getElementById("trophies-unlimited")) {
         getRandomTrophyVideo();
     }
     if (document.getElementById("leaderboard-content")) {
         fetchLeaderboard('alltime');
-        fetchLeaderboard('daily');
+        fetchLeaderboard('weekly');
     }
 });
 // Only update the submit button on daily page
@@ -1091,7 +1121,7 @@ function logout() {
 }
 
 async function fetchLeaderboard(type = 'alltime') {
-    const contentId = type === 'alltime' ? 'leaderboard-content' : 'leaderboard-content-daily';
+    const contentId = type === 'alltime' ? 'leaderboard-content' : 'leaderboard-content-weekly';
     const content = document.getElementById(contentId);
     
     if (!content) return;
@@ -1099,7 +1129,7 @@ async function fetchLeaderboard(type = 'alltime') {
     try {
         const endpoint = type === 'alltime'
             ? 'https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard'
-            : 'https://mortipins-leaderboard.imenkei64.workers.dev/leaderboard/daily';
+            : 'https://leaderboard_fetch.imenkei64.workers.dev/leaderboard/weekly';
         
         const response = await fetch(endpoint, {
             method: 'GET',
@@ -1120,8 +1150,11 @@ async function fetchLeaderboard(type = 'alltime') {
         const data = await response.json();
         console.log(`Leaderboard data (${type}):`, data);
 
-        if (data.success) {
-            const table = createLeaderboardTable(data.data);
+        // For our leaderboard workers we return raw array for weekly/daily/alltime
+        const payload = Array.isArray(data) ? data : (data.data || []);
+
+        if (payload && payload.length >= 0) {
+            const table = createLeaderboardTable(payload, type);
             content.innerHTML = '';
             content.appendChild(table);
         } else {
@@ -1133,28 +1166,49 @@ async function fetchLeaderboard(type = 'alltime') {
     }
 }
 
-function createLeaderboardTable(data) {
+function createLeaderboardTable(data, type = 'alltime') {
     const table = document.createElement('table');
     table.className = 'leaderboard-table';
 
     const thead = document.createElement('thead');
-    thead.innerHTML = `
-        <tr>
-            <th class="rank">Rank</th>
-            <th class="username">Username</th>
-            <th class="points">Points</th>
-        </tr>
-    `;
+    if (type === 'weekly') {
+        // Weekly: only show correct guesses
+        thead.innerHTML = `
+            <tr>
+                <th class="rank">Rank</th>
+                <th class="username">Username</th>
+                <th class="correct">Correct Guesses</th>
+            </tr>
+        `;
+    } else {
+        // All-time: show points
+        thead.innerHTML = `
+            <tr>
+                <th class="rank">Rank</th>
+                <th class="username">Username</th>
+                <th class="points">Points</th>
+            </tr>
+        `;
+    }
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
-    data.forEach(entry => {
+    data.forEach((entry, idx) => {
+        const rank = entry.rank || (idx + 1);
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class="rank">#${entry.rank}</td>
-            <td class="username">${entry.username}</td>
-            <td class="points">${entry.points.toLocaleString()}</td>
-        `;
+        if (type === 'weekly') {
+            row.innerHTML = `
+                <td class="rank">#${rank}</td>
+                <td class="username">${entry.username}</td>
+                <td class="correct">${entry.correct_count || 0}</td>
+            `;
+        } else {
+            row.innerHTML = `
+                <td class="rank">#${rank}</td>
+                <td class="username">${entry.username}</td>
+                <td class="points">${(entry.points || 0).toLocaleString()}</td>
+            `;
+        }
         tbody.appendChild(row);
     });
     table.appendChild(tbody);
@@ -1165,7 +1219,7 @@ function createLeaderboardTable(data) {
 function switchLeaderboard(type) {
     // Hide all leaderboard content
     document.getElementById('alltime-leaderboard').classList.remove('active');
-    document.getElementById('daily-leaderboard').classList.remove('active');
+    document.getElementById('weekly-leaderboard').classList.remove('active');
     
     // Remove active class from all buttons
     document.querySelectorAll('.tab-button').forEach(btn => {
@@ -1176,8 +1230,8 @@ function switchLeaderboard(type) {
     if (type === 'alltime') {
         document.getElementById('alltime-leaderboard').classList.add('active');
         document.querySelectorAll('.tab-button')[0].classList.add('active');
-    } else {
-        document.getElementById('daily-leaderboard').classList.add('active');
+    } else if (type === 'weekly') {
+        document.getElementById('weekly-leaderboard').classList.add('active');
         document.querySelectorAll('.tab-button')[1].classList.add('active');
     }
 }

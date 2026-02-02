@@ -94,12 +94,32 @@
         <div class="leaderboard-section">
             <div class="leaderboard-header">
                 <h1 class="leaderboard-title">BRAWLDLE Leaderboard</h1>
+                <p class="leaderboard-description">
+                    The <strong>All time</strong> leaderboard shows total accumulated points. 
+                    The <strong>Weekly</strong> leaderboard shows who made the most correct guesses this week (resets every Monday at 5:00 AM UTC).
+                </p>
             </div>
+            <div class="leaderboard-tabs">
+                <button class="tab-button active" onclick="switchLeaderboard('alltime')">All time</button>
+                <button class="tab-button" onclick="switchLeaderboard('weekly')">Weekly</button>
+            </div>
+
             <button onclick="location.href='brawldle.html'" class="submit-button">Back to Brawldle</button>
-            <div id="leaderboard-content">
-                <div class="loading">Loading leaderboard... (check your internet connection)</div>
+
+            <div id="alltime-leaderboard" class="leaderboard-panel active">
+                <div id="leaderboard-content">
+                    <div class="loading">Loading leaderboard... (check your internet connection)</div>
+                </div>
             </div>
-            <p class="leaderboard-note">Updates every minute*</p>
+
+            <div id="weekly-leaderboard" class="leaderboard-panel">
+                <div id="leaderboard-content-weekly">
+                    <div class="loading">Loading weekly leaderboard...</div>
+                </div>
+                <p class="leaderboard-note">Weekly rankings reset every Monday (UTC)</p>
+            </div>
+
+            <p class="leaderboard-note">Updates every 30 seconds</p>
         </div>
     </main>
 

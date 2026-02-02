@@ -1,0 +1,17 @@
+{
+  "name": "mortipins-workers",
+  "version": "1.0.0",
+  "description": "Helpers to deploy MortipinS Cloudflare Workers and related resources",
+  "scripts": {
+    "deploy:dashboard": "cd workers/dashboard && wrangler deploy",
+    "deploy:leaderboard": "cd workers/leaderboard && wrangler deploy",
+    "deploy:cron": "cd workers/cron && wrangler deploy",
+    "deploy:admin": "cd workers/admin && wrangler deploy",
+    "deploy:all": "npm run deploy:dashboard && npm run deploy:leaderboard && npm run deploy:cron && npm run deploy:admin",
+    "setup:ps1": "pwsh ./scripts/setup.ps1",
+    "setup:sh": "bash ./scripts/setup.sh"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

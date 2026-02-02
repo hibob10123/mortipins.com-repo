@@ -1,0 +1,26 @@
+# Wrangler local development
+.wrangler/
+.dev.vars
+wrangler.toml.backup
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables (if you ever use .env files)
+.env
+.env.local

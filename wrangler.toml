@@ -1,0 +1,16 @@
+# Root-level placeholder wrangler.toml for convenience
+# This is intentionally minimal — per-worker wrangler.toml files live under workers/*
+
+name = "mortipins-workers-root"
+account_id = "f1d9712e71c59dd0eb2fdb12284fa685"
+compatibility_date = "2026-02-02"
+
+# Add your D1 databases here so `wrangler d1 execute` can locate them when run from repo root.
+# Replace binding/database_name values if your D1 database is named differently in Cloudflare.
+[[d1_databases]]
+binding = "mortipins"
+database_name = "mortipins"
+database_id = "9f64aa01-a10f-4409-bccb-a38a97946f4d"
+
+# This root file is not used to publish workers; use the subfolder wrangler.toml files for each worker.
+# It exists to store account-level defaults and make CLI tools comfortable with repo root.
