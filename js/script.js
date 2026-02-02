@@ -638,20 +638,88 @@ function submitGuess() {
     */
 
     
+    // Get current user Elo/points for proper Elo calculation
+    const token = localStorage.getItem('token');
+    let currentElo = 0;
+    
+    if (token) {
+        try {
+            const eloResponse = await fetch('https://mortipins-dashboard.imenkei64.workers.dev/get-points', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (eloResponse.ok) {
+                const eloData = await eloResponse.json();
+                currentElo = eloData.points || 0;
+            }
+        } catch (e) {
+            console.log('Could not fetch current Elo, using 0');
+        }
+    }
+    
+    // Calculate points based on Elo system (higher Elo = less gain, more loss)
     let points = 0;
-    if (isCorrect) {
-        points = 212210;
+    const rankDifference = Math.abs(trueRankIndex - selectedRankIndex);
+    
+    // Base points scale with your Elo
+    // Low Elo: bigger gains/smaller losses
+    // High Elo: smaller gains/bigger losses
+    let baseGain, baseLoss;
+    
+    if (currentElo < 200) {
+        baseGain = 30;  // New players gain a lot
+        baseLoss = -3;  // New players lose very little
+    } else if (currentElo < 400) {
+        baseGain = 25;
+        baseLoss = -5;
+    } else if (currentElo < 600) {
+        baseGain = 22;
+        baseLoss = -6;
+    } else if (currentElo < 800) {
+        baseGain = 20;
+        baseLoss = -8;
+    } else if (currentElo < 1000) {
+        baseGain = 18;
+        baseLoss = -10;
+    } else if (currentElo < 1200) {
+        baseGain = 16;
+        baseLoss = -12;
+    } else if (currentElo < 1500) {
+        baseGain = 14;
+        baseLoss = -14;
+    } else if (currentElo < 1800) {
+        baseGain = 12;
+        baseLoss = -16;
+    } else if (currentElo < 2200) {
+        baseGain = 10;
+        baseLoss = -18;
+    } else if (currentElo < 2600) {
+        baseGain = 8;
+        baseLoss = -20;
+    } else if (currentElo < 3000) {
+        baseGain = 6;
+        baseLoss = -23;
     } else {
-        points = -12;
+        baseGain = 4;   // Top players gain very little
+        baseLoss = -26; // Top players lose a lot
+    }
+    
+    if (isCorrect) {
+        points = baseGain;
+    } else {
+        // More penalty if you're way off
+        points = baseLoss - (rankDifference * 2);
     }
 
-    console.log('Points awarded:', points); // Log the points awarded
+    console.log('Current Elo:', currentElo, 'Points awarded:', points);
 
-    // Add streak points
+    // Add streak bonuses
     if (streak >= 10) {
-        points += 1000; // 10-win streak bonus
+        points += 10; // 10-win streak bonus
     } else if (streak >= 5) {
-        points *= 2; // 5-win streak multiplier
+        points += 5; // 5-win streak bonus
     }
 
     console.log('Final points after streak adjustments:', points);
