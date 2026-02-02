@@ -449,6 +449,16 @@ function getRandomVideo() {
         return;
     }
     
+    // Clear any previous selection
+    selectedRankName = null;
+    const buttons = document.querySelectorAll('.rank-buttons img');
+    buttons.forEach(button => {
+        button.classList.remove('selected');
+        button.style.transform = '';
+        button.style.filter = '';
+        button.style.opacity = '';
+    });
+    
     videoFrame.src = videoLinks[currentVideoIndex].link;
     console.log('Loading video:', videoLinks[currentVideoIndex].link);
     
@@ -483,6 +493,16 @@ function getVideoDaily() {
     const index = daysSinceEpoch % videoLinksDaily.length;
     currentVideoIndex = index;
 
+    // Clear any previous selection
+    selectedRankName = null;
+    const buttons = document.querySelectorAll('.rank-buttons img');
+    buttons.forEach(button => {
+        button.classList.remove('selected');
+        button.style.transform = '';
+        button.style.filter = '';
+        button.style.opacity = '';
+    });
+
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
     if (videoFrame && videoLinksDaily[currentVideoIndex]) {
@@ -496,11 +516,28 @@ function getVideoDaily() {
 function selectRank(rank) {
     selectedRank = rank;
     selectedRankName = rankNames[rank- 1];
-    buttons = document.querySelectorAll('.rank-buttons img');
+    const buttons = document.querySelectorAll('.rank-buttons img');
+    
+    // Remove selected class AND inline styles from all buttons
     buttons.forEach(button => {
         button.classList.remove('selected');
+        button.style.transform = '';
+        button.style.filter = '';
+        button.style.opacity = '';
     });
-    buttons[rank - 1].classList.add('selected');
+    
+    // Force reflow to ensure class removal is processed
+    void buttons[0].offsetHeight;
+    
+    // Add selected class to clicked button
+    const selectedButton = buttons[rank - 1];
+    selectedButton.classList.add('selected');
+    
+    // Force immediate visual update with inline styles
+    selectedButton.style.transform = 'scale(1.2)';
+    selectedButton.style.filter = 'brightness(1.2) grayscale(0)';
+    selectedButton.style.opacity = '1';
+    
     // Record the guess
     videoLinks[currentVideoIndex].guesses.push(selectedRankName);
 }
@@ -571,7 +608,7 @@ function submitTrophyGuess() {
             </div>
         </div>
     `;
-    modal.style.display = "block";
+    showModal();
 
     selectedTrophyCount = 1;
     document.getElementById("trophyRange").value = 1;
@@ -837,7 +874,7 @@ async function submitGuess() {
                 <canvas id="guessDistributionChart" width="400" height="400"></canvas>
             `;
         }
-        modal.style.display = "block";
+        showModal();
 
         return showGuessDistribution(videoLink);
     }).then(() => {
@@ -856,7 +893,7 @@ async function submitGuess() {
             <p>True Rank: ${trueRank}</p>
             <canvas id="guessDistributionChart" width="400" height="400"></canvas>
         `;
-        modal.style.display = "block";
+        showModal();
         console.log('Modal should be displayed now');
         
         // Still show the chart
@@ -952,7 +989,7 @@ function submitGuessDaily() {
         <p>True Rank: ${trueRank}</p>
         <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
-    modal.style.display = "block";
+    showModal();
 
     console.log('Submitting guess:', {
         video_id: videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null,
@@ -1041,15 +1078,48 @@ async function showGuessDistribution(videoLink) {
                 datasets: [{
                     label: 'Guess Distribution',
                     data: counts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(74, 144, 226, 0.7)',
+                    borderColor: 'rgba(74, 144, 226, 1)',
+                    borderWidth: 2,
+                    borderRadius: 6
                 }]
             },
             options: {
+                animation: {
+                    duration: 800,
+                    easing: 'easeOutQuart',
+                    delay: (context) => {
+                        let delay = 0;
+                        if (context.type === 'data' && context.mode === 'default') {
+                            delay = context.dataIndex * 80;
+                        }
+                        return delay;
+                    }
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
                     }
                 },
                 responsive: true,
@@ -1065,23 +1135,24 @@ if (typeof Chart !== 'undefined') {
     console.error('Chart.js is not loaded');
 }
 
+// Helper function to show modal with smooth animation
+function showModal() {
+    const modal = document.getElementById("rankModal");
+    modal.style.display = "block";
+    // Force reflow
+    void modal.offsetHeight;
+    // Trigger animation
+    modal.classList.add('show');
+}
+
 function closeModal() {
     const modal = document.getElementById("rankModal");
-    modal.style.display = "none";
-
-     // Apply fade-out animation
-     modal.style.animation = "fadeOut 0.3s ease-out forwards";
-     modal.querySelector('.modal-content').style.animation = "slideOut 0.3s ease-out forwards";
-     overlay.style.animation = "fadeOut 0.3s ease-out forwards";
- 
-     // Wait for the animation to complete before hiding the modal and overlay
-     setTimeout(() => {
-         modal.style.display = "none";
-         overlay.style.display = "none";
-         modal.style.animation = ""; // Reset animation
-         modal.querySelector('.modal-content').style.animation = ""; // Reset animation
-         overlay.style.animation = ""; // Reset animation
-     }, 300);
+    modal.classList.remove('show');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 300);
 }
 /*
 function updateTimer() {
