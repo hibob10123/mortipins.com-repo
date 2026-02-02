@@ -34,6 +34,30 @@ export async function handleRequest(request, env) {
   const url = new URL(request.url);
   const parts = url.pathname.split('/').filter(Boolean);
 
+  // /leaderboard/alltime - All-time leaderboard (top 100)
+  if (parts.length === 2 && parts[0] === 'leaderboard' && parts[1] === 'alltime') {
+    const rows = await env.DB.prepare(`
+      SELECT username, points, email
+      FROM users
+      ORDER BY points DESC
+      LIMIT 100
+    `).all();
+
+    const items = (rows.results || []).map(r => ({ 
+      username: r.username, 
+      email: r.email, 
+      points: r.points
+    }));
+
+    return new Response(JSON.stringify(items), { 
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=60',
+        ...corsHeaders()
+      } 
+    });
+  }
+
   // /leaderboard/weekly - LIVE data for current week
   if (parts.length === 2 && parts[0] === 'leaderboard' && parts[1] === 'weekly') {
     const currentWeekId = getCurrentWeekId();
