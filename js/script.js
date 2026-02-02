@@ -438,8 +438,20 @@ function getRandomVideo() {
     currentVideoIndex = Math.floor(Math.random() * videoLinks.length);
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
+    
+    if (!videoFrame) {
+        console.error('videoFrame element not found!');
+        return;
+    }
+    
+    if (!videoLinks || videoLinks.length === 0) {
+        console.error('No video links available!');
+        return;
+    }
+    
     videoFrame.src = videoLinks[currentVideoIndex].link;
-    // console.log('Current video:', videoLinks[currentVideoIndex]);
+    console.log('Loading video:', videoLinks[currentVideoIndex].link);
+    
     if (rankDisplay) {
         rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
     }
@@ -595,7 +607,7 @@ function restartGame() {
     getRandomTrophyVideo();
 }
 
-function submitGuess() {
+async function submitGuess() {
     if (selectedRankName === null) {
         return;
     }
@@ -639,7 +651,6 @@ function submitGuess() {
 
     
     // Get current user Elo/points for proper Elo calculation
-    const token = localStorage.getItem('token');
     let currentElo = 0;
     
     if (token) {
@@ -1111,40 +1122,30 @@ function animateBrawldleElements() {
     const videoFrame = document.getElementById('videoFrame');
     const rankButtons = document.querySelectorAll('.rank-buttons img');
     
-    // Start elements invisible
-    if (videoFrame) {
-        videoFrame.style.opacity = '0';
-    }
+    if (!videoFrame) return;
+    
+    // Ensure video is visible initially (don't hide it)
+    videoFrame.style.opacity = '1';
+    videoFrame.style.transform = 'translateY(0)';
+    
+    // Ensure buttons are visible
     rankButtons.forEach(button => {
-        button.style.opacity = '0';
-    });
-    
-    // Animate video first
-    if (videoFrame) {
-        setTimeout(() => {
-            videoFrame.classList.add('fade-in');
-        }, 100);
-    }
-    
-    // Animate rank buttons one by one
-    rankButtons.forEach((button, index) => {
-        setTimeout(() => {
-            button.classList.add('fade-in');
-        }, 700 + (index * 100)); // Start after video, 100ms between each
+        button.style.opacity = '1';
+        button.style.transform = 'translateY(0)';
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => { 
     if (document.getElementById("brawldle-daily")) {
         getVideoDaily();
-        setTimeout(() => animateBrawldleElements(), 100);
+        animateBrawldleElements();
         // start timer for daily page
         updateTimer();
         setInterval(updateTimer, 1000);
     }
     if (document.getElementById("brawldle-unlimited")) {
         getRandomVideo();
-        setTimeout(() => animateBrawldleElements(), 200);
+        animateBrawldleElements();
     }
     if (document.getElementById("trophies-unlimited")) {
         getRandomTrophyVideo();
