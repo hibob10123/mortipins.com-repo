@@ -435,6 +435,7 @@ let score = 0;
 let hearts = 3;
 
 function getRandomVideo() {
+    const prevIndex = currentVideoIndex;
     currentVideoIndex = Math.floor(Math.random() * videoLinks.length);
     const videoFrame = document.getElementById("videoFrame");
     const rankDisplay = document.getElementById("rankDisplay");
@@ -449,6 +450,8 @@ function getRandomVideo() {
         return;
     }
     
+    console.log('getRandomVideo called - changing from index', prevIndex, 'to', currentVideoIndex);
+    
     // Clear any previous selection
     selectedRankName = null;
     const buttons = document.querySelectorAll('.rank-buttons img');
@@ -459,8 +462,13 @@ function getRandomVideo() {
         button.style.opacity = '';
     });
     
-    videoFrame.src = videoLinks[currentVideoIndex].link;
-    console.log('Loading video:', videoLinks[currentVideoIndex].link);
+    // Force video to reload by clearing first, then setting
+    const newVideoSrc = videoLinks[currentVideoIndex].link;
+    videoFrame.src = '';
+    setTimeout(() => {
+        videoFrame.src = newVideoSrc;
+        console.log('Video src set to:', newVideoSrc);
+    }, 10);
     
     if (rankDisplay) {
         rankDisplay.textContent = `True Rank: ${videoLinks[currentVideoIndex].trueRank}`;
@@ -878,10 +886,7 @@ async function submitGuess() {
 
         return showGuessDistribution(videoLink);
     }).then(() => {
-        selectedRankName = null;
-        buttons.forEach(button => {
-            button.classList.remove('selected');
-        });
+        console.log('Chart rendered, loading next video...');
         getRandomVideo();
     }).catch(error => {
         console.error('Error in submitGuess:', error);
@@ -898,10 +903,7 @@ async function submitGuess() {
         
         // Still show the chart
         showGuessDistribution(videoLink).then(() => {
-            selectedRankName = null;
-            buttons.forEach(button => {
-                button.classList.remove('selected');
-            });
+            console.log('Chart rendered (error path), loading next video...');
             getRandomVideo();
         });
     });
