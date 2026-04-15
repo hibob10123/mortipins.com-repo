@@ -116,18 +116,9 @@
   let touchStartY = null;
 
   function enableSnapHandlers(){
-    if(wheelHandler) return; // already enabled
-    wheelHandler = function(e){
-      if(Math.abs(e.deltaY) < 10) return;
-      e.preventDefault();
-      updateCurrentSection();
-      if(e.deltaY > 0){ scrollToSection(currentSection + 1); }
-      else { scrollToSection(currentSection - 1); }
-    };
-    window.addEventListener('wheel', wheelHandler, { passive: false });
-
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    /* Wheel/touch hijacking removed: natural scroll is smoother and avoids
+       preventDefault fights with trackpads and mobile. Optional CSS scroll-snap
+       on `main` still applies when `.snap-enabled` is set (desktop). */
   }
 
   function disableSnapHandlers(){

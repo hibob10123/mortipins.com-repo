@@ -24,8 +24,12 @@
     <!-- css -->
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- js -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="css/glass-metal.css?v=10" rel="stylesheet">
+<!-- js -->
     <script src="js/script.js" defer></script>
+    <script src="js/glass-metal.js" defer></script>
+
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -37,49 +41,23 @@
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body>
-    <!-- overlay for mobile-->
-    <div id="overlay">
-        <div>
-            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
-        </div>
-        <div class="sidebar">
-            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
-            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
-            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
-            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
-            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
-        </div>
-    </div>
-
-    <header>
-        <nav class="nav full-nav">
-            <div class="logo">
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-                <span class="logo-text">Brawldle</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
+<body class="glass-metal-site">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="gm-nav">
+        <div class="gm-nav-inner">
+            <a class="gm-brand" href="index.html"><img src="images/mortis5_mastery.png" width="36" height="36" alt="MortipinS"><span>MortipinS</span></a>
+            <nav class="gm-nav-links" aria-label="Primary">
+                <a href="index.html" aria-current="page">Home</a>
                 <a href="brawldle.html">Minigames</a>
-                <a href="stats.html">Stats</a>
                 <a href="blog.html">Blog</a>
-            </div>
-            <div class="account">
-                <a href="account/signin.html">Account</a>
-            </div>
-        </nav>
-
-        <nav class="nav mobile-nav">
-            <div>
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-            </div>
-            <div>
-                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
-            </div>
-        </nav>
+                <a href="stats.html">Stats</a>
+                <a href="leaderboard.html">Leaderboard</a>
+            </nav>
+            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+        </div>
     </header>
 
-    <main>
+    <main id="main">
         <section class="legal-page">
             <h1 class="legal-title">Privacy Policy</h1>
             <p class="legal-lead">Effective date: January 28, 2026</p>
@@ -169,5 +147,12 @@
             </div>
         </footer>
     </main>
+<nav class="gm-bottom-nav" aria-label="Quick links">
+        <a href="index.html" aria-current="page"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+        <a href="brawldle.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-gamepad"></i></span><span>Play</span></a>
+        <a href="stats.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span>Stats</span></a>
+        <a href="blog.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span><span>Blog</span></a>
+        <a href="account/signin.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Account</span></a>
+    </nav>
 </body>
 </html>

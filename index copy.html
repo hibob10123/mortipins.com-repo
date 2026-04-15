@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MortipinS">
+    <meta name="description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
+    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="author" content="MortipinS">
+    <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MortipinS">
+    <meta property="og:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
+    <meta property="og:image" content="images/mortipins_logo.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MortipinS">
+    <meta name="twitter:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
+    <meta name="twitter:image" content="images/mortipins_logo.jpg">
+    <title>Morti-Site</title>
+    <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css -->
+    <link href="css/style.css?v=3" rel="stylesheet" >
+    <!-- js -->
+    <script src="js/script.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const exploreTrack = document.querySelector('.explore-track');
+        if (exploreTrack) {
+          const items = exploreTrack.querySelectorAll('.explore-item');
+          const trackWidth = exploreTrack.scrollWidth;
+          const viewWidth = window.innerWidth;
+          
+          if (trackWidth > viewWidth) {
+          }
+        }
+      });
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
+         crossorigin="anonymous"></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H31KKY28NR');
+</script>
+
+<body class="snap-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- overlay for mobile-->
+    <div id="overlay">
+        <div>
+            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+        </div>
+        <div class="sidebar">
+            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
+            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
+            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
+            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
+            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+            <a href="https://forms.gle/BN5McResZmoGCF3C6" target="_blank" rel="noopener" class="sidebar-button">Submit a clip</a>
+        </div>
+    </div>
+    <header>
+        <nav class="nav full-nav">
+            <div class="logo">
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
+                <span class="logo-text">Brawldle</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brawldle.html">Minigames</a>
+                <a href="stats.html">Stats</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="account">
+                <a href="account/signin.html">Account</a>
+            </div>
+        </nav>
+
+        <!-- mobile-->
+        <nav class="nav mobile-nav">
+            <div>
+                <img src="images/mortis5_mastery.png" alt="MortipinS Logo" >
+            </div>
+            <div>
+                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
+            </div>
+        </nav>
+    </header>
+    <main id="main">
+        <div class="hero">
+            <div class="intro">
+                <div class="intro-text">
+                    <img src="images/mortis5_mastery.png" alt="MortipinS Logo" class="hero-logo-mobile">
+                    <h1 class="hero-title">Brawldle</h1>
+                    <p class="tagline">A Brawl Stars website by MortipinS.</p>
+                    <div class="intro-button-container">
+                        <a href="https://www.youtube.com/@mortipins" class="intro-button" target="_blank" rel="noopener">YouTube Channel</a>
+                        <a href="brawldle.html" class="intro-button">Play Brawldle</a>
+                        <a href="https://forms.gle/BN5McResZmoGCF3C6" class="submit-clip-button" target="_blank" rel="noopener">Submit a clip</a>
+                    </div>
+                </div>
+               
+                <div class="grid">
+                    <div class="video-wrapper">
+                        <iframe class="video-iframe" title="Featured MortipinS video" src="https://www.youtube.com/embed/y3jQ6NvsuD4" allowfullscreen></iframe>
+                        <div class="video-meta">
+                            <div class="video-title">Featured Video</div>
+                            <a class="video-cta" href="https://www.youtube.com/@mortipins" target="_blank" rel="noopener">Channel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-cards">
+            <div class="c1">
+                <a class="card" href="brawldle.html">
+                    <img class="brawldle-img" src="images/brawldle-icon.jpg" alt="Brawldle artwork">
+                    <h2 class="card-title">PLAY BRAWLDLE</h2>
+                    <p class="card-text">Guess the rank of the player in the video. <br>Test your knowledge of Brawl Stars!</p>
+                </a>
+            </div>
+            <div class="c3">
+                <a class="card" href="blog.html">
+                    <img class="blogs-img" src="images/blog-icon.jpg" alt="Blog artwork">
+                    <h2 class="card-title">READ BLOGS</h2>
+                    <p class="card-text"> Read blogs about Brawl Stars. <br>Game updates, strategies, tips, tricks, etc.</p>
+                </a>
+            </div>
+            <div class="c2">
+                <a class="card" href="stats.html">
+                    <img class="stats-img" src="images/stats.jpg" alt="Stats artwork">
+                    <h2 class="card-title">VIEW STATS</h2>
+                    <p class="card-text">Check out active maps and upcoming maps for Brawl Stars, as well as player data.</p>
+                </a>
+            </div>
+        </div>
+    
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                    <a href="terms.html" class="footer-link">Terms</a>
+                    <a href="community-guidelines.html" class="footer-link">Guidelines</a>
+                </div>
+                <div class="footer-meta">
+                    <a href="https://discord.gg/ZpH7AAyt8t" target="_blank" rel="noopener" class="footer-link">Join Discord</a>
+                    <p>&copy; MortipinS 2026. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="js/scroll-effects.js" defer></script>
+</body>
+</html>

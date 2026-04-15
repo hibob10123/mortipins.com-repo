@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -11,88 +11,77 @@
     <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
     <meta name="author" content="MortipinS">
     <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="MortipinS">
     <meta property="og:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
     <meta property="og:image" content="images/mortipins_logo.jpg">
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MortipinS">
     <meta name="twitter:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
     <meta name="twitter:image" content="images/mortipins_logo.jpg">
     <title>Minigames - Morti-Site</title>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
-    <!-- google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <!--font awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- css -->
-    <link href="css/style.css" rel="stylesheet" >
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
-         crossorigin="anonymous"></script>
-    <!-- js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="css/glass-metal.css?v=28" rel="stylesheet">
+    <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem("gmSlideFromHome") !== "1") return;
+        sessionStorage.removeItem("gmSlideFromHome");
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        document.documentElement.classList.add("gm-slide-enter");
+      } catch (e) {}
+    })();
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729" crossorigin="anonymous"></script>
     <script src="js/script.js" defer></script>
+    <script src="js/glass-metal.js" defer></script>
+    <script src="js/home-stars.js" defer></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H31KKY28NR');
+    </script>
 </head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-H31KKY28NR');
-</script>
-
-<body class="snap-page">
-    <a class="skip-link" href="#main">Skip to content</a>
-    <!-- overlay for mobile-->
-    <div id="overlay">
-        <div>
-            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+<body class="glass-metal-site brawldle-hub">
+    <!-- Same parallax starfield + shooting stars + planets + ship as index (home-stars.js full mode) -->
+    <div class="gm-starfield gm-starfield--home" aria-hidden="true">
+        <div class="gm-planets">
+            <div class="gm-planet gm-planet--a" data-parallax="0.055" aria-hidden="true"></div>
+            <div class="gm-planet gm-planet--b" data-parallax="0.1" aria-hidden="true"></div>
+            <div class="gm-planet gm-planet--c" data-parallax="0.165" aria-hidden="true"></div>
         </div>
-        <div class="sidebar">
-            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
-            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
-            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
-            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
-            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
-            <a href="https://forms.gle/BN5McResZmoGCF3C6" target="_blank" rel="noopener" class="sidebar-button">Submit a clip</a>
+        <div class="gm-ship-pass" aria-hidden="true">
+            <svg class="gm-ship" viewBox="0 0 32 14" width="36" height="16" aria-hidden="true" focusable="false">
+                <path fill="rgba(215,230,255,0.75)" d="M0 7 L10 2 L32 7 L10 12 Z" />
+                <path fill="rgba(255,255,255,0.35)" d="M10 2 L22 7 L10 7 Z" />
+            </svg>
         </div>
     </div>
-    <header>
-        <nav class="nav full-nav">
-            <div class="logo">
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-                <span class="logo-text">Brawldle</span>
-            </div>
-            <div class="nav-links">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="gm-nav">
+        <div class="gm-nav-inner">
+            <a class="gm-brand" href="index.html"><img src="images/mortis5_mastery.png" width="36" height="36" alt="MortipinS"><span>MortipinS</span></a>
+            <nav class="gm-nav-links" aria-label="Primary">
                 <a href="index.html">Home</a>
-                <a href="brawldle.html">Minigames</a>
-                <a href="stats.html">Stats</a>
+                <a href="brawldle.html" aria-current="page">Minigames</a>
                 <a href="blog.html">Blog</a>
-            </div>
-            <div class="account">
-                <a href="account/signin.html">Account</a>
-            </div>
-        </nav>
-
-        <!-- mobile-->
-        <nav class="nav mobile-nav">
-            <div>
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo" >
-            </div>
-            <div>
-                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
-            </div>
-        </nav>
+                <a href="stats.html">Stats</a>
+                <a href="leaderboard.html">Leaderboard</a>
+            </nav>
+            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+        </div>
     </header>
     <main id="main">
-        <!-- Update Banner -->
         <div class="update-banner">
             <div class="update-content">
                 <i class="fa-solid fa-trophy"></i>
@@ -116,18 +105,18 @@
                     <div class="intro-text">
                         <h1>Play TrophyGuess</h1>
                         <p>Guess the trophy range of the player in the video. <br>How well do you know Brawl Stars progression?</p>
-                        <a href="trophies-unlimited.html" class="trophyGuess-button">Play TrophyGuess</a>
+                        <a href="trophies-unlimited.html" class="brawldle-button2">Play TrophyGuess</a>
                         <a href="https://forms.gle/BN5McResZmoGCF3C6" class="brawldle-button" target="_blank" rel="noopener">Submit a clip</a>
 
                     </div>
                     <img class="minigame-intro-img" src="images/trophyguess-icon.png" alt="TrophyGuess Game">
                 </div>
-            </div>  
+            </div>
         </div>
 
         <div class="brawldle-section how-to-play-detailed">
             <h2>How to Play Brawldle</h2>
-            
+
             <h3>Unlimited Mode (Elo Ranking)</h3>
             <p>This is where you climb the leaderboard!</p>
             <ul>
@@ -170,16 +159,21 @@
         </footer>
     </main>
 
-    <!-- modal structure-->
     <div id="rankModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h1>Results</h1>
             <div id="modalText"></div>
-            <button onclick="closeModal()" class="submit-button" aria-label="Close modal">Close</button>
+            <button type="button" onclick="closeModal()" class="submit-button" aria-label="Close modal">Close</button>
         </div>
     </div>
-    </div>
-    
+
+    <nav class="gm-bottom-nav" aria-label="Quick links">
+        <a href="index.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+        <a href="brawldle.html" aria-current="page"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-gamepad"></i></span><span>Play</span></a>
+        <a href="stats.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span>Stats</span></a>
+        <a href="blog.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span><span>Blog</span></a>
+        <a href="account/signin.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Account</span></a>
+    </nav>
 </body>
 </html>

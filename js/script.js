@@ -656,16 +656,25 @@ async function submitGuess() {
     if (selectedRankName === null) {
         return;
     }
-    
+
+    const modalText = document.getElementById("modalText");
+    const clip = videoLinks[currentVideoIndex];
+    if (!modalText || !clip || clip.trueRank == null) {
+        console.error("submitGuess: missing modal or video entry", {
+            hasModalText: !!modalText,
+            index: currentVideoIndex,
+        });
+        return;
+    }
+
     // Capture these values immediately before they get cleared
     const guessedRank = selectedRankName;
-    const trueRank = videoLinks[currentVideoIndex].trueRank;
-    const videoLink = videoLinks[currentVideoIndex].link;
-    
+    const trueRank = clip.trueRank;
+    const videoLink = clip.link;
+
     const token = localStorage.getItem('token');
 
     const modal = document.getElementById("rankModal");
-    const modalText = document.getElementById("modalText");
 
     const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
     
@@ -791,19 +800,20 @@ async function submitGuess() {
 
     
     console.log('Submitting guess with isCorrect:', isCorrect);
-    
-    Promise.all([
-        fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                video_id: videoLink,
-                guess: guessedRank
-            })
-        }),
-        fetch('https://mortipins-dashboard.imenkei64.workers.dev/update-points', {
+
+    const guessFetch = fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            video_id: videoLink,
+            guess: guessedRank
+        })
+    });
+
+    const pointsFetch = token
+        ? fetch('https://mortipins-dashboard.imenkei64.workers.dev/update-points', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -817,7 +827,9 @@ async function submitGuess() {
                 delta: points
             })
         })
-    ]).then(async ([guessResponse, pointsResponse]) => {
+        : Promise.resolve(null);
+
+    Promise.all([guessFetch, pointsFetch]).then(async ([guessResponse, pointsResponse]) => {
         console.log('Responses received - guess:', guessResponse.status, 'points:', pointsResponse?.status);
         if (!guessResponse.ok) {
             throw new Error(`HTTP error! status: ${guessResponse.status}`);
@@ -968,9 +980,17 @@ function submitGuessDaily() {
         return;
     }
 
-    const modal = document.getElementById("rankModal");
     const modalText = document.getElementById("modalText");
-    const trueRank = videoLinks[currentVideoIndex].trueRank;
+    const clip = videoLinks[currentVideoIndex];
+    if (!modalText || !clip) {
+        console.error("submitGuessDaily: missing modal or video entry", {
+            hasModalText: !!modalText,
+            index: currentVideoIndex,
+        });
+        return;
+    }
+
+    const trueRank = clip.trueRank;
 
     if (selectedRankName === trueRank) {
         flashColor = 'rgba(0, 255, 0, 0.6)';
@@ -1140,20 +1160,32 @@ if (typeof Chart !== 'undefined') {
 // Helper function to show modal with smooth animation
 function showModal() {
     const modal = document.getElementById("rankModal");
+    if (!modal) {
+        console.error("rankModal not found in DOM");
+        return;
+    }
+    /* Last child of body stacks above nav/ads; z-index beats stacking quirks on glass-metal pages */
+    if (modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+    }
     modal.style.display = "block";
+    modal.style.zIndex = "100000";
+    modal.style.visibility = "visible";
+    modal.style.pointerEvents = "auto";
     // Force reflow
     void modal.offsetHeight;
-    // Trigger animation
-    modal.classList.add('show');
+    modal.classList.add("show");
 }
 
 function closeModal() {
     const modal = document.getElementById("rankModal");
-    modal.classList.remove('show');
-    
+    if (!modal) return;
+    modal.classList.remove("show");
+
     // Wait for animation to complete before hiding
-    setTimeout(() => {
+    setTimeout(function () {
         modal.style.display = "none";
+        modal.style.zIndex = "";
     }, 300);
 }
 /*

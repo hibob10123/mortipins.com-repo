@@ -30,7 +30,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css -->
     <link href="css/style.css" rel="stylesheet">
-    <!-- Google AdSense -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="css/glass-metal.css?v=17" rel="stylesheet">
+<!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
          crossorigin="anonymous"></script>
     <!-- Chart.js -->
@@ -39,49 +41,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
     <!-- core script for videoLinks and overlay -->
     <script src="js/script.js" defer></script>
+    <script src="js/glass-metal.js" defer></script>
+    <script src="js/home-stars.js" defer></script>
+
     <!-- multiplayer script -->
     <script src="js/multiplayer.js" defer></script>
 </head>
-<body id="brawldle-multiplayer">
-    <!-- overlay for mobile-->
-    <div id="overlay">
-        <div>
-            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
-        </div>
-        <div class="sidebar">
-            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
-            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
-            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
-            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
-            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+<body class="glass-metal-site brawldle-game" id="brawldle-multiplayer">
+    <div class="gm-starfield gm-starfield--subtle" aria-hidden="true">
+        <div class="gm-planets">
+            <div class="gm-planet gm-planet--a" data-parallax="0.038" aria-hidden="true"></div>
+            <div class="gm-planet gm-planet--c" data-parallax="0.095" aria-hidden="true"></div>
         </div>
     </div>
-    <header>
-        <nav class="nav full-nav">
-            <div class="logo">
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-                <span class="logo-text">Brawldle</span>
-            </div>
-            <div class="nav-links">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="gm-nav">
+        <div class="gm-nav-inner">
+            <a class="gm-brand" href="index.html"><img src="images/mortis5_mastery.png" width="36" height="36" alt="MortipinS"><span>MortipinS</span></a>
+            <nav class="gm-nav-links" aria-label="Primary">
                 <a href="index.html">Home</a>
-                <a href="brawldle.html">Minigames</a>
-                <a href="stats.html">Stats</a>
+                <a href="brawldle.html" aria-current="page">Minigames</a>
                 <a href="blog.html">Blog</a>
-            </div>
-            <div class="account">
-                <a href="account/signin.html">Account</a>
-            </div>
-        </nav>
-        <nav class="nav mobile-nav">
-            <div>
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-            </div>
-            <div>
-                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
-            </div>
-        </nav>
+                <a href="stats.html">Stats</a>
+                <a href="leaderboard.html">Leaderboard</a>
+            </nav>
+            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+        </div>
     </header>
-    <main>
+    <main id="main">
         <div id="matchmakingScreen" class="matchmaking-screen">
             <h2>Looking for players...</h2>
             <i class="fa-solid fa-spinner fa-spin fa-3x"></i>
@@ -180,5 +167,12 @@
         </div>
     </div>
     <!-- single footer retained below -->
+<nav class="gm-bottom-nav" aria-label="Quick links">
+        <a href="index.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+        <a href="brawldle.html" aria-current="page"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-gamepad"></i></span><span>Play</span></a>
+        <a href="stats.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span>Stats</span></a>
+        <a href="blog.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span><span>Blog</span></a>
+        <a href="account/signin.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Account</span></a>
+    </nav>
 </body>
-</html> 
+</html>

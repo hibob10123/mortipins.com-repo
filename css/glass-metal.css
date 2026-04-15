@@ -1,0 +1,2058 @@
+/**
+ * Glass & Metal — homepage redesign (scoped to body.glass-metal-home)
+ * Light source: top-left ~45° for elevated shadows
+ */
+
+:root {
+  --gm-bg-obsidian: #0a0a0a;
+  --gm-bg-charcoal: #121212;
+  --gm-surface: rgba(35, 35, 36, 0.45);
+  --gm-border: rgba(255, 255, 255, 0.2);
+  --gm-border-soft: rgba(255, 255, 255, 0.08);
+  --gm-text: #e5e2e1;
+  --gm-text-muted: #9a9a9a;
+  --gm-accent: #d4a574;
+  --gm-metal-1: #e0e0e0;
+  --gm-metal-2: #888888;
+  --gm-radius: 12px;
+  --gm-pad-section: clamp(2.5rem, 5vw, 4.5rem);
+  --gm-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --gm-max: 1280px;
+  --gm-shadow-tl: -6px -6px 24px rgba(0, 0, 0, 0.45);
+  --gm-inner-glow: inset 0.5px 0.5px 0 0 rgba(255, 255, 255, 0.12);
+  --gm-motion-smooth: cubic-bezier(0.33, 1, 0.68, 1);
+  --gm-motion-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Hubble / space loop — https://giphy.com/gifs/esahubble-icDJYd8Zrcqa89tqHf */
+  --gm-space-gif-url: url("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODh6MnAwaGN1aXhsMzYyYzN6a2dvM2xvc29mZjZnNXl2MWt5Y2xrMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sJvz8Qnfly3BOuotGx/giphy.gif");
+  /* Dark wash stacked above the GIF (higher = subtler / lower perceived GIF opacity) */
+  --gm-space-gif-dim: 0.58;
+}
+
+/* Space + glass: GIF layer + cool tint (direct asset; iframe embed is not used for bg) */
+body.glass-metal-home::before,
+body.glass-metal-site::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #040814;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(4, 10, 28, 0.88) 0%,
+      rgba(6, 14, 36, 0.72) 45%,
+      rgba(3, 6, 18, 0.92) 100%
+    ),
+    radial-gradient(ellipse 120% 70% at 50% -15%, rgba(100, 160, 255, 0.12), transparent 52%),
+    radial-gradient(ellipse 90% 60% at 80% 95%, rgba(0, 0, 0, 0.35), transparent 50%),
+    linear-gradient(
+      rgba(2, 5, 14, var(--gm-space-gif-dim)),
+      rgba(2, 5, 14, var(--gm-space-gif-dim))
+    ),
+    var(--gm-space-gif-url);
+  background-size: cover, cover, cover, cover, cover;
+  background-position: center, center, center, center, center;
+  background-repeat: no-repeat;
+}
+
+/* Minigames hub (brawldle.html): darker space wash over GIF + stars */
+body.glass-metal-site.brawldle-hub::before {
+  background-color: #000208;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(0, 2, 10, 0.97) 0%,
+      rgba(2, 5, 18, 0.93) 45%,
+      rgba(0, 1, 6, 0.98) 100%
+    ),
+    radial-gradient(ellipse 120% 70% at 50% -15%, rgba(70, 110, 200, 0.05), transparent 52%),
+    radial-gradient(ellipse 90% 60% at 80% 95%, rgba(0, 0, 0, 0.68), transparent 50%),
+    linear-gradient(
+      rgba(0, 1, 6, 0.72),
+      rgba(0, 1, 6, 0.72)
+    ),
+    var(--gm-space-gif-url);
+  background-size: cover, cover, cover, cover, cover;
+  background-position: center, center, center, center, center;
+  background-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home::before,
+  body.glass-metal-site::before {
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(4, 10, 28, 0.95) 0%,
+        rgba(6, 14, 36, 0.88) 50%,
+        rgba(3, 6, 18, 0.96) 100%
+      ),
+      radial-gradient(ellipse 100% 80% at 40% 20%, rgba(80, 120, 200, 0.15), transparent 55%),
+      radial-gradient(ellipse 80% 50% at 60% 100%, rgba(0, 0, 0, 0.4), transparent 50%);
+  }
+
+  body.glass-metal-site.brawldle-hub::before {
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(0, 2, 14, 0.98) 0%,
+        rgba(2, 6, 22, 0.94) 50%,
+        rgba(0, 1, 8, 0.99) 100%
+      ),
+      radial-gradient(ellipse 100% 80% at 40% 20%, rgba(60, 100, 180, 0.1), transparent 55%),
+      radial-gradient(ellipse 80% 50% at 60% 100%, rgba(0, 0, 0, 0.55), transparent 50%);
+  }
+}
+
+/* Reset scope */
+body.glass-metal-home {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  color: var(--gm-text);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.glass-metal-home * {
+  box-sizing: border-box;
+}
+
+body.glass-metal-home > *:not(.skip-link):not(.gm-starfield) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Home: ambient star canvas — sits above space GIF wash, below UI */
+body.glass-metal-home > .gm-starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition:
+    opacity 0.42s var(--gm-ease),
+    transform 0.4s var(--gm-ease);
+}
+
+/* Soft galaxy wash — bulge + disk + arms (behind planets & canvas stars; no moon disc) */
+body.glass-metal-home > .gm-starfield::before,
+body.glass-metal-site > .gm-starfield.gm-starfield--home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle clamp(48px, 7vw, 100px) at 28% 32%,
+      rgba(255, 240, 255, 0.22) 0%,
+      rgba(200, 160, 230, 0.1) 35%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 95% 42% at 38% 38%,
+      rgba(150, 110, 200, 0.14) 0%,
+      rgba(90, 60, 140, 0.06) 45%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 140% 55% at 72% 28%,
+      rgba(80, 120, 220, 0.1) 0%,
+      rgba(40, 50, 100, 0.04) 48%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 85% 38% at 18% 72%,
+      rgba(120, 90, 180, 0.09) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 160% 120% at 50% 50%,
+      rgba(60, 45, 110, 0.1) 0%,
+      rgba(25, 20, 55, 0.04) 42%,
+      transparent 68%
+    );
+}
+
+/* Decorative planets (parallax in home-stars.js). Override with data-image on .gm-planet or .gm-planet--has-image + background in your CSS. */
+body.glass-metal-home .gm-planets,
+body.glass-metal-site .gm-starfield--home .gm-planets {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body.glass-metal-home .gm-planet,
+body.glass-metal-site .gm-starfield--home .gm-planet {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Generated gas-giant blobs (no image) */
+body.glass-metal-home .gm-planet--a:not(.gm-planet--has-image),
+body.glass-metal-site .gm-starfield--home .gm-planet--a:not(.gm-planet--has-image) {
+  width: clamp(72px, 14vw, 160px);
+  height: clamp(72px, 14vw, 160px);
+  top: 18%;
+  right: 6%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 210, 190, 0.45), transparent 42%),
+    radial-gradient(circle at 70% 65%, rgba(120, 80, 160, 0.55), rgba(40, 25, 70, 0.35));
+  box-shadow:
+    inset -4px -6px 20px rgba(0, 0, 0, 0.35),
+    0 0 40px rgba(160, 120, 200, 0.12);
+  opacity: 0.55;
+}
+
+body.glass-metal-home .gm-planet--b:not(.gm-planet--has-image),
+body.glass-metal-site .gm-starfield--home .gm-planet--b:not(.gm-planet--has-image) {
+  width: clamp(100px, 20vw, 220px);
+  height: clamp(100px, 20vw, 220px);
+  bottom: 8%;
+  left: 4%;
+  background:
+    radial-gradient(circle at 40% 38%, rgba(255, 245, 220, 0.35), transparent 38%),
+    radial-gradient(circle at 55% 55%, rgba(200, 140, 100, 0.4), rgba(60, 35, 28, 0.45));
+  box-shadow:
+    inset 3px 4px 18px rgba(255, 255, 255, 0.08),
+    0 0 50px rgba(210, 160, 120, 0.1);
+  opacity: 0.45;
+}
+
+body.glass-metal-home .gm-planet--c:not(.gm-planet--has-image),
+body.glass-metal-site .gm-starfield--home .gm-planet--c:not(.gm-planet--has-image) {
+  width: clamp(48px, 9vw, 100px);
+  height: clamp(48px, 9vw, 100px);
+  top: 42%;
+  right: 22%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(180, 210, 255, 0.5), rgba(60, 90, 140, 0.4));
+  box-shadow: 0 0 28px rgba(150, 190, 255, 0.15);
+  opacity: 0.4;
+}
+
+/* Custom planet art: set data-image="images/planet.png" on the div, or use this pattern in your stylesheet */
+body.glass-metal-home .gm-planet--has-image,
+body.glass-metal-site .gm-starfield--home .gm-planet--has-image {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-shadow: none;
+}
+
+body.glass-metal-home .gm-planet--a.gm-planet--has-image,
+body.glass-metal-site .gm-starfield--home .gm-planet--a.gm-planet--has-image {
+  width: clamp(80px, 16vw, 200px);
+  height: clamp(80px, 16vw, 200px);
+  top: 16%;
+  right: 5%;
+  opacity: 0.65;
+}
+
+body.glass-metal-home .gm-planet--b.gm-planet--has-image,
+body.glass-metal-site .gm-starfield--home .gm-planet--b.gm-planet--has-image {
+  width: clamp(110px, 22vw, 260px);
+  height: clamp(110px, 22vw, 260px);
+  bottom: 6%;
+  left: 3%;
+  opacity: 0.55;
+}
+
+body.glass-metal-home .gm-planet--c.gm-planet--has-image,
+body.glass-metal-site .gm-starfield--home .gm-planet--c.gm-planet--has-image {
+  width: clamp(56px, 11vw, 120px);
+  height: clamp(56px, 11vw, 120px);
+  top: 40%;
+  right: 20%;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home .gm-planet,
+  body.glass-metal-site .gm-starfield--home .gm-planet {
+    will-change: auto;
+  }
+}
+
+body.glass-metal-home .gm-starfield-canvas,
+body.glass-metal-site .gm-starfield--home .gm-starfield-canvas {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.72;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home .gm-starfield-canvas,
+  body.glass-metal-site .gm-starfield--home .gm-starfield-canvas {
+    opacity: 0.42;
+    mix-blend-mode: normal;
+  }
+
+  body.glass-metal-home > .gm-starfield::before,
+  body.glass-metal-site > .gm-starfield.gm-starfield--home::before {
+    opacity: 0.78;
+  }
+}
+
+/* Minigame pages: subtle starfield + galaxy (below UI; home-stars.js subtle mode) */
+body.glass-metal-site > .gm-starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.glass-metal-site > .gm-starfield--subtle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    radial-gradient(
+      circle clamp(40px, 6vw, 80px) at 30% 34%,
+      rgba(255, 235, 255, 0.12) 0%,
+      rgba(160, 130, 200, 0.06) 38%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 100% 40% at 40% 40%,
+      rgba(130, 100, 180, 0.08) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 120% 50% at 70% 30%,
+      rgba(70, 100, 180, 0.06) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 140% 100% at 50% 50%,
+      rgba(45, 35, 85, 0.07) 0%,
+      transparent 65%
+    );
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planets {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet--a:not(.gm-planet--has-image) {
+  width: clamp(56px, 11vw, 120px);
+  height: clamp(56px, 11vw, 120px);
+  top: 16%;
+  right: 8%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 200, 190, 0.28), transparent 42%),
+    radial-gradient(circle at 70% 65%, rgba(100, 70, 140, 0.35), rgba(30, 20, 55, 0.25));
+  box-shadow: inset -3px -4px 14px rgba(0, 0, 0, 0.3);
+  opacity: 0.38;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet--c:not(.gm-planet--has-image) {
+  width: clamp(36px, 7vw, 72px);
+  height: clamp(36px, 7vw, 72px);
+  top: 48%;
+  right: 18%;
+  background: radial-gradient(circle at 50% 50%, rgba(170, 200, 255, 0.35), rgba(50, 70, 120, 0.28));
+  box-shadow: 0 0 18px rgba(130, 170, 255, 0.08);
+  opacity: 0.32;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet--has-image {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-shadow: none;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet--a.gm-planet--has-image {
+  width: clamp(64px, 12vw, 140px);
+  height: clamp(64px, 12vw, 140px);
+  top: 14%;
+  right: 6%;
+  opacity: 0.45;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-planet--c.gm-planet--has-image {
+  width: clamp(40px, 8vw, 88px);
+  height: clamp(40px, 8vw, 88px);
+  top: 46%;
+  right: 16%;
+  opacity: 0.38;
+}
+
+body.glass-metal-site .gm-starfield--subtle .gm-starfield-canvas {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.38;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .gm-starfield--subtle .gm-planet {
+    will-change: auto;
+  }
+
+  body.glass-metal-site .gm-starfield--subtle .gm-starfield-canvas {
+    opacity: 0.24;
+    mix-blend-mode: normal;
+  }
+
+  body.glass-metal-site > .gm-starfield--subtle::before {
+    opacity: 0.4;
+  }
+}
+
+/* ——— Typography: 3 weights (300, 500, 700) ——— */
+body.glass-metal-home h1,
+body.glass-metal-home h2,
+body.glass-metal-home h3 {
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+
+body.glass-metal-home .gm-strong {
+  font-weight: 700;
+}
+
+body.glass-metal-home .gm-label {
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--gm-text-muted);
+}
+
+/* ——— Glass surface ——— */
+.gm-glass {
+  background: var(--gm-surface);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+  box-shadow: var(--gm-inner-glow), var(--gm-shadow-tl);
+}
+
+/* ——— Brushed metal button ——— */
+.gm-metal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--gm-radius);
+  border: 0.5px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(135deg, var(--gm-metal-1) 0%, var(--gm-metal-2) 100%);
+  color: #2a1f0f;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--gm-motion-smooth),
+    box-shadow 0.4s var(--gm-motion-smooth),
+    filter 0.35s var(--gm-ease);
+  box-shadow: var(--gm-shadow-tl);
+}
+
+.gm-metal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.65s var(--gm-ease);
+  pointer-events: none;
+}
+
+.gm-metal:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow:
+    -4px -8px 32px rgba(0, 0, 0, 0.45),
+    0 0 32px rgba(212, 165, 116, 0.18);
+}
+
+.gm-metal:hover::after {
+  transform: translateX(100%);
+}
+
+.gm-metal:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-metal,
+  .gm-metal:hover,
+  .gm-metal:active {
+    transform: none;
+    transition: filter 0.25s var(--gm-ease), box-shadow 0.25s var(--gm-ease);
+  }
+}
+
+.gm-metal--lg {
+  padding: 1.15rem 2.25rem;
+  font-size: 0.75rem;
+}
+
+/* Ghost / glass button */
+.gm-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border-soft);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gm-text);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background 0.35s var(--gm-motion-smooth),
+    border-color 0.35s var(--gm-motion-smooth),
+    transform 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+.gm-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--gm-border);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.gm-btn-ghost:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-btn-ghost:hover,
+  .gm-btn-ghost:active {
+    transform: none;
+  }
+}
+
+/* ——— Nav ——— */
+.gm-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--gm-border-soft);
+  background: rgba(12, 12, 12, 0.55);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.gm-nav-inner {
+  max-width: var(--gm-max);
+  margin: 0 auto;
+  padding: 1.1rem clamp(1.25rem, 4vw, 2.25rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.gm-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.04em;
+}
+
+.gm-brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.gm-nav-links {
+  display: none;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 900px) {
+  .gm-nav-links {
+    display: flex;
+  }
+}
+
+.gm-nav-links a {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gm-text-muted);
+  text-decoration: none;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.35s var(--gm-motion-smooth),
+    border-color 0.35s var(--gm-motion-smooth),
+    transform 0.25s var(--gm-motion-smooth);
+}
+
+.gm-nav-links a:hover {
+  transform: translateY(-1px);
+}
+
+.gm-nav-links a:hover:not([aria-current="page"]) {
+  color: #fff;
+}
+
+.gm-nav-links a[aria-current="page"] {
+  border-bottom-color: var(--gm-accent);
+  color: var(--gm-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-nav-links a:hover {
+    transform: none;
+  }
+}
+
+.gm-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gm-nav .gm-metal {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.6rem;
+}
+
+/* ——— Main grid shell (12 cols) ——— */
+.gm-main {
+  max-width: var(--gm-max);
+  margin: 0 auto;
+  padding: calc(5.5rem + var(--gm-pad-section)) clamp(1.25rem, 4vw, 2.25rem) var(--gm-pad-section);
+}
+
+.gm-grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+/* ——— Hero: title + video side by side ——— */
+.gm-hero {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.gm-hero-split {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .gm-hero-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, min(46%, 520px));
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+}
+
+.gm-hero-copy {
+  min-width: 0;
+}
+
+.gm-hero h1 {
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  line-height: 1;
+  margin: 0 0 1rem;
+  color: #fff;
+  text-align: left;
+}
+
+.gm-hero h1 .gm-accent-text {
+  color: var(--gm-accent);
+  font-weight: 300;
+}
+
+.gm-hero-lead {
+  max-width: 28rem;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--gm-text-muted);
+  margin: 1.25rem 0 0;
+}
+
+.gm-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+/* Play control: compact metal pill with icon */
+.gm-play-btn {
+  padding: 0.75rem 1.5rem;
+  gap: 0.65rem;
+  border-radius: 999px;
+  min-width: 8rem;
+  justify-content: center;
+}
+
+.gm-play-btn .gm-play-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.65rem;
+  padding-left: 0.15rem;
+  transition:
+    transform 0.45s var(--gm-motion-snap),
+    background 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+/* Homepage — extra hover motion on primary actions */
+body.glass-metal-home .gm-play-btn:hover .gm-play-icon {
+  transform: scale(1.12);
+  background: rgba(0, 0, 0, 0.38);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+body.glass-metal-home .gm-video-cap a {
+  transition:
+    color 0.3s var(--gm-motion-smooth),
+    transform 0.35s var(--gm-motion-smooth),
+    letter-spacing 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-home .gm-video-cap a:hover {
+  transform: translateX(4px);
+  letter-spacing: 0.14em;
+}
+
+body.glass-metal-home .gm-community-inner .gm-btn-ghost:hover {
+  border-color: rgba(212, 165, 116, 0.45);
+  box-shadow: 0 0 24px rgba(212, 165, 116, 0.12);
+}
+
+body.glass-metal-home .gm-submit-row .gm-metal:hover {
+  box-shadow:
+    -4px -8px 32px rgba(0, 0, 0, 0.45),
+    0 0 32px rgba(212, 165, 116, 0.2);
+}
+
+body.glass-metal-home .gm-panel-link {
+  display: inline-block;
+  transition:
+    transform 0.4s var(--gm-motion-smooth),
+    letter-spacing 0.45s var(--gm-motion-smooth),
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+body.glass-metal-home .gm-panel:hover .gm-panel-link {
+  transform: translateX(6px);
+  letter-spacing: 0.34em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home .gm-play-btn:hover .gm-play-icon,
+  body.glass-metal-home .gm-video-cap a:hover,
+  body.glass-metal-home .gm-panel:hover .gm-panel-link {
+    transform: none;
+  }
+}
+
+.gm-hero-media {
+  position: relative;
+  min-width: 0;
+}
+
+.gm-video-frame {
+  border-radius: var(--gm-radius);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.gm-video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  opacity: 0.92;
+}
+
+.gm-video-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gm-text-muted);
+  border-top: 1px solid var(--gm-border-soft);
+}
+
+.gm-video-cap a {
+  color: var(--gm-accent);
+  text-decoration: none;
+}
+
+.gm-video-cap a:hover {
+  text-decoration: underline;
+}
+
+/* ——— Bento ——— */
+.gm-bento {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 768px) {
+  .gm-bento {
+    margin-top: -0.75rem;
+  }
+}
+
+.gm-card-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.15s linear;
+  will-change: transform;
+}
+
+.gm-bento-large {
+  grid-column: 1 / -1;
+  min-height: 320px;
+}
+
+@media (min-width: 768px) {
+  .gm-bento-large {
+    grid-column: 1 / span 8;
+    min-height: 380px;
+  }
+  /* Stats — top row right */
+  .gm-bento-sm-a {
+    grid-column: 9 / span 4;
+  }
+  /* Blog — row 2 left */
+  .gm-bento-sm-b {
+    grid-column: 1 / span 4;
+  }
+  /* Submit — row 2 right (8 cols) */
+  .gm-bento-wide {
+    grid-column: 5 / span 8;
+  }
+}
+
+@media (max-width: 767px) {
+  .gm-bento-sm-a,
+  .gm-bento-sm-b,
+  .gm-bento-wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.gm-panel {
+  padding: clamp(1.75rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 240px;
+}
+
+.gm-panel h3 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  margin: 0 0 0.75rem;
+  color: #fff;
+  font-weight: 300;
+}
+
+.gm-panel p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--gm-text-muted);
+  max-width: 22rem;
+}
+
+.gm-panel-link {
+  margin-top: 1.25rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gm-accent);
+  border-bottom: 1px solid var(--gm-accent);
+  align-self: flex-start;
+  padding-bottom: 0.25rem;
+}
+
+.gm-panel:hover .gm-panel-link {
+  letter-spacing: 0.32em;
+}
+
+.gm-panel-tall {
+  justify-content: space-between;
+}
+
+.gm-submit-row {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1.5rem;
+  min-height: auto;
+}
+
+@media (min-width: 768px) {
+  .gm-submit-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.gm-submit-row .gm-metal {
+  flex-shrink: 0;
+}
+
+/* ——— Community strip ——— */
+.gm-community {
+  margin-bottom: clamp(3rem, 8vw, 5rem);
+}
+
+.gm-community-inner {
+  padding: clamp(2.5rem, 6vw, 4rem);
+  text-align: left;
+}
+
+@media (min-width: 700px) {
+  .gm-community-inner {
+    text-align: center;
+  }
+}
+
+.gm-community h2 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin: 0 0 2rem;
+  color: #fff;
+  max-width: 18ch;
+}
+
+@media (min-width: 700px) {
+  .gm-community h2 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 22ch;
+  }
+}
+
+.gm-community-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+@media (min-width: 700px) {
+  .gm-community-actions {
+    justify-content: center;
+  }
+}
+
+/* ——— Footer ——— */
+.gm-footer {
+  border-top: 1px solid var(--gm-border-soft);
+  background: rgba(5, 5, 5, 0.85);
+  padding: 2.5rem clamp(1.25rem, 4vw, 2.25rem);
+}
+
+.gm-footer-inner {
+  max-width: var(--gm-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .gm-footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.gm-footer-brand {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.gm-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  justify-content: center;
+}
+
+.gm-footer-links a {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gm-text-muted);
+  text-decoration: none;
+  transition: color 0.35s var(--gm-motion-smooth), transform 0.25s var(--gm-motion-smooth);
+}
+
+.gm-footer-links a:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-footer-links a:hover {
+    transform: none;
+  }
+}
+
+.gm-footer-meta {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* ——— Mobile bottom nav ——— */
+.gm-bottom-nav {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 0.65rem 0.5rem calc(0.65rem + env(safe-area-inset-bottom));
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-top: 1px solid var(--gm-border-soft);
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .gm-bottom-nav {
+    display: none;
+  }
+}
+
+.gm-bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gm-text-muted);
+  text-decoration: none;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  transition:
+    color 0.3s var(--gm-motion-smooth),
+    transform 0.25s var(--gm-motion-snap),
+    background 0.3s var(--gm-motion-smooth);
+}
+
+.gm-bottom-nav a[aria-current="page"],
+.gm-bottom-nav a:hover {
+  color: var(--gm-accent);
+}
+
+.gm-bottom-nav a:hover {
+  transform: translateY(-2px);
+}
+
+.gm-bottom-nav a:active {
+  transform: scale(0.96);
+}
+
+.gm-bottom-nav .gm-bn-icon {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  transition: transform 0.3s var(--gm-motion-snap), opacity 0.25s ease;
+}
+
+.gm-bottom-nav a:hover .gm-bn-icon {
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-bottom-nav a:hover,
+  .gm-bottom-nav a:active,
+  .gm-bottom-nav a:hover .gm-bn-icon {
+    transform: none;
+  }
+}
+
+@media (max-width: 899px) {
+  body.glass-metal-home .gm-main {
+    padding-bottom: calc(var(--gm-pad-section) + 4rem);
+  }
+}
+
+/* ——— Home: orbital rings (Brawldle card), tiny ship ——— */
+body.glass-metal-home .gm-orbit-wrap {
+  position: relative;
+  grid-column: 1 / -1;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  body.glass-metal-home .gm-orbit-wrap {
+    grid-column: 1 / span 8;
+  }
+}
+
+body.glass-metal-home .gm-orbit-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 104%;
+  height: 108%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(168, 210, 255, 0.32);
+  box-shadow:
+    0 0 48px rgba(100, 160, 255, 0.07),
+    inset 0 0 32px rgba(100, 160, 255, 0.04);
+  pointer-events: none;
+  z-index: 0;
+  animation: gm-orbit-spin 96s linear infinite;
+}
+
+body.glass-metal-home .gm-orbit-ring--outer {
+  width: 118%;
+  height: 124%;
+  border-color: rgba(212, 165, 116, 0.16);
+  animation: gm-orbit-spin 132s linear infinite reverse;
+  opacity: 0.6;
+}
+
+@keyframes gm-orbit-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+body.glass-metal-home .gm-orbit-wrap .gm-panel {
+  position: relative;
+  z-index: 1;
+}
+
+body.glass-metal-home .gm-ship-pass,
+body.glass-metal-site .gm-starfield--home .gm-ship-pass {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.glass-metal-home .gm-ship,
+body.glass-metal-site .gm-starfield--home .gm-ship {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(200, 230, 255, 0.55));
+  will-change: transform, opacity;
+  animation: gm-ship-flight 52s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+@keyframes gm-ship-flight {
+  0%,
+  93% {
+    opacity: 0;
+    transform: translate3d(-18vw, 8vh, 0) rotate(32deg) scale(0.92);
+  }
+  94% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0.9;
+    transform: translate3d(118vw, 72vh, 0) rotate(32deg) scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  body.glass-metal-home .gm-ship,
+  body.glass-metal-site .gm-starfield--home .gm-ship {
+    width: 30px;
+    height: auto;
+    animation-duration: 44s;
+  }
+}
+
+/* Home → Brawldle: slide out (js/slide-nav.js) */
+body.glass-metal-home > header.gm-nav,
+body.glass-metal-home > main.gm-main,
+body.glass-metal-home > nav.gm-bottom-nav {
+  transition:
+    transform 0.4s var(--gm-ease),
+    opacity 0.4s var(--gm-ease);
+}
+
+body.glass-metal-home.gm-slide-exit > header.gm-nav,
+body.glass-metal-home.gm-slide-exit > main.gm-main,
+body.glass-metal-home.gm-slide-exit > nav.gm-bottom-nav {
+  transform: translateX(-28px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.glass-metal-home.gm-slide-exit > .gm-starfield {
+  transform: translateX(-16px);
+  opacity: 0.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home .gm-orbit-ring,
+  body.glass-metal-home .gm-orbit-ring--outer {
+    animation: none;
+    opacity: 0.45;
+  }
+
+  body.glass-metal-home .gm-ship,
+  body.glass-metal-site .gm-starfield--home .gm-ship {
+    animation: none;
+    opacity: 0;
+  }
+
+  body.glass-metal-home.gm-slide-exit > header.gm-nav,
+  body.glass-metal-home.gm-slide-exit > main.gm-main,
+  body.glass-metal-home.gm-slide-exit > nav.gm-bottom-nav,
+  body.glass-metal-home.gm-slide-exit > .gm-starfield {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ——— Stagger reveal ——— */
+.gm-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.85s var(--gm-ease), transform 0.85s var(--gm-ease);
+}
+
+.gm-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gm-reveal-delay-1 {
+  transition-delay: 0.08s;
+}
+.gm-reveal-delay-2 {
+  transition-delay: 0.16s;
+}
+.gm-reveal-delay-3 {
+  transition-delay: 0.24s;
+}
+.gm-reveal-delay-4 {
+  transition-delay: 0.32s;
+}
+.gm-reveal-delay-5 {
+  transition-delay: 0.4s;
+}
+.gm-reveal-delay-6 {
+  transition-delay: 0.48s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .gm-metal::after {
+    display: none;
+  }
+  .gm-card-tilt {
+    transform: none !important;
+  }
+}
+
+/* Skip link reuse */
+body.glass-metal-home .skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: var(--gm-radius);
+}
+body.glass-metal-home .skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+body.glass-metal-home a:focus-visible,
+body.glass-metal-home .gm-metal:focus-visible,
+body.glass-metal-site a:focus-visible,
+body.glass-metal-site .gm-metal:focus-visible {
+  outline: 2px solid var(--gm-accent);
+  outline-offset: 3px;
+}
+
+/* =============================================================================
+   Site-wide interior pages (class="glass-metal-site" on <body>)
+   Load after style.css. Keeps wording/layout; reskins to Glass & Metal.
+   ============================================================================= */
+
+/* style.css uses `body { display: grid; grid-template-rows: nav 1fr }` so <main> fills
+   exactly one viewport row. With flex column children, a tall .brawldle-section
+   (min-height ~100vh) forces .hero to flex-shrink to 0 — invisible on desktop.
+   Mobile sets main height:auto in a media query; interior pages need the same. */
+html:has(body.glass-metal-site) {
+  height: auto !important;
+}
+
+body.glass-metal-site {
+  margin: 0;
+  min-height: 100vh;
+  display: block !important;
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  color: var(--gm-text);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.glass-metal-site > *:not(.skip-link):not(.gm-starfield) {
+  position: relative;
+  z-index: 1;
+}
+
+body.glass-metal-site main {
+  max-width: var(--gm-max);
+  margin: 0 auto;
+  padding: calc(5.25rem + 1rem) clamp(1rem, 3vw, 1.75rem) 3rem;
+  box-sizing: border-box;
+  height: auto !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Account pages: center card without transform (avoids conflict with .gm-reveal) */
+body.glass-metal-site main#main:has(.login-container) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 5.25rem - 6rem);
+}
+
+body.glass-metal-site main#main:has(.login-container) .login-container {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Minigames hub: slide in from right after home (js/slide-nav.js) */
+html.gm-slide-enter body.glass-metal-site > header.gm-nav,
+html.gm-slide-enter body.glass-metal-site > main#main,
+html.gm-slide-enter body.glass-metal-site > nav.gm-bottom-nav {
+  transform: translateX(36px);
+  opacity: 0;
+  transition:
+    transform 0.45s var(--gm-ease),
+    opacity 0.45s var(--gm-ease);
+}
+
+html.gm-slide-enter body.glass-metal-site.gm-slide-enter-done > header.gm-nav,
+html.gm-slide-enter body.glass-metal-site.gm-slide-enter-done > main#main,
+html.gm-slide-enter body.glass-metal-site.gm-slide-enter-done > nav.gm-bottom-nav {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.gm-slide-enter body.glass-metal-site > header.gm-nav,
+  html.gm-slide-enter body.glass-metal-site > main#main,
+  html.gm-slide-enter body.glass-metal-site > nav.gm-bottom-nav {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* Brawldle / TrophyGuess play pages: tighter top spacing so the game sits higher */
+body.brawldle-game main {
+  padding-top: 4.35rem;
+}
+
+body.brawldle-game .brawldle-text {
+  margin-top: 0.35rem !important;
+}
+
+body.brawldle-game .brawldle-video iframe {
+  margin-top: 0.45rem !important;
+}
+
+@media (min-width: 769px) {
+  body.brawldle-game .brawldle-video iframe {
+    margin-top: 0.35rem !important;
+  }
+}
+
+@media (max-width: 899px) {
+  body.glass-metal-site main {
+    padding-bottom: calc(3rem + 4.5rem);
+  }
+}
+
+body.glass-metal-site .skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: var(--gm-radius);
+}
+
+body.glass-metal-site .skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* Legacy footer → glass strip */
+body.glass-metal-site .footer {
+  background: rgba(5, 5, 5, 0.92);
+  border-top: 1px solid var(--gm-border-soft);
+  margin-top: 3rem;
+  padding: 2.25rem 1rem;
+  text-align: center;
+}
+
+body.glass-metal-site .footer-content {
+  max-width: var(--gm-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  body.glass-metal-site .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+body.glass-metal-site .footer-link {
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gm-text-muted) !important;
+}
+
+body.glass-metal-site .footer-link:hover {
+  color: #fff !important;
+}
+
+body.glass-metal-site .footer-meta p {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: #555;
+}
+
+/* Sections & containers */
+body.glass-metal-site .stats-container,
+body.glass-metal-site .leaderboard-container,
+body.glass-metal-site .blog {
+  margin-top: 0;
+}
+
+/* Leaderboard: stacked glass sections for staggered .gm-reveal (same pattern as stats) */
+body.glass-metal-site .leaderboard-container > .leaderboard-section {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: min(960px, 100%);
+  margin-bottom: clamp(1rem, 3vw, 1.35rem);
+}
+
+body.glass-metal-site .leaderboard-container > .leaderboard-section:last-child {
+  margin-bottom: 0;
+}
+
+body.glass-metal-site .leaderboard-section--intro {
+  padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1rem, 3vw, 1.75rem) !important;
+}
+
+body.glass-metal-site .leaderboard-section--controls {
+  padding: clamp(1.15rem, 3vw, 1.65rem) clamp(1rem, 3vw, 1.75rem) !important;
+}
+
+body.glass-metal-site .leaderboard-section--boards {
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 3vw, 1.75rem) !important;
+}
+
+/* Submit clip — Google Form embed */
+body.glass-metal-site .submit-clip-page {
+  padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.75rem) !important;
+}
+
+body.glass-metal-site .submit-clip-header {
+  text-align: center;
+  max-width: 38rem;
+  margin: 0 auto 1.75rem;
+}
+
+body.glass-metal-site .submit-clip-header .gm-label {
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--gm-text-muted);
+}
+
+body.glass-metal-site .submit-clip-header h1 {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0.5rem 0 1rem;
+}
+
+body.glass-metal-site .submit-clip-lead {
+  color: var(--gm-text-muted) !important;
+  line-height: 1.65;
+  font-size: 0.95rem;
+  margin: 0 0 1.35rem;
+  text-align: left;
+}
+
+body.glass-metal-site .submit-clip-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+body.glass-metal-site .submit-iframe-shell {
+  border-radius: var(--gm-radius);
+  overflow: hidden;
+  border: 1px solid var(--gm-border-soft);
+  background: rgba(0, 0, 0, 0.28);
+  min-height: min(72vh, 820px);
+}
+
+body.glass-metal-site .submit-iframe {
+  display: block;
+  width: 100%;
+  min-height: min(72vh, 820px);
+  border: 0;
+  background: #fafafa;
+}
+
+@media (max-width: 767px) {
+  body.glass-metal-site .submit-iframe-shell,
+  body.glass-metal-site .submit-iframe {
+    min-height: 560px;
+  }
+}
+
+body.glass-metal-site .stats-section,
+body.glass-metal-site .leaderboard-section,
+body.glass-metal-site .brawldle-section,
+body.glass-metal-site .blog-post {
+  background: var(--gm-surface) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-inner-glow), var(--gm-shadow-tl);
+  color: var(--gm-text) !important;
+}
+
+/* Blog index hero — flat glass strip, no lifted corner shadow / title glow */
+body.glass-metal-site .blog .blog-hero {
+  background: rgba(14, 16, 22, 0.55) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--gm-border-soft) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: none !important;
+  color: var(--gm-text) !important;
+}
+
+body.glass-metal-site .blog .hero-title {
+  text-shadow: none !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
+}
+
+body.glass-metal-site .stats-section h2,
+body.glass-metal-site .brawldle-section h2,
+body.glass-metal-site .leaderboard-section h2,
+body.glass-metal-site .section-header h2 {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.06em;
+  color: #fff !important;
+}
+
+body.glass-metal-site .section-header {
+  border-bottom: 1px solid var(--gm-border-soft) !important;
+}
+
+/* Intro cards (Brawldle hub) — soft inset + even lift shadow (no -6px/-6px “corner” box) */
+body.glass-metal-site .brawldle-intro,
+body.glass-metal-site .trophyguess-intro {
+  background: var(--gm-surface) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-inner-glow), 0 6px 20px rgba(0, 0, 0, 0.22) !important;
+  transition:
+    transform 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .brawldle-intro:hover,
+body.glass-metal-site .trophyguess-intro:hover {
+  box-shadow: var(--gm-inner-glow), 0 10px 28px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .brawldle-intro:hover,
+  body.glass-metal-site .trophyguess-intro:hover {
+    transform: none;
+  }
+}
+
+body.glass-metal-site .brawldle-intro h1,
+body.glass-metal-site .trophyguess-intro h1 {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 300 !important;
+  color: #fff !important;
+}
+
+body.glass-metal-site .intro-text p,
+body.glass-metal-site .brawldle-section p,
+body.glass-metal-site .brawldle-section li {
+  color: var(--gm-text-muted) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+/* Primary actions → metal */
+body.glass-metal-site .brawldle-button,
+body.glass-metal-site .submit-clip-button,
+body.glass-metal-site .submit-button,
+body.glass-metal-site .trophyGuess-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--gm-metal-1) 0%, var(--gm-metal-2) 100%) !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.35) !important;
+  color: #2a1f0f !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-shadow-tl);
+  transition:
+    filter 0.35s var(--gm-motion-smooth),
+    transform 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .brawldle-button::after,
+body.glass-metal-site .submit-clip-button::after,
+body.glass-metal-site .submit-button::after,
+body.glass-metal-site .trophyGuess-button::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  left: -40%;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-12deg);
+  transition: transform 0.65s var(--gm-ease);
+  pointer-events: none;
+}
+
+body.glass-metal-site .brawldle-button:hover,
+body.glass-metal-site .submit-clip-button:hover,
+body.glass-metal-site .submit-button:hover,
+body.glass-metal-site .trophyGuess-button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: var(--gm-shadow-tl), 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.glass-metal-site .brawldle-button:hover::after,
+body.glass-metal-site .submit-clip-button:hover::after,
+body.glass-metal-site .submit-button:hover::after,
+body.glass-metal-site .trophyGuess-button:hover::after {
+  transform: translateX(380%) skewX(-12deg);
+}
+
+body.glass-metal-site .brawldle-button:active,
+body.glass-metal-site .submit-button:active,
+body.glass-metal-site .trophyGuess-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+body.glass-metal-site .brawldle-button2 {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid var(--gm-border-soft) !important;
+  color: var(--gm-text) !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  font-size: 0.68rem !important;
+  border-radius: var(--gm-radius) !important;
+  transition:
+    background 0.35s var(--gm-motion-smooth),
+    border-color 0.35s var(--gm-motion-smooth),
+    transform 0.3s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .brawldle-button2:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--gm-border) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+body.glass-metal-site .brawldle-button2:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .brawldle-button::after,
+  body.glass-metal-site .submit-clip-button::after,
+  body.glass-metal-site .submit-button::after,
+  body.glass-metal-site .trophyGuess-button::after {
+    display: none;
+  }
+
+  body.glass-metal-site .brawldle-button:hover,
+  body.glass-metal-site .submit-clip-button:hover,
+  body.glass-metal-site .submit-button:hover,
+  body.glass-metal-site .trophyGuess-button:hover,
+  body.glass-metal-site .brawldle-button2:hover {
+    transform: none;
+  }
+}
+
+/* Hero / grid */
+body.glass-metal-site .hero {
+  margin: 0 auto 2rem;
+  padding: 0 !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  flex-shrink: 0;
+  overflow: visible !important;
+}
+
+body.glass-metal-site .intro-container {
+  gap: clamp(1.25rem, 3vw, 2rem) !important;
+}
+
+/* Update banner */
+body.glass-metal-site .update-banner {
+  background: var(--gm-surface) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border-soft) !important;
+  border-radius: var(--gm-radius) !important;
+  margin: 0 0 1.5rem !important;
+  max-width: 100% !important;
+}
+
+body.glass-metal-site .update-content {
+  color: var(--gm-text-muted) !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.85rem !important;
+}
+
+/* Modals — above nav (z~100), bottom bar, space video; .show content must stay visible */
+body.glass-metal-site #rankModal.modal,
+body.glass-metal-site .modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100000 !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(6px);
+}
+
+body.glass-metal-site .modal.show {
+  background-color: rgba(0, 0, 0, 0.88) !important;
+}
+
+body.glass-metal-site .modal-content {
+  background: rgba(22, 22, 24, 0.95) !important;
+  border: 1px solid var(--gm-border) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-shadow-tl);
+  color: var(--gm-text) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+body.glass-metal-site .modal.show .modal-content {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+body.glass-metal-site .modal-content h1 {
+  font-weight: 300 !important;
+  color: #fff !important;
+}
+
+body.glass-metal-site .close {
+  color: var(--gm-text-muted) !important;
+}
+
+/* Tables / leaderboard */
+body.glass-metal-site .leaderboard-table,
+body.glass-metal-site table {
+  font-family: "Inter", sans-serif !important;
+  border-radius: var(--gm-radius);
+  overflow: hidden;
+}
+
+body.glass-metal-site .leaderboard-table th {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--gm-accent) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.7rem !important;
+}
+
+body.glass-metal-site .leaderboard-table td {
+  border-color: var(--gm-border-soft) !important;
+  color: var(--gm-text) !important;
+}
+
+/* Inputs */
+body.glass-metal-site input[type="text"],
+body.glass-metal-site input[type="password"],
+body.glass-metal-site input[type="email"],
+body.glass-metal-site input[type="search"],
+body.glass-metal-site textarea,
+body.glass-metal-site .player-tag-input {
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid var(--gm-border-soft) !important;
+  border-radius: var(--gm-radius) !important;
+  color: var(--gm-text) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+body.glass-metal-site input:focus,
+body.glass-metal-site textarea:focus {
+  outline: none !important;
+  border-color: var(--gm-accent) !important;
+}
+
+/* Blog */
+body.glass-metal-site .blog-card,
+body.glass-metal-site .blog-search {
+  font-family: "Inter", sans-serif !important;
+}
+
+body.glass-metal-site .hero-title,
+body.glass-metal-site .hero-sub {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 300 !important;
+}
+
+/* Tab buttons leaderboard */
+body.glass-metal-site .tab-button {
+  font-family: "Inter", sans-serif !important;
+  border-radius: var(--gm-radius) !important;
+}
+
+/* Brawler cards etc */
+body.glass-metal-site .brawler-card,
+body.glass-metal-site .event-card,
+body.glass-metal-site .player-card {
+  border-radius: var(--gm-radius) !important;
+  border: 1px solid var(--gm-border-soft) !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Blog listing — align post cards with glass panels (blog.css loads before overrides) */
+body.glass-metal-site .post-card {
+  background: var(--gm-surface) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-inner-glow), 0 6px 18px rgba(0, 0, 0, 0.2) !important;
+  transition:
+    transform 0.45s var(--gm-motion-smooth),
+    box-shadow 0.45s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gm-inner-glow), 0 10px 26px rgba(0, 0, 0, 0.28) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .post-card:hover {
+    transform: none;
+  }
+}
+
+body.glass-metal-site .post-title {
+  color: #fff !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 500 !important;
+}
+
+body.glass-metal-site .post-excerpt {
+  color: var(--gm-text-muted) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+body.glass-metal-site .post-body {
+  color: var(--gm-text) !important;
+}
+
+body.glass-metal-site .post-cta {
+  color: var(--gm-accent) !important;
+  font-family: "Inter", sans-serif !important;
+  text-decoration: none;
+}
+
+body.glass-metal-site .post-cta:hover {
+  color: #fff !important;
+}
+
+/* Account / form CTAs */
+body.glass-metal-site .account-buttons {
+  position: relative;
+  overflow: hidden;
+  transition:
+    filter 0.3s var(--gm-motion-smooth),
+    transform 0.3s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .account-buttons:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+body.glass-metal-site .account-buttons:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .account-buttons:hover,
+  body.glass-metal-site .account-buttons:active {
+    transform: none;
+  }
+}
+

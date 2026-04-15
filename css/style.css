@@ -25,6 +25,15 @@
     --colora: #ffe537;
     --colora2: #537fe7;
 
+    /* Design tokens (spacing, surfaces — extend as needed) */
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.42);
+    --shadow-card-hover: 0 22px 48px rgba(0, 0, 0, 0.5);
+    --surface-elevated: hsl(0, 0%, 9%);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+
     /* landing page */
     --ff: var(--ff-heading);
     --h1: bold max(4rem)/1em var(--ff); 
@@ -93,18 +102,43 @@ main {
 
 body::before {
     content: '';
-    position: fixed; /* fixed so it fills the viewport even when scrolling */
+    position: fixed;
     inset: 0;
-    /* Layer the subtle dot pattern over the animated GIF */
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px), url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjJxMjRocmY2YXZnM3EyN3c5cDY3dHB0N3B4djBvYnRwYWxrN3VweSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aRZ4vTsHnyW6A/giphy.gif');
-    background-size: 50px 50px, cover;
-    background-repeat: repeat, no-repeat;
-    background-position: 0 0, center;
-    opacity: 0.3;
-
+    /* Calm, static backdrop: depth gradients + fine grid (no heavy GIF) */
+    background-color: var(--gray5);
+    background-image:
+        radial-gradient(ellipse 100% 70% at 50% -30%, rgba(83, 127, 231, 0.14), transparent 55%),
+        radial-gradient(ellipse 60% 45% at 100% 100%, rgba(255, 229, 55, 0.05), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 0% 80%, rgba(83, 127, 231, 0.06), transparent 45%),
+        linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7%) 45%, hsl(0, 0%, 5%) 100%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 23px,
+            rgba(255, 255, 255, 0.018) 23px,
+            rgba(255, 255, 255, 0.018) 24px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 23px,
+            rgba(255, 255, 255, 0.018) 23px,
+            rgba(255, 255, 255, 0.018) 24px
+        );
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1;
     z-index: -1;
-    animation: float 5s ease-in-out infinite;
-    pointer-events: none; /* Ensure the background doesn't interfere with user interactions */
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        background-image:
+            radial-gradient(ellipse 100% 70% at 50% -30%, rgba(83, 127, 231, 0.1), transparent 55%),
+            linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7%) 100%);
+    }
 }
 
 
@@ -250,8 +284,13 @@ select:focus-visible {
 }
 
 .nav div:nth-child(2) a:hover {
-    color: var(--gray90);
-    transform: scale(1.03);
+    color: #fff;
+}
+
+.nav div:nth-child(2) a:focus-visible {
+    outline: 2px solid var(--colora);
+    outline-offset: 4px;
+    border-radius: 6px;
 }
 
 .nav div:nth-child(2) img{
@@ -1011,9 +1050,9 @@ body.snap-page .flex-cards .card {
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
-    background-color: var(--gray10);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-elevated);
+    box-shadow: var(--shadow-card);
     transition: transform 320ms cubic-bezier(.2,.9,.3,1), box-shadow 320ms ease, filter 320ms ease;
     will-change: transform, box-shadow;
     cursor: pointer;
@@ -1021,8 +1060,8 @@ body.snap-page .flex-cards .card {
 
 /* Scope hover to the card itself for a modern lift + soft shadow */
 .flex-cards .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.35);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: var(--shadow-card-hover), 0 6px 18px rgba(0,0,0,0.35);
     filter: drop-shadow(0 12px 24px rgba(0,0,0,0.25));
 }
 
@@ -1056,7 +1095,20 @@ body.snap-page .flex-cards .card {
 
 /* Slight card rim to separate cards from very dark page backgrounds */
 .flex-cards .card {
-    border: 1px solid rgba(255,255,255,0.03);
+    border: 1px solid var(--border-subtle);
+}
+
+/* Homepage cards are real links */
+.flex-cards a.card {
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.flex-cards a.card:focus-visible {
+    outline: 3px solid var(--colora);
+    outline-offset: 4px;
+    border-radius: var(--radius-md);
 }
 
 @media (max-width: 768px) {
@@ -2780,6 +2832,10 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
 .tagline {
     font-size: 20px;
     color: white;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.55;
 }
 
 .hero .intro-text h1.hero-title {
@@ -4145,5 +4201,27 @@ body.debug-layout main { background: rgba(255,255,255,0.02); }
     box-sizing: border-box !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
+  }
+}
+
+/* ——— Accessibility: respect reduced motion ——— */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .card,
+  .intro-img,
+  .flex-cards > div {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .flex-cards .card:hover,
+  .flex-cards a.card:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .flex-cards .card:hover img {
+    transform: none;
   }
 }

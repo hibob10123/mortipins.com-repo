@@ -31,11 +31,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css -->
     <link href="css/style.css" rel="stylesheet" >
-    <!-- Google AdSense -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="css/glass-metal.css?v=22" rel="stylesheet">
+<!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
          crossorigin="anonymous"></script>
     <!-- js -->
     <script src="js/script.js" defer></script>
+    <script src="js/glass-metal.js" defer></script>
+    <script src="js/home-stars.js" defer></script>
+
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -48,78 +53,72 @@
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body>
-   <!-- overlay for mobile-->
-   <div id="overlay">
-        <div>
-            <i class="fa fa-times" title="button to close navigation" onclick="off()"></i>
+<body class="glass-metal-site">
+    <!-- Same parallax starfield + planets + ship as index (home-stars.js full mode) -->
+    <div class="gm-starfield gm-starfield--home" aria-hidden="true">
+        <div class="gm-planets">
+            <div class="gm-planet gm-planet--a" data-parallax="0.055" aria-hidden="true"></div>
+            <div class="gm-planet gm-planet--b" data-parallax="0.1" aria-hidden="true"></div>
+            <div class="gm-planet gm-planet--c" data-parallax="0.165" aria-hidden="true"></div>
         </div>
-        <div class="sidebar">
-            <button onclick="location.href='index.html'" class="sidebar-button">Home</button>
-            <button onclick="location.href='brawldle.html'" class="sidebar-button">Minigames</button>
-            <button onclick="location.href='stats.html'" class="sidebar-button">Stats</button>
-            <button onclick="location.href='blog.html'" class="sidebar-button">Blog</button>
-            <button onclick="location.href='account/signin.html'" class="sidebar-button">Account</button>
+        <div class="gm-ship-pass" aria-hidden="true">
+            <svg class="gm-ship" viewBox="0 0 32 14" width="36" height="16" aria-hidden="true" focusable="false">
+                <path fill="rgba(215,230,255,0.75)" d="M0 7 L10 2 L32 7 L10 12 Z" />
+                <path fill="rgba(255,255,255,0.35)" d="M10 2 L22 7 L10 7 Z" />
+            </svg>
         </div>
     </div>
-    <header>
-        <nav class="nav full-nav">
-            <div class="logo">
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo">
-                <span class="logo-text">Brawldle</span>
-            </div>
-            <div class="nav-links">
+   <a class="skip-link" href="#main">Skip to content</a>
+    <header class="gm-nav">
+        <div class="gm-nav-inner">
+            <a class="gm-brand" href="index.html"><img src="images/mortis5_mastery.png" width="36" height="36" alt="MortipinS"><span>MortipinS</span></a>
+            <nav class="gm-nav-links" aria-label="Primary">
                 <a href="index.html">Home</a>
                 <a href="brawldle.html">Minigames</a>
-                <a href="stats.html">Stats</a>
                 <a href="blog.html">Blog</a>
-            </div>
-            <div class="account">
-                <a href="account/signin.html">Account</a>
-            </div>
-        </nav>
-
-        <!-- mobile-->
-        <nav class="nav mobile-nav">
-            <div>
-                <img src="images/mortis5_mastery.png" alt="MortipinS Logo" >
-            </div>
-            <div>
-                <i class="fa-solid fa-bars" title="button to open navigation" onclick="on()"></i>
-            </div>
-        </nav>
+                <a href="stats.html">Stats</a>
+                <a href="leaderboard.html" aria-current="page">Leaderboard</a>
+            </nav>
+            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+        </div>
     </header>
     
-    <main>
-        <div class="leaderboard-section">
-            <div class="leaderboard-header">
-                <h1 class="leaderboard-title">BRAWLDLE Leaderboard</h1>
-                <p class="leaderboard-description">
-                    The <strong>All time</strong> leaderboard shows total accumulated points. 
-                    The <strong>Weekly</strong> leaderboard shows who made the most correct guesses this week (resets every Monday at 5:00 AM UTC).
-                </p>
-            </div>
-            <div class="leaderboard-tabs">
-                <button class="tab-button active" onclick="switchLeaderboard('alltime')">All time</button>
-                <button class="tab-button" onclick="switchLeaderboard('weekly')">Weekly</button>
-            </div>
-
-            <button onclick="location.href='brawldle.html'" class="submit-button">Back to Brawldle</button>
-
-            <div id="alltime-leaderboard" class="leaderboard-panel active">
-                <div id="leaderboard-content">
-                    <div class="loading">Loading leaderboard... (check your internet connection)</div>
+    <main id="main">
+        <div class="leaderboard-container">
+            <section class="leaderboard-section leaderboard-section--intro">
+                <div class="leaderboard-header">
+                    <h1 class="leaderboard-title">BRAWLDLE Leaderboard</h1>
+                    <p class="leaderboard-description">
+                        The <strong>All time</strong> leaderboard shows total accumulated points.
+                        The <strong>Weekly</strong> leaderboard shows who made the most correct guesses this week (resets every Monday at 5:00 AM UTC).
+                    </p>
                 </div>
-            </div>
+            </section>
 
-            <div id="weekly-leaderboard" class="leaderboard-panel">
-                <div id="leaderboard-content-weekly">
-                    <div class="loading">Loading weekly leaderboard...</div>
+            <section class="leaderboard-section leaderboard-section--controls">
+                <div class="leaderboard-tabs">
+                    <button type="button" class="tab-button active" onclick="switchLeaderboard('alltime')">All time</button>
+                    <button type="button" class="tab-button" onclick="switchLeaderboard('weekly')">Weekly</button>
                 </div>
-                <p class="leaderboard-note">Weekly rankings reset every Monday (UTC)</p>
-            </div>
+                <button type="button" onclick="location.href='brawldle.html'" class="submit-button">Back to Brawldle</button>
+            </section>
 
-            <p class="leaderboard-note">Updates every 30 seconds</p>
+            <section class="leaderboard-section leaderboard-section--boards">
+                <div id="alltime-leaderboard" class="leaderboard-panel active">
+                    <div id="leaderboard-content">
+                        <div class="loading">Loading leaderboard... (check your internet connection)</div>
+                    </div>
+                </div>
+
+                <div id="weekly-leaderboard" class="leaderboard-panel">
+                    <div id="leaderboard-content-weekly">
+                        <div class="loading">Loading weekly leaderboard...</div>
+                    </div>
+                    <p class="leaderboard-note">Weekly rankings reset every Monday (UTC)</p>
+                </div>
+
+                <p class="leaderboard-note">Updates every 30 seconds</p>
+            </section>
         </div>
     </main>
 
@@ -132,6 +131,12 @@
             <button onclick="closeModal()" class="submit-button" aria-label="Close modal">Close</button>
         </div>
     </div>
-    </div>
+<nav class="gm-bottom-nav" aria-label="Quick links">
+        <a href="index.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span><span>Home</span></a>
+        <a href="brawldle.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-gamepad"></i></span><span>Play</span></a>
+        <a href="stats.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span><span>Stats</span></a>
+        <a href="blog.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-newspaper"></i></span><span>Blog</span></a>
+        <a href="account/signin.html"><span class="gm-bn-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Account</span></a>
+    </nav>
 </body>
 </html>
