@@ -816,11 +816,52 @@ body.glass-metal-home .gm-nav-icon--discord:hover {
     box-shadow 0.35s var(--gm-motion-smooth);
 }
 
+/* Home hero: main Play — warm gold, high contrast, outer glow (clear primary CTA) */
+body.glass-metal-home .gm-play-btn--hero {
+  background: linear-gradient(145deg, #fff6dc 0%, #f0c96a 36%, #c9782a 100%);
+  border-color: rgba(255, 230, 180, 0.9);
+  color: #1a0f06;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  box-shadow:
+    -3px -6px 22px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 200, 100, 0.55),
+    0 0 40px rgba(255, 170, 60, 0.45),
+    0 10px 32px rgba(0, 0, 0, 0.38);
+}
+
+body.glass-metal-home .gm-play-btn--hero:hover {
+  filter: brightness(1.07) saturate(1.1);
+  transform: translateY(-3px);
+  box-shadow:
+    -4px -10px 36px rgba(0, 0, 0, 0.48),
+    0 0 0 2px rgba(255, 215, 140, 0.75),
+    0 0 56px rgba(255, 185, 70, 0.55),
+    0 14px 40px rgba(0, 0, 0, 0.42);
+}
+
+body.glass-metal-home .gm-play-btn--hero .gm-play-icon {
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+body.glass-metal-home .gm-play-btn--hero:focus-visible {
+  outline: 2px solid rgba(255, 220, 160, 0.95);
+  outline-offset: 3px;
+}
+
 /* Homepage — extra hover motion on primary actions */
 body.glass-metal-home .gm-play-btn:hover .gm-play-icon {
   transform: scale(1.12);
   background: rgba(0, 0, 0, 0.38);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+body.glass-metal-home .gm-play-btn--hero:hover .gm-play-icon {
+  background: rgba(0, 0, 0, 0.32);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 0 16px rgba(255, 200, 100, 0.35);
 }
 
 body.glass-metal-home .gm-video-cap a {
@@ -874,6 +915,10 @@ body.glass-metal-home .gm-panel:hover .gm-panel-link {
   body.glass-metal-home .gm-play-btn:hover .gm-play-icon,
   body.glass-metal-home .gm-video-cap a:hover,
   body.glass-metal-home .gm-panel:hover .gm-panel-link {
+    transform: none;
+  }
+
+  body.glass-metal-home .gm-play-btn--hero:hover {
     transform: none;
   }
 }
@@ -1013,6 +1058,91 @@ body.glass-metal-home .gm-panel:hover .gm-panel-link {
 
 .gm-panel:hover .gm-panel-link {
   letter-spacing: 0.32em;
+}
+
+/* Home bento: featured Play Brawldle card — warmer glass + visible glow ring */
+body.glass-metal-home .gm-glass.gm-panel--spotlight {
+  background: linear-gradient(
+    165deg,
+    rgba(255, 195, 110, 0.24) 0%,
+    rgba(90, 70, 40, 0.34) 48%,
+    rgba(16, 16, 20, 0.78) 100%
+  );
+  border-color: rgba(255, 200, 120, 0.52);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px rgba(255, 190, 90, 0.25),
+    0 16px 48px rgba(0, 0, 0, 0.52),
+    0 0 72px rgba(255, 160, 60, 0.16);
+  transition:
+    border-color 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+body.glass-metal-home .gm-glass.gm-panel--spotlight:hover {
+  border-color: rgba(255, 215, 150, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 200, 120, 0.38),
+    0 22px 58px rgba(0, 0, 0, 0.58),
+    0 0 88px rgba(255, 170, 70, 0.22);
+}
+
+body.glass-metal-home .gm-panel--spotlight h3 {
+  text-shadow: 0 0 28px rgba(255, 200, 120, 0.38);
+}
+
+body.glass-metal-home .gm-panel--spotlight .gm-panel-link {
+  color: #ffe8c8;
+  border-bottom-color: rgba(255, 220, 160, 0.92);
+  letter-spacing: 0.32em;
+}
+
+/* Neon Mortis art — right side of Play Brawldle card (decorative; faded + cool tint) */
+body.glass-metal-home .gm-glass.gm-panel--spotlight .gm-bento-mortis-art {
+  position: absolute;
+  right: clamp(0.25rem, 2vw, 1.35rem);
+  bottom: 8%;
+  width: clamp(104px, 30%, 220px);
+  max-height: 78%;
+  height: auto;
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.32;
+  transform: rotate(-9deg);
+  z-index: 2;
+  pointer-events: none;
+  filter:
+    saturate(0.88)
+    brightness(1.04)
+    drop-shadow(0 0 32px rgba(80, 170, 255, 0.22));
+}
+
+@media (min-width: 768px) {
+  body.glass-metal-home .gm-glass.gm-panel--spotlight {
+    padding-right: clamp(8rem, 23%, 13.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  body.glass-metal-home .gm-glass.gm-panel--spotlight {
+    padding-bottom: clamp(5.5rem, 36vw, 7rem);
+  }
+
+  body.glass-metal-home .gm-glass.gm-panel--spotlight .gm-bento-mortis-art {
+    right: 0.5rem;
+    bottom: 0.65rem;
+    width: min(130px, 46vw);
+    max-height: 52%;
+    opacity: 0.26;
+    transform: rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-home .gm-glass.gm-panel--spotlight .gm-bento-mortis-art {
+    transform: none;
+  }
 }
 
 .gm-panel-tall {
@@ -1267,6 +1397,19 @@ body.glass-metal-home .gm-orbit-ring--outer {
   border-color: rgba(212, 165, 116, 0.16);
   animation: gm-orbit-spin 132s linear infinite reverse;
   opacity: 0.6;
+}
+
+/* Brighter orbital halo behind the featured Play card */
+body.glass-metal-home .gm-orbit-wrap .gm-orbit-ring {
+  border-color: rgba(150, 210, 255, 0.45);
+  box-shadow:
+    0 0 64px rgba(100, 175, 255, 0.16),
+    inset 0 0 44px rgba(100, 165, 255, 0.08);
+}
+
+body.glass-metal-home .gm-orbit-wrap .gm-orbit-ring--outer {
+  border-color: rgba(255, 200, 130, 0.32);
+  opacity: 0.82;
 }
 
 @keyframes gm-orbit-spin {
@@ -1543,6 +1686,86 @@ body.brawldle-game .brawldle-video iframe {
 @media (min-width: 769px) {
   body.brawldle-game .brawldle-video iframe {
     margin-top: 0.35rem !important;
+  }
+}
+
+/* Brawldle guess feedback — aurora (correct) vs nebula alert (wrong), space palette */
+body.glass-metal-site.brawldle-game.flash.flash--brawldle {
+  animation: none !important;
+  background-color: transparent !important;
+}
+
+body.glass-metal-site.brawldle-game.flash.flash--brawldle-correct::after,
+body.glass-metal-site.brawldle-game.flash.flash--brawldle-wrong::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+body.glass-metal-site.brawldle-game.flash.flash--brawldle-correct::after {
+  background:
+    radial-gradient(ellipse 130% 95% at 50% 108%, rgba(0, 255, 210, 0.5) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 55% at 18% 22%, rgba(120, 210, 255, 0.35) 0%, transparent 52%),
+    radial-gradient(ellipse 85% 60% at 88% 18%, rgba(0, 255, 255, 0.22) 0%, transparent 48%),
+    radial-gradient(circle 2px at 22% 35%, rgba(255, 255, 255, 0.9) 0%, transparent 45%),
+    radial-gradient(circle 1.5px at 78% 42%, rgba(255, 255, 255, 0.75) 0%, transparent 40%),
+    radial-gradient(circle 1px at 55% 28%, rgba(200, 240, 255, 0.85) 0%, transparent 35%);
+  animation: gm-brawldle-flash-correct 0.72s ease-out forwards;
+}
+
+body.glass-metal-site.brawldle-game.flash.flash--brawldle-wrong::after {
+  background:
+    radial-gradient(ellipse 110% 75% at 50% 45%, rgba(255, 55, 90, 0.42) 0%, transparent 58%),
+    radial-gradient(ellipse 90% 55% at 28% 72%, rgba(255, 140, 40, 0.28) 0%, transparent 52%),
+    radial-gradient(ellipse 70% 50% at 75% 30%, rgba(160, 0, 120, 0.32) 0%, transparent 50%),
+    radial-gradient(circle 1.5px at 40% 38%, rgba(255, 200, 200, 0.9) 0%, transparent 40%),
+    radial-gradient(circle 1px at 68% 55%, rgba(255, 120, 100, 0.75) 0%, transparent 35%);
+  animation: gm-brawldle-flash-wrong 0.72s ease-out forwards;
+  mix-blend-mode: normal;
+  opacity: 0.95;
+}
+
+@keyframes gm-brawldle-flash-correct {
+  0% {
+    opacity: 0;
+    filter: brightness(1) saturate(1);
+  }
+  22% {
+    opacity: 1;
+    filter: brightness(1.12) saturate(1.25);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes gm-brawldle-flash-wrong {
+  0% {
+    opacity: 0;
+    filter: brightness(1) contrast(1);
+  }
+  18% {
+    opacity: 1;
+    filter: brightness(1.08) contrast(1.08);
+  }
+  45% {
+    opacity: 0.92;
+    filter: brightness(1.05) contrast(1.05);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(1) contrast(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site.brawldle-game.flash.flash--brawldle-correct::after,
+  body.glass-metal-site.brawldle-game.flash.flash--brawldle-wrong::after {
+    animation-duration: 0.22s !important;
   }
 }
 

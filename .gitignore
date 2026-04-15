@@ -24,3 +24,9 @@ npm-debug.log*
 # Environment variables (if you ever use .env files)
 .env
 .env.local
+
+# jupyter notebooks
+vid-list.ipynb
+
+# Local datasets (form exports, submission CSV/TSV — may contain PII)
+data/
