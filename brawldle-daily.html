@@ -32,14 +32,17 @@
     <!-- css -->
     <link href="css/style.css" rel="stylesheet" >
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-    <link href="css/glass-metal.css?v=31" rel="stylesheet">
+    <link href="css/glass-metal.css?v=41" rel="stylesheet">
+    <script src="js/gm-slide-enter.js"></script>
 <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
          crossorigin="anonymous"></script>
     <!-- js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/brawldle-local-stats.js" defer></script>
     <script src="js/script.js" defer></script>
     <script src="js/glass-metal.js" defer></script>
+    <script src="js/report-video.js" defer></script>
     <script src="js/home-stars.js" defer></script>
 
 </head>
@@ -72,24 +75,31 @@
                 <a href="stats.html">Stats</a>
                 <a href="leaderboard.html">Leaderboard</a>
             </nav>
-            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+            <div class="gm-nav-actions"><span class="gm-nav-stats-hint">NEW: track your stats here</span><a class="gm-nav-icon gm-nav-icon--stats" href="brawldle-your-stats.html" title="Your guess stats" aria-label="Your Brawldle guess stats"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></a><a class="gm-metal" href="account/signin.html">Account</a></div>
         </div>
     </header>
     
     <main id="main">
         <section class="brawldle">
             <h1 class="brawldle-text">Daily Game!</h1>
-            <div id="timer">Loading...</div>
-            <div class="brawldle-video">
-                <iframe id="videoFrame" title="Brawldle Daily clip" src="https://www.youtube.com/embed/BjDtf5DlTmA" allowfullscreen></iframe>
-                <div class="rank-buttons">
-                    <img src="images/icon_ranked_bronze.png" alt="Bronze Rank" onclick="selectRank(1)">
-                    <img src="images/icon_ranked_silver.png" alt="Silver Rank" onclick="selectRank(2)">
-                    <img src="images/icon_ranked_gold.png" alt="Gold Rank" onclick="selectRank(3)">
-                    <img src="images/icon_ranked_diamond.png" alt="Diamond Rank" onclick="selectRank(4)">
-                    <img src="images/icon_ranked_mythic.png" alt="Mythic Rank" onclick="selectRank(5)">
-                    <img src="images/icon_ranked_legendary.png" alt="Legendary Rank" onclick="selectRank(6)">
-                    <img src="images/icon_ranked_masters.png" alt="Masters Rank" onclick="selectRank(7)">
+            <div class="brawldle-daily-topbar">
+                <div id="timer" class="brawldle-daily-timer">Loading...</div>
+                <button type="button" class="gm-report-video-btn" id="gm-report-current-video-btn" data-report-video data-video-id="" data-video-url="" aria-label="Report this video">
+                    <i class="fa-solid fa-flag" aria-hidden="true"></i> Report video
+                </button>
+            </div>
+            <div class="featured-clip-wrap featured-clip-wrap--daily-video-only">
+                <div class="brawldle-video">
+                    <iframe id="videoFrame" title="Brawldle Daily clip" src="https://www.youtube.com/embed/BjDtf5DlTmA" allowfullscreen></iframe>
+                    <div class="rank-buttons">
+                        <img src="images/icon_ranked_bronze.png" alt="Bronze Rank" onclick="selectRank(1)">
+                        <img src="images/icon_ranked_silver.png" alt="Silver Rank" onclick="selectRank(2)">
+                        <img src="images/icon_ranked_gold.png" alt="Gold Rank" onclick="selectRank(3)">
+                        <img src="images/icon_ranked_diamond.png" alt="Diamond Rank" onclick="selectRank(4)">
+                        <img src="images/icon_ranked_mythic.png" alt="Mythic Rank" onclick="selectRank(5)">
+                        <img src="images/icon_ranked_legendary.png" alt="Legendary Rank" onclick="selectRank(6)">
+                        <img src="images/icon_ranked_masters.png" alt="Masters Rank" onclick="selectRank(7)">
+                    </div>
                 </div>
             </div>
             

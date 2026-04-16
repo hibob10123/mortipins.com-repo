@@ -1,0 +1,255 @@
+/**
+ * Morti-Site — reading layout (changelog, legal pages, blog posts)
+ * Depends on body.glass-metal-site + css variables from glass-metal.css
+ */
+
+/* ——— Legal / changelog / static prose ——— */
+body.glass-metal-site .legal-page {
+  width: 100%;
+  max-width: 42rem;
+  margin: clamp(4.5rem, 12vw, 6rem) auto 3rem;
+  padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.25rem, 3vw, 1.75rem);
+  background: rgba(14, 14, 16, 0.78) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+  color: var(--gm-text, #e5e2e1) !important;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+body.glass-metal-site .legal-title {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: clamp(1.5rem, 3.5vw, 1.85rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.2 !important;
+  color: #f2f0ee !important;
+  margin: 0 0 0.5rem !important;
+  text-align: left !important;
+}
+
+body.glass-metal-site .legal-lead {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  color: var(--gm-text-muted, #9a9a9a) !important;
+  margin: 0 0 1.75rem !important;
+  max-width: 36rem;
+}
+
+body.glass-metal-site .legal-page p,
+body.glass-metal-site .legal-page li {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
+  color: rgba(232, 229, 226, 0.94) !important;
+}
+
+body.glass-metal-site .legal-page h2 {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  margin: 2rem 0 0.65rem !important;
+  color: #faf8f6 !important;
+}
+
+body.glass-metal-site .legal-page h3 {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin: 1.5rem 0 0.5rem !important;
+  color: #e8e4e0 !important;
+}
+
+body.glass-metal-site .legal-page ul,
+body.glass-metal-site .legal-page ol {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.35rem;
+}
+
+body.glass-metal-site .legal-page li {
+  margin-bottom: 0.4rem;
+}
+
+body.glass-metal-site .legal-page a {
+  color: var(--gm-accent, #d4a574) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+body.glass-metal-site .legal-page a:hover {
+  color: #e8c49a !important;
+}
+
+body.glass-metal-site .legal-page strong {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Changelog */
+body.glass-metal-site .gm-changelog h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--gm-text, #e5e2e1);
+}
+
+body.glass-metal-site .gm-changelog h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gm-accent, #d4a574);
+}
+
+body.glass-metal-site .gm-changelog-entry ul {
+  margin: 0.5rem 0 1.25rem 1.25rem;
+  line-height: 1.65;
+}
+
+body.glass-metal-site .gm-changelog-foot {
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+}
+
+body.glass-metal-site .gm-changelog-foot a {
+  color: var(--gm-accent) !important;
+  font-weight: 500;
+}
+
+/* ——— Blog index (blog.html) + article posts ——— */
+body.glass-metal-site .blog {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--gm-text, #e5e2e1);
+}
+
+body.glass-metal-site .blog-hero {
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.5rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 55%);
+}
+
+body.glass-metal-site .hero-title {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: #faf8f6 !important;
+}
+
+body.glass-metal-site .hero-sub {
+  color: rgba(180, 182, 188, 0.95) !important;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  max-width: 38rem;
+}
+
+body.glass-metal-site .posts {
+  padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.5rem) clamp(3rem, 8vw, 5rem);
+}
+
+body.glass-metal-site .post-card {
+  background: rgba(12, 12, 14, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.glass-metal-site .post-card:hover {
+  border-color: rgba(212, 165, 116, 0.22);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.42);
+}
+
+body.glass-metal-site .post-title {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f0ebe8 !important;
+}
+
+body.glass-metal-site .post-excerpt {
+  color: rgba(210, 208, 204, 0.92) !important;
+  line-height: 1.65 !important;
+}
+
+body.glass-metal-site .post-cta {
+  color: var(--gm-accent, #d4a574) !important;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+body.glass-metal-site .post-cta:hover {
+  color: #e8c49a !important;
+}
+
+/* Long-form article body inside a post card */
+body.glass-metal-site .post-card .post-body h2,
+body.glass-metal-site .post-card .post-body h3,
+body.glass-metal-site .post-card .post-body h4 {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f2f0ee;
+  line-height: 1.3;
+}
+
+body.glass-metal-site .post-card .post-body h2 {
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.65rem;
+}
+
+body.glass-metal-site .post-card .post-body h3 {
+  font-size: 1.05rem;
+  margin: 1.35rem 0 0.5rem;
+  color: #e8e4e0;
+}
+
+body.glass-metal-site .post-card .post-body h4 {
+  font-size: 0.95rem;
+  margin: 1.1rem 0 0.4rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+body.glass-metal-site .post-card .post-body p,
+body.glass-metal-site .post-card .post-body li {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+  color: rgba(228, 225, 220, 0.88) !important;
+}
+
+body.glass-metal-site .post-card .post-body ul,
+body.glass-metal-site .post-card .post-body ol {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.35rem;
+}
+
+body.glass-metal-site .post-card .post-body li {
+  margin-bottom: 0.35rem;
+}
+
+body.glass-metal-site .post-card .post-body a {
+  color: var(--gm-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body.glass-metal-site .post-card .post-body a:hover {
+  color: #e8c49a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .post-card {
+    transition: none;
+  }
+}

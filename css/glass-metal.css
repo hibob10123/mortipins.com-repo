@@ -3,6 +3,8 @@
  * Light source: top-left ~45° for elevated shadows
  */
 
+@import url("morti-article.css");
+
 :root {
   --gm-bg-obsidian: #0a0a0a;
   --gm-bg-charcoal: #121212;
@@ -17,6 +19,8 @@
   --gm-radius: 12px;
   --gm-pad-section: clamp(2.5rem, 5vw, 4.5rem);
   --gm-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* Page / card slides — plain ease-out, no overshoot */
+  --gm-slide-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --gm-max: 1280px;
   --gm-shadow-tl: -6px -6px 24px rgba(0, 0, 0, 0.45);
   --gm-inner-glow: inset 0.5px 0.5px 0 0 rgba(255, 255, 255, 0.12);
@@ -26,6 +30,21 @@
   --gm-space-gif-url: url("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODh6MnAwaGN1aXhsMzYyYzN6a2dvM2xvc29mZjZnNXl2MWt5Y2xrMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sJvz8Qnfly3BOuotGx/giphy.gif");
   /* Dark wash stacked above the GIF (higher = subtler / lower perceived GIF opacity) */
   --gm-space-gif-dim: 0.58;
+}
+
+/* Sideways scroll: glass-metal pages should not extend past the viewport. Index only
+   loads this sheet (no style.css), so duplicate the html/body clamp from style.css. */
+html:has(body.glass-metal-home),
+html:has(body.glass-metal-site) {
+  overflow-x: hidden;
+  /* Avoid white flash before body::before paints (FOUC on navigation) */
+  background-color: #040814;
+}
+
+body.glass-metal-home,
+body.glass-metal-site {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Space + glass: GIF layer + cool tint (direct asset; iframe embed is not used for bg) */
@@ -111,7 +130,8 @@ body.glass-metal-home {
   min-height: 100vh;
   position: relative;
   isolation: isolate;
-  background: transparent;
+  /* Base fill under fixed ::before (avoids white flash while styles load) */
+  background-color: #040814;
   color: var(--gm-text);
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 400;
@@ -123,7 +143,7 @@ body.glass-metal-home * {
   box-sizing: border-box;
 }
 
-body.glass-metal-home > *:not(.skip-link):not(.gm-starfield) {
+body.glass-metal-home > *:not(.skip-link):not(.gm-starfield):not(.gm-bottom-nav) {
   position: relative;
   z-index: 1;
 }
@@ -671,6 +691,31 @@ body.glass-metal-home .gm-label {
   gap: 0.75rem;
 }
 
+/* Hint beside “your stats” chart icon (desktop / wide header) */
+.gm-nav-stats-hint {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gm-accent);
+  line-height: 1.25;
+  max-width: 7.5rem;
+  text-align: right;
+  flex-shrink: 1;
+}
+
+@media (max-width: 1049px) {
+  .gm-nav-stats-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-nav-stats-hint {
+    transition: none;
+  }
+}
+
 .gm-nav .gm-metal {
   padding: 0.65rem 1.25rem;
   font-size: 0.6rem;
@@ -709,6 +754,21 @@ body.glass-metal-home .gm-label {
   outline-offset: 2px;
 }
 
+.gm-nav-icon--stats:hover {
+  color: var(--gm-accent);
+  background: rgba(212, 165, 116, 0.12);
+}
+
+body.glass-metal-home .gm-nav-icon--stats:hover {
+  color: var(--gm-accent);
+  background: rgba(212, 165, 116, 0.12);
+}
+
+body.glass-metal-site .gm-nav-icon--stats[aria-current="page"] {
+  color: var(--gm-accent);
+  background: rgba(212, 165, 116, 0.15);
+}
+
 body.glass-metal-home .gm-nav-icon--yt:hover {
   color: #ff4e45;
   background: rgba(255, 60, 50, 0.12);
@@ -730,6 +790,11 @@ body.glass-metal-home .gm-nav-icon--discord:hover {
   max-width: var(--gm-max);
   margin: 0 auto;
   padding: calc(5.5rem + var(--gm-pad-section)) clamp(1.25rem, 4vw, 2.25rem) var(--gm-pad-section);
+}
+
+/* Home: nav is ~4.25–4.75rem; avoid stacking full section pad again (banner sat too low) */
+body.glass-metal-home .gm-main {
+  padding-top: calc(4.35rem + 0.65rem);
 }
 
 .gm-grid-12 {
@@ -1470,13 +1535,13 @@ body.glass-metal-site .gm-starfield--home .gm-ship {
   }
 }
 
-/* Home → Brawldle: slide out (js/slide-nav.js) */
+/* Home → next page: slide out (glass-metal.js) */
 body.glass-metal-home > header.gm-nav,
 body.glass-metal-home > main.gm-main,
 body.glass-metal-home > nav.gm-bottom-nav {
   transition:
-    transform 0.4s var(--gm-ease),
-    opacity 0.4s var(--gm-ease);
+    transform 0.4s var(--gm-slide-ease),
+    opacity 0.4s var(--gm-slide-ease);
 }
 
 body.glass-metal-home.gm-slide-exit > header.gm-nav,
@@ -1490,6 +1555,39 @@ body.glass-metal-home.gm-slide-exit > nav.gm-bottom-nav {
 body.glass-metal-home.gm-slide-exit > .gm-starfield {
   transform: translateX(-16px);
   opacity: 0.12;
+}
+
+/* Interior → next page: slide out (same easing as enter; no bounce) */
+body.glass-metal-site > header.gm-nav,
+body.glass-metal-site > main#main,
+body.glass-metal-site > nav.gm-bottom-nav {
+  transition:
+    transform 0.36s var(--gm-slide-ease),
+    opacity 0.36s var(--gm-slide-ease);
+}
+
+body.glass-metal-site.gm-slide-exit-site > header.gm-nav,
+body.glass-metal-site.gm-slide-exit-site > main#main,
+body.glass-metal-site.gm-slide-exit-site > nav.gm-bottom-nav {
+  transform: translateX(-16px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.glass-metal-site.gm-slide-exit-site > .gm-starfield {
+  opacity: 0.15;
+  transition: opacity 0.36s var(--gm-slide-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site.gm-slide-exit-site > header.gm-nav,
+  body.glass-metal-site.gm-slide-exit-site > main#main,
+  body.glass-metal-site.gm-slide-exit-site > nav.gm-bottom-nav,
+  body.glass-metal-site.gm-slide-exit-site > .gm-starfield {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1519,7 +1617,9 @@ body.glass-metal-home.gm-slide-exit > .gm-starfield {
 .gm-reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.85s var(--gm-ease), transform 0.85s var(--gm-ease);
+  transition:
+    opacity 0.85s var(--gm-slide-ease),
+    transform 0.85s var(--gm-slide-ease);
 }
 
 .gm-reveal.is-visible {
@@ -1544,6 +1644,20 @@ body.glass-metal-home.gm-slide-exit > .gm-starfield {
 }
 .gm-reveal-delay-6 {
   transition-delay: 0.48s;
+}
+
+/* Interior (glass-metal-site): slide + fade; use transition-* only so .gm-reveal-delay-* still applies */
+body.glass-metal-site .gm-reveal {
+  opacity: 0;
+  transform: translateX(28px);
+  transition-property: opacity, transform;
+  transition-duration: 0.75s;
+  transition-timing-function: var(--gm-slide-ease);
+}
+
+body.glass-metal-site .gm-reveal.is-visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1602,14 +1716,14 @@ body.glass-metal-site {
   display: block !important;
   position: relative;
   isolation: isolate;
-  background: transparent;
+  background-color: #040814;
   color: var(--gm-text);
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
 
-body.glass-metal-site > *:not(.skip-link):not(.gm-starfield) {
+body.glass-metal-site > *:not(.skip-link):not(.gm-starfield):not(.gm-bottom-nav) {
   position: relative;
   z-index: 1;
 }
@@ -1642,15 +1756,15 @@ body.glass-metal-site main#main:has(.login-container) .login-container {
   margin-right: auto;
 }
 
-/* Minigames hub: slide in from right after home (js/slide-nav.js) */
+/* Interior: slide in after any in-site navigation (js/gm-slide-enter.js + glass-metal.js) */
 html.gm-slide-enter body.glass-metal-site > header.gm-nav,
 html.gm-slide-enter body.glass-metal-site > main#main,
 html.gm-slide-enter body.glass-metal-site > nav.gm-bottom-nav {
   transform: translateX(36px);
   opacity: 0;
   transition:
-    transform 0.45s var(--gm-ease),
-    opacity 0.45s var(--gm-ease);
+    transform 0.45s var(--gm-slide-ease),
+    opacity 0.45s var(--gm-slide-ease);
 }
 
 html.gm-slide-enter body.glass-metal-site.gm-slide-enter-done > header.gm-nav,
@@ -1975,6 +2089,39 @@ body.glass-metal-site .section-header {
   border-bottom: 1px solid var(--gm-border-soft) !important;
 }
 
+/* Stats page: same glass panel + slide-in as minigames hub cards (see .gm-reveal override below) */
+body.glass-metal-site .stats-container {
+  margin-top: 0 !important;
+  margin-bottom: 2rem;
+}
+
+body.glass-metal-site .stats-section {
+  background: var(--gm-surface) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--gm-border) !important;
+  border-radius: var(--gm-radius) !important;
+  box-shadow: var(--gm-inner-glow), 0 6px 20px rgba(0, 0, 0, 0.22) !important;
+}
+
+body.glass-metal-site .stats-section:hover {
+  box-shadow: var(--gm-inner-glow), 0 10px 28px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.glass-metal-site .stats-section.gm-reveal.is-visible:hover {
+  transform: translate(0, -2px);
+  transition:
+    transform 0.35s var(--gm-motion-smooth),
+    box-shadow 0.35s var(--gm-motion-smooth);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .stats-section:hover,
+  body.glass-metal-site .stats-section.gm-reveal.is-visible:hover {
+    transform: none;
+  }
+}
+
 /* Intro cards (Brawldle hub) — soft inset + even lift shadow (no -6px/-6px “corner” box) */
 body.glass-metal-site .brawldle-intro,
 body.glass-metal-site .trophyguess-intro {
@@ -1984,20 +2131,20 @@ body.glass-metal-site .trophyguess-intro {
   border: 1px solid var(--gm-border) !important;
   border-radius: var(--gm-radius) !important;
   box-shadow: var(--gm-inner-glow), 0 6px 20px rgba(0, 0, 0, 0.22) !important;
+}
+
+body.glass-metal-site .brawldle-intro.gm-reveal.is-visible:hover,
+body.glass-metal-site .trophyguess-intro.gm-reveal.is-visible:hover {
+  box-shadow: var(--gm-inner-glow), 0 10px 28px rgba(0, 0, 0, 0.3) !important;
+  transform: translate(0, -2px);
   transition:
     transform 0.35s var(--gm-motion-smooth),
     box-shadow 0.35s var(--gm-motion-smooth);
 }
 
-body.glass-metal-site .brawldle-intro:hover,
-body.glass-metal-site .trophyguess-intro:hover {
-  box-shadow: var(--gm-inner-glow), 0 10px 28px rgba(0, 0, 0, 0.3) !important;
-  transform: translateY(-2px);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  body.glass-metal-site .brawldle-intro:hover,
-  body.glass-metal-site .trophyguess-intro:hover {
+  body.glass-metal-site .brawldle-intro.gm-reveal.is-visible:hover,
+  body.glass-metal-site .trophyguess-intro.gm-reveal.is-visible:hover {
     transform: none;
   }
 }
@@ -2141,20 +2288,57 @@ body.glass-metal-site .intro-container {
   gap: clamp(1.25rem, 3vw, 2rem) !important;
 }
 
-/* Update banner */
-body.glass-metal-site .update-banner {
+/* Update banner (minigames hub + homepage) */
+body.glass-metal-site .update-banner,
+body.glass-metal-home .update-banner {
   background: var(--gm-surface) !important;
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--gm-border-soft) !important;
   border-radius: var(--gm-radius) !important;
-  margin: 0 0 1.5rem !important;
-  max-width: 100% !important;
+  padding: 0.75rem 1.25rem !important;
+  margin: 0 auto 1.25rem !important;
+  max-width: min(1100px, calc(100% - 2rem)) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22) !important;
+  position: relative;
+  z-index: 1;
 }
 
-body.glass-metal-site .update-content {
+body.glass-metal-site .update-content,
+body.glass-metal-home .update-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
   color: var(--gm-text-muted) !important;
   font-family: "Inter", sans-serif !important;
   font-size: 0.85rem !important;
+  line-height: 1.55;
+}
+
+body.glass-metal-site .update-content > i:first-child,
+body.glass-metal-home .update-content > i:first-child {
+  color: var(--gm-accent) !important;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+body.glass-metal-site .update-content a,
+body.glass-metal-home .update-content a {
+  color: var(--gm-accent) !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body.glass-metal-site .update-content a:hover,
+body.glass-metal-home .update-content a:hover {
+  color: #e8c49a !important;
+}
+
+body.glass-metal-home .update-banner {
+  margin-top: 0.35rem !important;
 }
 
 /* Modals — above nav (z~100), bottom bar, space video; .show content must stay visible */
@@ -2334,6 +2518,400 @@ body.glass-metal-site .account-buttons:active {
 @media (prefers-reduced-motion: reduce) {
   body.glass-metal-site .account-buttons:hover,
   body.glass-metal-site .account-buttons:active {
+    transform: none;
+  }
+}
+
+/* —— Brawldle Daily: timer + report on one row (no overlap with countdown) —— */
+body#brawldle-daily .brawldle-daily-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto 0.65rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+body#brawldle-daily .brawldle-daily-timer {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  body#brawldle-daily .brawldle-daily-topbar {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  body#brawldle-daily .brawldle-daily-timer {
+    flex: 1 1 auto;
+    margin-bottom: 0 !important;
+  }
+
+  body#brawldle-daily .brawldle-daily-topbar .gm-report-video-btn {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  body#brawldle-daily .brawldle-daily-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body#brawldle-daily .brawldle-daily-topbar .gm-report-video-btn {
+    align-self: center;
+  }
+}
+
+/* Daily: video block only inside featured-clip-wrap (report moved to topbar) */
+body#brawldle-daily .featured-clip-wrap--daily-video-only {
+  gap: 0;
+}
+
+/* —— Report video (above video, centered) —— */
+body.glass-metal-site .featured-clip-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+body.glass-metal-site .featured-clip-wrap .brawldle-video {
+  width: 100%;
+  align-self: stretch;
+}
+
+/* Tighter gap below the button; iframe no longer needs top margin for “below” layout */
+body.glass-metal-site .featured-clip-wrap .brawldle-video iframe {
+  margin-top: 0.35rem;
+}
+
+@media (min-width: 769px) {
+  body.glass-metal-site .featured-clip-wrap .brawldle-video iframe {
+    margin-top: 0.25rem;
+  }
+}
+
+body.glass-metal-site .gm-report-video-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition:
+    color 0.2s var(--gm-motion-smooth),
+    border-color 0.2s var(--gm-motion-smooth),
+    box-shadow 0.2s var(--gm-motion-smooth),
+    transform 0.2s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .gm-report-video-btn:hover {
+  color: #fff;
+  border-color: rgba(212, 165, 116, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 20px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(212, 165, 116, 0.15);
+  transform: translateY(-1px);
+}
+
+body.glass-metal-site .gm-report-video-btn:active {
+  transform: translateY(0);
+}
+
+body.glass-metal-site .gm-report-video-btn:focus-visible {
+  outline: 2px solid var(--gm-accent);
+  outline-offset: 3px;
+}
+
+html.gm-report-modal-open,
+html.gm-report-modal-open body {
+  overflow: hidden;
+}
+
+body.glass-metal-site .gm-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+body.glass-metal-site .gm-report-modal[hidden] {
+  display: none;
+}
+
+body.glass-metal-site .gm-report-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 4, 12, 0.78);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+}
+
+body.glass-metal-site .gm-report-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(400px, 100%);
+  max-height: min(92vh, 520px);
+  overflow: auto;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  color: var(--gm-text);
+  background: linear-gradient(
+    165deg,
+    rgba(28, 30, 36, 0.92) 0%,
+    rgba(12, 14, 20, 0.96) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.45) inset,
+    0 24px 48px rgba(0, 0, 0, 0.55),
+    0 0 80px rgba(0, 0, 0, 0.45);
+}
+
+body.glass-metal-site .gm-report-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.glass-metal-site .gm-report-modal__title {
+  margin: 0;
+  padding-right: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #fff;
+}
+
+body.glass-metal-site .gm-report-modal__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: -0.25rem -0.25rem 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  transition:
+    background 0.2s var(--gm-motion-smooth),
+    color 0.2s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .gm-report-modal__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+body.glass-metal-site .gm-report-modal__close:focus-visible {
+  outline: 2px solid var(--gm-accent);
+  outline-offset: 2px;
+}
+
+body.glass-metal-site .gm-report-modal__close-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+body.glass-metal-site .gm-report-modal__hint {
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.75rem 1.25rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--gm-text-muted);
+}
+
+body.glass-metal-site .gm-report-modal__fields {
+  padding: 0.25rem 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+body.glass-metal-site .gm-report-modal__label {
+  display: block;
+  margin: 0.75rem 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+body.glass-metal-site .gm-report-modal__label:first-child {
+  margin-top: 0.35rem;
+}
+
+body.glass-metal-site .gm-report-modal__optional {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+body.glass-metal-site .gm-report-modal__select,
+body.glass-metal-site .gm-report-modal__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body.glass-metal-site .gm-report-modal__panel .gm-report-modal__select,
+body.glass-metal-site .gm-report-modal__panel .gm-report-modal__textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 10px !important;
+  color: var(--gm-text) !important;
+}
+
+body.glass-metal-site .gm-report-modal__select {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+body.glass-metal-site .gm-report-modal__textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+body.glass-metal-site .gm-report-modal__panel .gm-report-modal__select:focus,
+body.glass-metal-site .gm-report-modal__panel .gm-report-modal__textarea:focus {
+  border-color: rgba(212, 165, 116, 0.45) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1px rgba(212, 165, 116, 0.2);
+}
+
+body.glass-metal-site .gm-report-modal__status {
+  margin: 0;
+  padding: 0 1.25rem;
+  min-height: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--gm-text-muted);
+}
+
+body.glass-metal-site .gm-report-modal__status--ok {
+  color: #8fd9a8;
+}
+
+body.glass-metal-site .gm-report-modal__status--error {
+  color: #f0a8a8;
+}
+
+body.glass-metal-site .gm-report-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 1rem 1.25rem 1.25rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.glass-metal-site .gm-report-modal__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 1.15rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s var(--gm-motion-smooth),
+    border-color 0.2s var(--gm-motion-smooth),
+    color 0.2s var(--gm-motion-smooth),
+    box-shadow 0.2s var(--gm-motion-smooth);
+}
+
+body.glass-metal-site .gm-report-modal__btn--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+body.glass-metal-site .gm-report-modal__btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+body.glass-metal-site .gm-report-modal__btn--primary {
+  background: linear-gradient(180deg, #c99a6a 0%, #9a6b3d 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #1a1208;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+body.glass-metal-site .gm-report-modal__btn--primary:hover {
+  filter: brightness(1.06);
+}
+
+body.glass-metal-site .gm-report-modal__btn:focus-visible {
+  outline: 2px solid var(--gm-accent);
+  outline-offset: 2px;
+}
+
+body.glass-metal-site .gm-report-modal__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-metal-site .gm-report-video-btn {
+    transition: none;
+  }
+
+  body.glass-metal-site .gm-report-video-btn:hover {
     transform: none;
   }
 }

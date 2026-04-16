@@ -30,6 +30,21 @@
 
       if (node.classList.contains("stats-container")) {
         node.querySelectorAll(":scope > .stats-section").forEach(add);
+      } else if (node.classList.contains("legal-page")) {
+        var entries = node.querySelectorAll(":scope > .gm-changelog-entry");
+        var title = node.querySelector(":scope > .legal-title");
+        var lead = node.querySelector(":scope > .legal-lead");
+        if (entries.length) {
+          if (title) add(title);
+          if (lead) add(lead);
+          entries.forEach(add);
+        } else {
+          add(node);
+        }
+      } else if (node.classList.contains("hero")) {
+        var intros = node.querySelectorAll(".brawldle-intro, .trophyguess-intro");
+        if (intros.length) intros.forEach(add);
+        else add(node);
       } else if (node.classList.contains("blog")) {
         node.querySelectorAll(":scope > *").forEach(function (child) {
           if (child.classList.contains("posts")) {
@@ -45,6 +60,8 @@
         node
           .querySelectorAll(":scope > .leaderboard-section, :scope > section")
           .forEach(add);
+      } else if (node.classList.contains("brawldle-ys-grid")) {
+        node.querySelectorAll(":scope > .brawldle-ys-card").forEach(add);
       } else if (node.classList.contains("footer")) {
         /* keep footer static for calmer layout */
       } else if (node.classList.contains("login-container")) {
@@ -72,6 +89,20 @@
       return;
     }
 
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var inViewport = [];
+    var belowFold = [];
+
+    els.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      /* Anything intersecting the first screen: animate on page open (navigation), not on scroll */
+      if (r.bottom > 0 && r.top < vh) {
+        inViewport.push(el);
+      } else {
+        belowFold.push(el);
+      }
+    });
+
     var io = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -81,32 +112,26 @@
           }
         });
       },
-      /* threshold 0 + modest bottom inset: reliable for above-the-fold on first paint */
-      { root: null, rootMargin: "0px 0px -5% 0px", threshold: 0 }
+      { root: null, rootMargin: "0px 0px 0px 0px", threshold: 0 }
     );
 
-    els.forEach(function (el) {
-      io.observe(el);
-    });
-
-    /**
-     * Some browsers/layouts don't deliver the initial intersection callback before paint.
-     * Force-visible any .gm-reveal already in the viewport so content never stays opacity:0.
-     */
-    function revealIfAlreadyInView() {
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      document.querySelectorAll(".gm-reveal:not(.is-visible)").forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < vh) {
-          el.classList.add("is-visible");
-          io.unobserve(el);
-        }
+    function revealViewportAndWireScroll() {
+      inViewport.forEach(function (el) {
+        el.classList.add("is-visible");
+      });
+      belowFold.forEach(function (el) {
+        io.observe(el);
       });
     }
 
-    requestAnimationFrame(function () {
-      requestAnimationFrame(revealIfAlreadyInView);
-    });
+    function scheduleViewportReveal() {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(revealViewportAndWireScroll);
+      });
+    }
+
+    /* Card reveals on every load; shell slide (gm-slide-enter) runs in parallel via CSS */
+    scheduleViewportReveal();
   }
 
   function initTilt() {
@@ -152,4 +177,81 @@
   } else {
     boot();
   }
+})();
+
+/**
+ * Any glass-metal page → another: set gmSlideNav, optional exit motion, then navigate.
+ * (Previously only index loaded this; logic now lives here so all pages participate.)
+ */
+(function () {
+  var home = document.body.classList.contains("glass-metal-home");
+  var site = document.body.classList.contains("glass-metal-site");
+  if (!home && !site) return;
+
+  var reduce =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var durationHomeMs = 400;
+  var durationSiteMs = 360;
+
+  function go(url) {
+    try {
+      sessionStorage.setItem("gmSlideNav", "1");
+    } catch (e) {}
+    window.location.href = url;
+  }
+
+  function isInternalPageLink(anchor) {
+    var href = anchor.getAttribute("href");
+    if (!href || href.charAt(0) === "#") return false;
+    if (anchor.target && anchor.target !== "" && anchor.target !== "_self") return false;
+    if (/^mailto:|^tel:/i.test(href)) return false;
+
+    var abs;
+    try {
+      abs = new URL(anchor.href, window.location.href);
+    } catch (e) {
+      return false;
+    }
+    if (abs.origin !== window.location.origin) return false;
+
+    var cur = new URL(window.location.href);
+    if (abs.pathname === cur.pathname && abs.search === cur.search) return false;
+
+    var path = abs.pathname || "";
+    return /\.html$/i.test(path) || path === "/" || /\/$/i.test(path);
+  }
+
+  document.addEventListener(
+    "click",
+    function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || !isInternalPageLink(a)) return;
+      if (e.defaultPrevented) return;
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      e.preventDefault();
+      var url = a.href;
+
+      if (reduce) {
+        go(url);
+        return;
+      }
+
+      if (home) {
+        document.body.classList.add("gm-slide-exit");
+        window.setTimeout(function () {
+          go(url);
+        }, durationHomeMs);
+      } else {
+        document.body.classList.add("gm-slide-exit-site");
+        window.setTimeout(function () {
+          go(url);
+        }, durationSiteMs);
+      }
+    },
+    true
+  );
 })();

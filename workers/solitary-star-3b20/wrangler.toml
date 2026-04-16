@@ -1,0 +1,19 @@
+# Brawldle / guess / report-video Worker on the Mortipin Cloudflare account.
+# Repo root wrangler.toml points at a different account_id — use THIS file for this Worker.
+#
+# Secrets (from repo root):
+#   wrangler secret put DISCORD_WEBHOOK_URL -c workers/solitary-star-3b20/wrangler.toml
+#
+# Deploy (after adding D1 binding + database_id to match your dashboard):
+#   wrangler deploy -c workers/solitary-star-3b20/wrangler.toml
+
+name = "solitary-star-3b20"
+account_id = "f25f2d86f2e2b056e5cb907cfa8f1f26"
+main = "../../js/workercode.js"
+compatibility_date = "2026-02-02"
+
+# Uncomment and set database_id from Cloudflare → D1 → your guesses DB when deploying.
+# [[d1_databases]]
+# binding = "guesses-db"
+# database_name = "YOUR_D1_NAME"
+# database_id = "YOUR_D1_UUID"

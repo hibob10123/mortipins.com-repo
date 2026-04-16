@@ -1,0 +1,161 @@
+/* Brawldle "Your guess stats" page — glass-metal site */
+
+.brawldle-ys {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  padding-top: clamp(4.5rem, 12vw, 6rem);
+}
+
+.brawldle-ys-hero {
+  text-align: center;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.brawldle-ys-hero h1 {
+  font-size: clamp(1.65rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  color: var(--gm-text, #e5e2e1);
+}
+
+.brawldle-ys-hero p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--gm-text-muted, #9a9a9a);
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+
+.brawldle-ys-empty {
+  text-align: center;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--gm-text-muted, #9a9a9a);
+  font-size: 0.92rem;
+}
+
+.brawldle-ys-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+@media (min-width: 900px) {
+  .brawldle-ys-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.brawldle-ys-card {
+  background: rgba(22, 22, 24, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.brawldle-ys-card h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gm-accent, #d4a574);
+}
+
+.brawldle-ys-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 520px) {
+  .brawldle-ys-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Daily: five KPIs (games, accuracy, avg off, streak, longest) */
+.brawldle-ys-kpis--daily {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 640px) {
+  .brawldle-ys-kpis--daily {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .brawldle-ys-kpis--daily {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Unlimited: four KPIs */
+.brawldle-ys-kpis--unlimited {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 640px) {
+  .brawldle-ys-kpis--unlimited {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.brawldle-ys-kpi {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 0.85rem 0.75rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brawldle-ys-kpi__val {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0ebe8;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.brawldle-ys-kpi__lab {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gm-text-muted, #8a8a8a);
+  line-height: 1.3;
+}
+
+.brawldle-ys-chart-wrap {
+  position: relative;
+  height: min(320px, 55vw);
+  min-height: 220px;
+}
+
+.brawldle-ys-axis-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: #6a6a6a;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brawldle-ys-card {
+    transition: none;
+  }
+}

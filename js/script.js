@@ -419,6 +419,30 @@ const videoLinksDaily = videoLinks; // alias - we'll pick by date from the full 
 
 const rankNames = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
 
+function youtubeIdFromEmbedUrl(embedUrl) {
+    if (!embedUrl) return '';
+    const m = String(embedUrl).match(/\/embed\/([^?&]+)/);
+    return m ? m[1] : '';
+}
+
+function youtubeWatchUrlFromEmbed(embedUrl) {
+    const id = youtubeIdFromEmbedUrl(embedUrl);
+    return id ? `https://www.youtube.com/watch?v=${id}` : '';
+}
+
+function syncReportVideoButton() {
+    const btn = document.getElementById('gm-report-current-video-btn');
+    if (!btn) return;
+    const vf = document.getElementById('videoFrame');
+    const vft = document.getElementById('videoFrameTrophy');
+    let embedSrc = '';
+    if (vft && vft.src) embedSrc = vft.src;
+    else if (vf && vf.src) embedSrc = vf.src;
+    const id = youtubeIdFromEmbedUrl(embedSrc);
+    btn.setAttribute('data-video-id', id);
+    btn.setAttribute('data-video-url', youtubeWatchUrlFromEmbed(embedSrc));
+}
+
 let currentVideoIndex = 0;
 let currentTrophyVideoIndex = 0;
 let selectedRank = null;
@@ -462,6 +486,7 @@ function getRandomVideo() {
     setTimeout(() => {
         videoFrame.src = newVideoSrc;
         console.log('Video src set to:', newVideoSrc);
+        syncReportVideoButton();
     }, 10);
     
     if (rankDisplay) {
@@ -474,6 +499,7 @@ function getRandomTrophyVideo() {
     const videoFrameTrophy = document.getElementById("videoFrameTrophy");
     videoFrameTrophy.src = videoTrophyLinks[currentTrophyVideoIndex].link;
     console.log('Current trophy video:', videoTrophyLinks[currentTrophyVideoIndex]);
+    syncReportVideoButton();
 }
 
 function updateTrophyValue() {
@@ -513,6 +539,7 @@ function getVideoDaily() {
     if (rankDisplay && videoLinksDaily[currentVideoIndex]) {
         rankDisplay.textContent = `True Rank: ${videoLinksDaily[currentVideoIndex].trueRank}`;
     }
+    syncReportVideoButton();
 }
 
 function selectRank(rank) {
@@ -947,6 +974,11 @@ async function submitGuess() {
     }
     updateStreakDisplay();
 
+    if (document.getElementById("brawldle-unlimited") && window.MortipinsBrawldleStats) {
+        window.MortipinsBrawldleStats.recordUnlimited(isCorrect, rankDifference);
+        window.MortipinsBrawldleStats.updateUnlimitedLongestStreak(streak);
+    }
+
 }
 
 
@@ -963,38 +995,85 @@ if (typeof Chart !== 'undefined') {
 
 
 
-function canSubmitGuess() {
-    
-    const lastGuessDate = localStorage.getItem('lastGuessDate');
-    const today = new Date().toISOString().split('T')[0];
-
-    return lastGuessDate !== today;
-    
-   return true;
-}
-
 function updateSubmitButton() {
-    /*
     const submitButton = document.getElementById("submitButton");
-    if (!canSubmitGuess()) {
-        submitButton.textContent = "Already Submitted";
+    if (!submitButton || !window.MortipinsBrawldleStats) return;
+
+    if (window.MortipinsBrawldleStats.hasDailyGuessUsedToday()) {
+        submitButton.textContent = "Already played today";
         submitButton.classList.add("disabled");
-        submitButton.onclick = null; // Disable the click event
+        submitButton.setAttribute("aria-disabled", "true");
+        submitButton.onclick = function (e) {
+            if (e) e.preventDefault();
+            return false;
+        };
     } else {
         submitButton.textContent = "Submit Guess";
         submitButton.classList.remove("disabled");
-        submitButton.onclick = submitGuessDaily; // Enable the click event
-    }
-        */
-    submitButton.textContent = "Submit Guess";
-        submitButton.classList.remove("disabled");
+        submitButton.removeAttribute("aria-disabled");
         submitButton.onclick = submitGuessDaily;
+    }
 }
 
+function getBrawldleDailyShareUrl() {
+    try {
+        return new URL("brawldle-daily.html", window.location.origin).href;
+    } catch (e) {
+        return "https://mortipins.com/brawldle-daily.html";
+    }
+}
+
+function buildDailyShareText(payload) {
+    const dateUtc = payload.dateUtc || "";
+    const rankStepsOff = Number(payload.rankStepsOff) || 0;
+    const isCorrect = !!payload.isCorrect;
+    const cur = Number(payload.currentStreak) || 0;
+    const best = Number(payload.longestStreak) || 0;
+    const resultLine = isCorrect
+        ? "Result: Exact rank"
+        : "Result: ±" + rankStepsOff + " rank" + (rankStepsOff === 1 ? "" : "s") + " off";
+    return [
+        "MortipinS Brawldle Daily · " + dateUtc + " UTC",
+        resultLine,
+        "🔥 Streak: " + cur + " · Best: " + best,
+        "Play: " + getBrawldleDailyShareUrl(),
+    ].join("\n");
+}
+
+function copyDailyShareFallback(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard
+            .writeText(text)
+            .then(function () {
+                alert("Copied to clipboard!");
+            })
+            .catch(function () {
+                window.prompt("Copy:", text);
+            });
+    } else {
+        window.prompt("Copy:", text);
+    }
+}
+
+function shareDailyBrawldleResult(payload) {
+    const text = buildDailyShareText(payload);
+    const title = "MortipinS Brawldle Daily";
+    if (navigator.share) {
+        navigator.share({ title: title, text: text }).catch(function () {
+            copyDailyShareFallback(text);
+        });
+    } else {
+        copyDailyShareFallback(text);
+    }
+}
 
 function submitGuessDaily() {
     if (selectedRankName === null) {
         console.log('No rank selected');
+        return;
+    }
+
+    if (window.MortipinsBrawldleStats && window.MortipinsBrawldleStats.hasDailyGuessUsedToday()) {
         return;
     }
 
@@ -1008,15 +1087,44 @@ function submitGuessDaily() {
         return;
     }
 
+    const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
     const trueRank = clip.trueRank;
+    const trueRankIndex = rankOrder.indexOf(trueRank);
+    const selectedRankIndex = rankOrder.indexOf(selectedRankName);
+    const isCorrect = selectedRankIndex === trueRankIndex;
+    const rankStepsOff = Math.abs(trueRankIndex - selectedRankIndex);
 
-    triggerBrawldleFlash(selectedRankName === trueRank);
+    triggerBrawldleFlash(isCorrect);
+
+    if (window.MortipinsBrawldleStats) {
+        window.MortipinsBrawldleStats.setDailyGuessCompletedToday();
+        window.MortipinsBrawldleStats.recordDaily(isCorrect, rankStepsOff);
+    }
+    updateSubmitButton();
 
     modalText.innerHTML = `
         <p>You guessed: ${selectedRankName}</p>
         <p>True Rank: ${trueRank}</p>
+        <div class="brawldle-daily-share-row">
+            <button type="button" class="submit-button brawldle-daily-share-btn" aria-label="Share your daily result">Share result</button>
+        </div>
         <canvas id="guessDistributionChart" width="400" height="400"></canvas>
     `;
+    const shareBtn = modalText.querySelector(".brawldle-daily-share-btn");
+    if (shareBtn && window.MortipinsBrawldleStats) {
+        const streak = window.MortipinsBrawldleStats.getDailyStreak();
+        const dateUtc = window.MortipinsBrawldleStats.getUtcDateString();
+        shareBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            shareDailyBrawldleResult({
+                dateUtc: dateUtc,
+                rankStepsOff: rankStepsOff,
+                isCorrect: isCorrect,
+                currentStreak: streak.current,
+                longestStreak: streak.longest,
+            });
+        });
+    }
     showModal();
 
     console.log('Submitting guess:', {
@@ -1024,14 +1132,17 @@ function submitGuessDaily() {
         guess: selectedRankName
     });
 
-    fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', { 
+    const videoId = videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null;
+    const guessLabel = selectedRankName;
+
+    fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            video_id: videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null,
-            guess: selectedRankName
+            video_id: videoId,
+            guess: guessLabel
         })
     }).then(response => {
         if (!response.ok) {
@@ -1040,18 +1151,18 @@ function submitGuessDaily() {
         return response.json();
     }).then(data => {
         console.log('Guess submitted:', data);
-        showGuessDistribution(videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null);
+        showGuessDistribution(videoId);
 
-        const today = new Date().toISOString().split('T')[0];
-        localStorage.setItem('lastGuessDate', today);
-        updateSubmitButton();
+        const buttons = document.querySelectorAll('.rank-buttons img');
+        selectedRankName = null;
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+            button.style.transform = '';
+            button.style.filter = '';
+            button.style.opacity = '';
+        });
     }).catch(error => {
         console.error('Error:', error);
-    });
-
-    selectedRankName = null;
-    buttons.forEach(button => {
-        button.classList.remove('selected');
     });
 }
 

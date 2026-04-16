@@ -1,7 +1,8 @@
 /* Blog index — clean layout (pairs with glass-metal.css on body.glass-metal-site) */
 :root {
   --blog-max: 1100px;
-  --blog-muted: #9aa4b2;
+  /* Aligned with glass-metal --gm-text-muted */
+  --blog-muted: #9a9a9a;
 }
 
 .blog,

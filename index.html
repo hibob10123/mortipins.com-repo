@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
+    <style>html{background-color:#040814}</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,7 +25,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="css/glass-metal.css?v=30" rel="stylesheet">
+    <link href="css/glass-metal.css?v=38" rel="stylesheet">
+    <script src="js/gm-slide-enter.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H31KKY28NR"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -35,7 +37,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729" crossorigin="anonymous"></script>
     <script src="js/glass-metal.js" defer></script>
     <script src="js/home-stars.js" defer></script>
-    <script src="js/slide-nav.js" defer></script>
 </head>
 <body class="glass-metal-home">
     <!-- Planets: data-parallax = scroll depth. Replace art: data-image="images/planet.png" OR add gm-planet--has-image + background in CSS. -->
@@ -76,17 +77,25 @@
                         <i class="fa-brands fa-discord" aria-hidden="true"></i>
                     </a>
                 </div>
+                <span class="gm-nav-stats-hint">NEW: track your stats here</span>
+                <a class="gm-nav-icon gm-nav-icon--stats" href="brawldle-your-stats.html" title="Your guess stats" aria-label="Your Brawldle guess stats"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></a>
                 <a class="gm-metal" href="account/signin.html">Account</a>
             </div>
         </div>
     </header>
 
     <main id="main" class="gm-main">
+        <div class="update-banner gm-reveal gm-reveal-delay-1">
+            <div class="update-content">
+                <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
+                <span><strong>Latest:</strong> New UI, track your stats on-device, fresh Brawldle clips, daily game fixes &amp; more. <a href="changelog.html">Read the full changelog</a>.</span>
+            </div>
+        </div>
         <!-- Hero: title + video side by side, play + copy below title column -->
         <section class="gm-hero">
             <div class="gm-hero-split">
                 <div class="gm-hero-copy">
-                    <p class="gm-label gm-reveal gm-reveal-delay-1">Brawl Stars · Subscribe plz</p>
+                    <p class="gm-label gm-reveal gm-reveal-delay-1">Subscribe · Please</p>
                     <h1 class="gm-reveal gm-reveal-delay-2">
                         Mortipin's<br />
                         <span class="gm-accent-text">Brawldle</span>
@@ -98,7 +107,7 @@
                         </a>
                     </div>
                     <p class="gm-hero-lead gm-reveal gm-reveal-delay-4">
-                        Guess the rank, read the meta, and track live rotations—built for cool people subscriped to mortipins
+                        Guess the rank, read mediocre blogs, and check stats (kinda)—built for cool people subscriped to mortipins
                     </p>
                 </div>
                 <div class="gm-hero-media gm-reveal gm-reveal-delay-2">
@@ -121,8 +130,8 @@
                 <a class="gm-glass gm-panel gm-card-tilt gm-bento-large gm-panel--spotlight" href="brawldle.html">
                     <img class="gm-bento-mortis-art" src="images/neon-mortis.png" width="280" height="280" alt="" aria-hidden="true" loading="lazy" decoding="async">
                     <div>
-                        <h3>Play Brawldle</h3>
-                        <p>Daily and unlimited modes—guess the rank from real clips and climb the leaderboard.</p>
+                        <h3>Guess the Rank</h3>
+                        <p>daily and unlimited modes—guess the rank real user clips and climb the leaderboard</p>
                         <span class="gm-panel-link">Play</span>
                     </div>
                 </a>
@@ -132,7 +141,7 @@
                     <div>
                         <h3>View stats</h3>
                     </div>
-                    <p>Active maps, rotations, and player lookups powered by live data.</p>
+                    <p>kinda broken right now but active maps, rotations, and player lookups powered by Brawlify.</p>
                 </div>
             </a>
             <a class="gm-glass gm-panel gm-card-tilt gm-bento-sm-b gm-reveal gm-reveal-delay-3" href="blog.html">
@@ -140,13 +149,13 @@
                     <div>
                         <h3>Read blogs</h3>
                     </div>
-                    <p>Updates, strategy, and community notes from the channel.</p>
+                    <p>updates, strategy, and community notes from the channel.</p>
                 </div>
             </a>
             <div class="gm-glass gm-panel gm-submit-row gm-bento-wide gm-reveal gm-reveal-delay-4">
                 <div>
                     <h3>Submit a clip</h3>
-                    <p>Send your best moments for a chance to be featured in Brawldle and on YouTube.</p>
+                    <p>send your best moments for a chance to be featured in Brawldle and on YouTube.</p>
                 </div>
                 <a class="gm-metal" href="submit.html">Upload</a>
             </div>

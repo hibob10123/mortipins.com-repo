@@ -32,7 +32,8 @@
     <!-- css -->
     <link href="css/style.css" rel="stylesheet" >
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-    <link href="css/glass-metal.css?v=17" rel="stylesheet">
+    <link href="css/glass-metal.css?v=40" rel="stylesheet">
+    <script src="js/gm-slide-enter.js"></script>
 <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729"
          crossorigin="anonymous"></script>
@@ -41,6 +42,7 @@
     <!-- js -->
     <script src="js/script.js" defer></script>
     <script src="js/glass-metal.js" defer></script>
+    <script src="js/report-video.js" defer></script>
     <script src="js/home-stars.js" defer></script>
 
 </head>
@@ -73,7 +75,7 @@
                 <a href="stats.html">Stats</a>
                 <a href="leaderboard.html">Leaderboard</a>
             </nav>
-            <div class="gm-nav-actions"><a class="gm-metal" href="account/signin.html">Account</a></div>
+            <div class="gm-nav-actions"><span class="gm-nav-stats-hint">NEW: track your stats here</span><a class="gm-nav-icon gm-nav-icon--stats" href="brawldle-your-stats.html" title="Your guess stats" aria-label="Your Brawldle guess stats"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></a><a class="gm-metal" href="account/signin.html">Account</a></div>
         </div>
     </header>
     
@@ -87,11 +89,16 @@
             </div>
             <div id="streak">Score: 0</div>
             <p style="color: var(--gray50)">Rules: <br>Score +1 if within +/- 7500 trophies<br>Score +3 and hearts +1 if within +/- 2500 trophies</p>
-            <div class="brawldle-video">
-                <iframe id="videoFrameTrophy" title="TrophyGuess clip" src="" allowfullscreen></iframe>
-                <div class="trophy-slider">
-                    <input type="range" min="1" max="200000" value="1" class="slider" id="trophyRange">
-                    <p>Trophies: <span id="trophyValue">1</span></p>
+            <div class="featured-clip-wrap">
+                <button type="button" class="gm-report-video-btn" id="gm-report-current-video-btn" data-report-video data-video-id="" data-video-url="" aria-label="Report this video">
+                    <i class="fa-solid fa-flag" aria-hidden="true"></i> Report video
+                </button>
+                <div class="brawldle-video">
+                    <iframe id="videoFrameTrophy" title="TrophyGuess clip" src="" allowfullscreen></iframe>
+                    <div class="trophy-slider">
+                        <input type="range" min="1" max="200000" value="1" class="slider" id="trophyRange">
+                        <p>Trophies: <span id="trophyValue">1</span></p>
+                    </div>
                 </div>
             </div>
             <a href="#" class="submit-button" onclick="submitTrophyGuess()">Submit Guess</a>
