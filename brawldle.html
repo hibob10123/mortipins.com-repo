@@ -8,19 +8,24 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MortipinS">
-    <meta name="description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle">
+    <meta name="description" content="Pick your Brawl Stars guess the rank mode: Brawldle Daily (one clip per day), Unlimited (Elo and leaderboard), TrophyGuess, or Multiplayer. Free games from MortipinS.">
+    <meta name="keywords" content="Brawl Stars guess the rank, Brawldle, Brawl Stars minigames, guess the rank unlimited, MortipinS">
     <meta name="author" content="MortipinS">
+    <link rel="canonical" href="https://mortipins.com/brawldle.html">
     <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="MortipinS">
-    <meta property="og:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta property="og:image" content="images/mortipins_logo.jpg">
+    <meta property="og:url" content="https://mortipins.com/brawldle.html">
+    <meta property="og:title" content="Brawl Stars Minigames — Guess the Rank &amp; TrophyGuess | Morti-Site">
+    <meta property="og:description" content="Pick your Brawl Stars guess the rank mode: Brawldle Daily (one clip per day), Unlimited (Elo and leaderboard), TrophyGuess, or Multiplayer. Free games from MortipinS.">
+    <meta property="og:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta property="og:site_name" content="Morti-Site">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MortipinS">
-    <meta name="twitter:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="twitter:image" content="images/mortipins_logo.jpg">
-    <title>Minigames - Morti-Site</title>
+    <meta name="twitter:title" content="Brawl Stars Minigames — Guess the Rank &amp; TrophyGuess | Morti-Site">
+    <meta name="twitter:description" content="Pick your Brawl Stars guess the rank mode: Brawldle Daily (one clip per day), Unlimited (Elo and leaderboard), TrophyGuess, or Multiplayer. Free games from MortipinS.">
+    <meta name="twitter:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta name="theme-color" content="#040814">
+    <title>Brawl Stars Minigames — Guess the Rank &amp; TrophyGuess | Morti-Site</title>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-    <link href="css/glass-metal.css?v=38" rel="stylesheet">
+    <link href="css/glass-metal.css?v=42" rel="stylesheet">
     <script src="js/gm-slide-enter.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465950233828729" crossorigin="anonymous"></script>
     <script src="js/script.js" defer></script>
@@ -106,34 +111,33 @@
             </div>
         </div>
 
-        <div class="brawldle-section how-to-play-detailed">
-            <h2>How to Play Brawldle</h2>
+        <section class="brawldle-section how-to-play-detailed gm-howto-play" aria-labelledby="howto-brawldle-heading">
+            <h2 id="howto-brawldle-heading">How to Play Brawldle</h2>
+            <p class="gm-howto-intro">Two ways to play: grind Elo in Unlimited, or one shared Daily clip with community stats.</p>
 
-            <h3>Unlimited Mode (Elo Ranking)</h3>
-            <p>This is where you climb the leaderboard!</p>
-            <ul>
-                <li><strong>Watch & Guess:</strong> You'll see a gameplay clip. Guess the player's rank in that clip.</li>
-                <li><strong>Ranks:</strong> The possible ranks are: Bronze, Silver, Gold, Diamond, Mythic, Legendary, and Masters.</li>
-                <li><strong>Scoring (Elo System):</strong>
-                    <ul>
-                        <li><strong>Correct Guess:</strong> Gain Elo points.</li>
-                        <li><strong>Incorrect Guess:</strong> Lose Elo points.</li>
-                        <li><strong>The Challenge:</strong> As your total Elo score increases, you'll gain fewer points for correct guesses and lose more for incorrect ones. This makes reaching higher Elo tiers a true test of skill!</li>
+            <div class="gm-howto-grid">
+                <article class="gm-howto-card">
+                    <h3>Unlimited</h3>
+                    <p class="gm-howto-card-sub">Elo ranking &amp; leaderboard</p>
+                    <ul class="gm-howto-list">
+                        <li><strong>Watch &amp; guess</strong> the rank from the clip—Bronze through Masters.</li>
+                        <li><strong>Elo scoring:</strong> correct guesses add points; wrong guesses subtract. As your Elo rises, gains get smaller and losses hurt more.</li>
+                        <li><strong>Leaderboard:</strong> compete globally on Elo.</li>
+                        <li><strong>Account:</strong> sign in to save your score and show up on the board.</li>
                     </ul>
-                </li>
-                <li><strong>Leaderboard:</strong> Compete for the top spot! Your Elo score is tracked on the global leaderboard.</li>
-                <li><strong>Login to Save:</strong> Remember to log in to save your Elo points and appear on the leaderboard.</li>
-            </ul>
-
-            <h3>Daily Game Mode</h3>
-            <p>A fresh challenge every day!</p>
-            <ul>
-                <li><strong>One Clip, One Guess:</strong> You get one featured clip per day.</li>
-                <li><strong>No Points, Just Pride:</strong> Guess the rank. There's no Elo awarded in this mode, but you can see how your guess compares to others with a distribution chart!</li>
-                <li><strong>Come Back Daily:</strong> A new clip awaits you each day.</li>
-            </ul>
-            <p>Ready to play? Choose your mode and show off your Brawldle expertise!</p>
-        </div>
+                </article>
+                <article class="gm-howto-card">
+                    <h3>Daily</h3>
+                    <p class="gm-howto-card-sub">One clip per UTC day</p>
+                    <ul class="gm-howto-list">
+                        <li><strong>One clip, one guess</strong> per day—same clip for everyone.</li>
+                        <li><strong>Community chart</strong> after you submit: see how your guess compares (no Elo in Daily).</li>
+                        <li><strong>Come back tomorrow</strong> for a new featured clip.</li>
+                    </ul>
+                </article>
+            </div>
+            <p class="gm-howto-cta"><strong>Ready?</strong> Use Daily Game or Play Unlimited above.</p>
+        </section>
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-links">
