@@ -705,281 +705,173 @@ function triggerBrawldleFlash(isCorrect) {
     }, 500);
 }
 
+// HTML for the animated skeleton shown while the chart data loads
+function chartSkeletonHTML() {
+    return `<div class="chart-skeleton" aria-label="Loading chart…" role="img">
+        <div class="chart-skeleton__bars">
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+            <div class="chart-skeleton__bar"></div>
+        </div>
+        <p class="chart-skeleton__label">Loading distribution…</p>
+    </div>`;
+}
+
 async function submitGuess() {
-    if (selectedRankName === null) {
-        return;
-    }
+    if (selectedRankName === null) return;
 
     const modalText = document.getElementById("modalText");
     const clip = videoLinks[currentVideoIndex];
-    if (!modalText || !clip || clip.trueRank == null) {
-        console.error("submitGuess: missing modal or video entry", {
-            hasModalText: !!modalText,
-            index: currentVideoIndex,
-        });
+    if (!modalText || !clip) {
+        console.error("submitGuess: missing modal or video entry", { index: currentVideoIndex });
         return;
     }
 
-    // Capture these values immediately before they get cleared
     const guessedRank = selectedRankName;
-    const trueRank = clip.trueRank;
-    const videoLink = clip.link;
+    const videoLink   = clip.link;
+    const token       = localStorage.getItem('token');
 
-    const token = localStorage.getItem('token');
+    // ── 1. Instantly trigger flash and open modal with skeleton ──────────────
+    // We don't know isCorrect yet (server validates), so flash after response.
+    // But we DO show the modal right away so it feels instant.
+    modalText.innerHTML = `
+        <p>You guessed: <strong>${guessedRank}</strong></p>
+        <p id="modal-true-rank" style="opacity:0.4">Checking…</p>
+        <p id="modal-elo-line" style="display:none"></p>
+        ${chartSkeletonHTML()}
+    `;
+    showModal();
 
-    const modal = document.getElementById("rankModal");
+    // ── 2. Fire all backend calls in parallel ────────────────────────────────
+    let currentElo = 0;
+    if (token) {
+        try {
+            const eloResp = await fetch('https://mortipins-dashboard.imenkei64.workers.dev/get-points', {
+                method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (eloResp.ok) currentElo = (await eloResp.json()).points || 0;
+        } catch (e) { /* non-fatal */ }
+    }
 
+    // Calculate points locally (same formula as before — server migration handled separately)
     const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
-    
-    const trueRankIndex = rankOrder.indexOf(trueRank); // Find true rank index
-    const selectedRankIndex = rankOrder.indexOf(guessedRank); // Find selected rank index
-    const isCorrect = selectedRankIndex === trueRankIndex; // Check if the guess is correct
-
-    console.log('True Rank Index:', trueRankIndex, 'Selected Rank Index:', selectedRankIndex);
+    const trueRank    = clip.trueRank; // still local until DB migration is live
+    const trueIdx     = rankOrder.indexOf(trueRank);
+    const guessIdx    = rankOrder.indexOf(guessedRank);
+    const isCorrect   = trueIdx === guessIdx;
+    const rankDiff    = Math.abs(trueIdx - guessIdx);
 
     triggerBrawldleFlash(isCorrect);
 
-    /*
-    modalText.innerHTML = `
-        <p>You guessed: ${selectedRankName}</p>
-        <p>True Rank: ${videoLinks[currentVideoIndex].trueRank}</p>
-        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-    `;
-    modal.style.display = "block";
-    */
-
-    
-    // Get current user Elo/points for proper Elo calculation
-    let currentElo = 0;
-    
-    if (token) {
-        try {
-            const eloResponse = await fetch('https://mortipins-dashboard.imenkei64.workers.dev/get-points', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (eloResponse.ok) {
-                const eloData = await eloResponse.json();
-                currentElo = eloData.points || 0;
-            }
-        } catch (e) {
-            console.log('Could not fetch current Elo, using 0');
-        }
-    }
-    
-    // Calculate points based on Elo system (higher Elo = less gain, more loss)
-    let points = 0;
-    const rankDifference = Math.abs(trueRankIndex - selectedRankIndex);
-    
-    // Base points scale with your Elo
-    // Low Elo: bigger gains/smaller losses
-    // High Elo: smaller gains/bigger losses
     let baseGain, baseLoss;
-    
-    if (currentElo < 200) {
-        baseGain = 30;  // New players gain a lot
-        baseLoss = -3;  // New players lose very little
-    } else if (currentElo < 400) {
-        baseGain = 25;
-        baseLoss = -5;
-    } else if (currentElo < 600) {
-        baseGain = 22;
-        baseLoss = -6;
-    } else if (currentElo < 800) {
-        baseGain = 20;
-        baseLoss = -8;
-    } else if (currentElo < 1000) {
-        baseGain = 18;
-        baseLoss = -10;
-    } else if (currentElo < 1200) {
-        baseGain = 16;
-        baseLoss = -12;
-    } else if (currentElo < 1500) {
-        baseGain = 14;
-        baseLoss = -14;
-    } else if (currentElo < 1800) {
-        baseGain = 12;
-        baseLoss = -16;
-    } else if (currentElo < 2200) {
-        baseGain = 10;
-        baseLoss = -18;
-    } else if (currentElo < 2600) {
-        baseGain = 8;
-        baseLoss = -20;
-    } else if (currentElo < 3000) {
-        baseGain = 6;
-        baseLoss = -23;
-    } else {
-        baseGain = 4;   // Top players gain very little
-        baseLoss = -26; // Top players lose a lot
-    }
-    
-    if (isCorrect) {
-        points = baseGain;
-    } else {
-        // More penalty if you're way off
-        points = baseLoss - (rankDifference * 2);
-    }
+    if      (currentElo < 200 ) { baseGain = 30; baseLoss = -3;  }
+    else if (currentElo < 400 ) { baseGain = 25; baseLoss = -5;  }
+    else if (currentElo < 600 ) { baseGain = 22; baseLoss = -6;  }
+    else if (currentElo < 800 ) { baseGain = 20; baseLoss = -8;  }
+    else if (currentElo < 1000) { baseGain = 18; baseLoss = -10; }
+    else if (currentElo < 1200) { baseGain = 16; baseLoss = -12; }
+    else if (currentElo < 1500) { baseGain = 14; baseLoss = -14; }
+    else if (currentElo < 1800) { baseGain = 12; baseLoss = -16; }
+    else if (currentElo < 2200) { baseGain = 10; baseLoss = -18; }
+    else if (currentElo < 2600) { baseGain = 8;  baseLoss = -20; }
+    else if (currentElo < 3000) { baseGain = 6;  baseLoss = -23; }
+    else                        { baseGain = 4;  baseLoss = -26; }
 
-    console.log('Current Elo:', currentElo, 'Points awarded:', points);
-
-    // Add streak bonuses
-    if (streak >= 10) {
-        points += 10; // 10-win streak bonus
-    } else if (streak >= 5) {
-        points += 5; // 5-win streak bonus
-    }
-
-    console.log('Final points after streak adjustments:', points);
-
-    // Ensure points-display exists
-    let pointsDisplay = document.getElementById('points-display');
-    if (!pointsDisplay) {
-        pointsDisplay = document.createElement('span');
-        pointsDisplay.id = 'points-display';
-        pointsDisplay.textContent = '0'; // Set initial value
-        document.body.appendChild(pointsDisplay); // Append it to the body or a specific container
-    }
-
-    
-    console.log('Submitting guess with isCorrect:', isCorrect);
+    let points = isCorrect ? baseGain : (baseLoss - rankDiff * 2);
+    if      (streak >= 10) points += 10;
+    else if (streak >= 5 ) points += 5;
 
     const guessFetch = fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            video_id: videoLink,
-            guess: guessedRank
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_id: videoLink, guess: guessedRank })
     });
 
     const pointsFetch = token
         ? fetch('https://mortipins-dashboard.imenkei64.workers.dev/update-points', {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                correctRank: trueRank,
-                guessedRank: guessedRank,
-                isCorrect: isCorrect,
-                winStreak: streak,
-                delta: points
-            })
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ correctRank: trueRank, guessedRank, isCorrect, winStreak: streak, delta: points })
         })
         : Promise.resolve(null);
 
-    Promise.all([guessFetch, pointsFetch]).then(async ([guessResponse, pointsResponse]) => {
-        console.log('Responses received - guess:', guessResponse.status, 'points:', pointsResponse?.status);
-        if (!guessResponse.ok) {
-            throw new Error(`HTTP error! status: ${guessResponse.status}`);
-        }
-        const guessData = await guessResponse.json();
-        console.log('Guess submitted:', guessData);
-
-        let pointsDelta = 0;
-        
-        // Try to update points, but don't let it break the modal
-        if (pointsResponse && pointsResponse.ok) {
-            try {
-                const pointsData = await pointsResponse.json();
-                console.log('Points updated:', pointsData);
-
-                // Extract the points value
-                const updatedPoints = parseInt(pointsData.points, 10);
-                console.log('Updated Points:', updatedPoints);
-
-                // Update points display
-                pointsDisplay.textContent = updatedPoints;
-                points = updatedPoints;
-
-                if (points<=250) {
-                    pointsDelta = isCorrect ? 20 : -1;
-                } else if (points<=500) {
-                    pointsDelta = isCorrect ? 18 : -2;
-                } else if (points<=750) {
-                    pointsDelta = isCorrect ? 16 : -3;
-                } else if (points<=1000) {
-                    pointsDelta = isCorrect ? 14 : -4;
-                } else if (points<=2000) {
-                    pointsDelta = isCorrect ? 10 : -5;
-                } else if (points<=2500) {
-                    pointsDelta = isCorrect ? 7 : -6;
-                } else if (points<=3000) {
-                    pointsDelta = isCorrect ? 5 : -5;
-                } else {
-                    pointsDelta = isCorrect ? 3 : -7;
-                }
-                console.log('Points Delta:', pointsDelta);
-            } catch (err) {
-                console.error('Error updating points:', err);
-            }
-        } else {
-            console.warn('Points response failed or missing');
-        }
-
-        // Always show modal regardless of points update
-        if (token) {
-            modalText.innerHTML = `
-                <p>ELO ${pointsDelta >= 0 ? 'gained' : 'lost'}: ${pointsDelta}</p>
-                <p>You guessed: ${guessedRank}</p>
-                <p>True Rank: ${trueRank}</p>
-                <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-            `;
-        } else {
-            modalText.innerHTML = `
-                <p>LOGIN TO EARN POINTS!</p> 
-                <p>You guessed: ${guessedRank}</p>
-                <p>True Rank: ${trueRank}</p>
-                <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-            `;
-        }
-        showModal();
-
-        return showGuessDistribution(videoLink);
-    }).then(() => {
-        console.log('Chart rendered, loading next video...');
-        getRandomVideo();
-    }).catch(error => {
-        console.error('Error in submitGuess:', error);
-        // Show modal even on error
-        const modal = document.getElementById("rankModal");
-        const modalText = document.getElementById("modalText");
-        modalText.innerHTML = `
-            <p>You guessed: ${guessedRank}</p>
-            <p>True Rank: ${trueRank}</p>
-            <canvas id="guessDistributionChart" width="400" height="400"></canvas>
-        `;
-        showModal();
-        console.log('Modal should be displayed now');
-        
-        // Still show the chart
-        showGuessDistribution(videoLink).then(() => {
-            console.log('Chart rendered (error path), loading next video...');
-            getRandomVideo();
-        });
-    });
-    
-    
-
-    if (isCorrect) {
-        streak++;
-    } else {
-        streak = 0;
-    }
+    // ── 3. Update streak + stats immediately (don't wait for API) ────────────
+    if (isCorrect) { streak++; } else { streak = 0; }
     updateStreakDisplay();
 
     if (document.getElementById("brawldle-unlimited") && window.MortipinsBrawldleStats) {
-        window.MortipinsBrawldleStats.recordUnlimited(isCorrect, rankDifference);
+        window.MortipinsBrawldleStats.recordUnlimited(isCorrect, rankDiff);
         window.MortipinsBrawldleStats.updateUnlimitedLongestStreak(streak);
     }
 
+    // ── 4. Fill in true rank immediately (we have it locally for now) ─────────
+    const trueRankEl = document.getElementById('modal-true-rank');
+    if (trueRankEl) {
+        trueRankEl.textContent = `True Rank: ${trueRank}`;
+        trueRankEl.style.opacity = '';
+    }
+
+    // ── 5. When API resolves, replace skeleton with real chart ───────────────
+    Promise.all([guessFetch, pointsFetch]).then(async ([guessResponse, pointsResponse]) => {
+        let pointsDelta = 0;
+
+        if (pointsResponse && pointsResponse.ok) {
+            try {
+                const pd = await pointsResponse.json();
+                const updatedPoints = parseInt(pd.points, 10);
+                let pointsDisplay = document.getElementById('points-display');
+                if (!pointsDisplay) {
+                    pointsDisplay = document.createElement('span');
+                    pointsDisplay.id = 'points-display';
+                    document.body.appendChild(pointsDisplay);
+                }
+                pointsDisplay.textContent = updatedPoints;
+
+                if      (updatedPoints <= 250 ) pointsDelta = isCorrect ? 20 : -1;
+                else if (updatedPoints <= 500 ) pointsDelta = isCorrect ? 18 : -2;
+                else if (updatedPoints <= 750 ) pointsDelta = isCorrect ? 16 : -3;
+                else if (updatedPoints <= 1000) pointsDelta = isCorrect ? 14 : -4;
+                else if (updatedPoints <= 2000) pointsDelta = isCorrect ? 10 : -5;
+                else if (updatedPoints <= 2500) pointsDelta = isCorrect ? 7  : -6;
+                else if (updatedPoints <= 3000) pointsDelta = isCorrect ? 5  : -5;
+                else                            pointsDelta = isCorrect ? 3  : -7;
+            } catch (e) { /* non-fatal */ }
+        }
+
+        // Show ELO line if logged in
+        const eloEl = document.getElementById('modal-elo-line');
+        if (eloEl && token) {
+            eloEl.textContent = `ELO ${pointsDelta >= 0 ? 'gained' : 'lost'}: ${pointsDelta}`;
+            eloEl.style.display = '';
+        } else if (eloEl && !token) {
+            eloEl.textContent = 'LOGIN TO EARN POINTS!';
+            eloEl.style.display = '';
+        }
+
+        // Replace skeleton with real chart
+        const skeleton = modalText.querySelector('.chart-skeleton');
+        if (skeleton) {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'guessDistributionChart';
+            canvas.width = 400;
+            canvas.height = 400;
+            skeleton.replaceWith(canvas);
+        }
+        await showGuessDistribution(videoLink);
+        getRandomVideo();
+    }).catch(err => {
+        console.error('submitGuess API error:', err);
+        // Replace skeleton with fallback message, still move to next video
+        const skeleton = modalText.querySelector('.chart-skeleton');
+        if (skeleton) skeleton.replaceWith(Object.assign(document.createElement('p'), { textContent: '(Distribution unavailable)' }));
+        getRandomVideo();
+    });
 }
+
 
 
 function updateStreakDisplay() {
@@ -1080,19 +972,18 @@ function submitGuessDaily() {
     const modalText = document.getElementById("modalText");
     const clip = videoLinks[currentVideoIndex];
     if (!modalText || !clip) {
-        console.error("submitGuessDaily: missing modal or video entry", {
-            hasModalText: !!modalText,
-            index: currentVideoIndex,
-        });
+        console.error("submitGuessDaily: missing modal or video entry", { index: currentVideoIndex });
         return;
     }
 
-    const rankOrder = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
-    const trueRank = clip.trueRank;
-    const trueRankIndex = rankOrder.indexOf(trueRank);
-    const selectedRankIndex = rankOrder.indexOf(selectedRankName);
-    const isCorrect = selectedRankIndex === trueRankIndex;
-    const rankStepsOff = Math.abs(trueRankIndex - selectedRankIndex);
+    const guessedRank  = selectedRankName;
+    const videoId      = clip.link;
+    const rankOrder    = ["Bronze", "Silver", "Gold", "Diamond", "Mythic", "Legendary", "Masters"];
+    const trueRank     = clip.trueRank;
+    const trueIdx      = rankOrder.indexOf(trueRank);
+    const guessIdx     = rankOrder.indexOf(guessedRank);
+    const isCorrect    = trueIdx === guessIdx;
+    const rankStepsOff = Math.abs(trueIdx - guessIdx);
 
     triggerBrawldleFlash(isCorrect);
 
@@ -1102,56 +993,49 @@ function submitGuessDaily() {
     }
     updateSubmitButton();
 
+    // ── Show modal instantly with skeleton chart ─────────────────────────────
     modalText.innerHTML = `
-        <p>You guessed: ${selectedRankName}</p>
+        <p>You guessed: <strong>${guessedRank}</strong></p>
         <p>True Rank: ${trueRank}</p>
         <div class="brawldle-daily-share-row">
             <button type="button" class="submit-button brawldle-daily-share-btn" aria-label="Share your daily result">Share result</button>
         </div>
-        <canvas id="guessDistributionChart" width="400" height="400"></canvas>
+        ${chartSkeletonHTML()}
     `;
+
     const shareBtn = modalText.querySelector(".brawldle-daily-share-btn");
     if (shareBtn && window.MortipinsBrawldleStats) {
-        const streak = window.MortipinsBrawldleStats.getDailyStreak();
-        const dateUtc = window.MortipinsBrawldleStats.getUtcDateString();
+        const streakData = window.MortipinsBrawldleStats.getDailyStreak();
+        const dateUtc    = window.MortipinsBrawldleStats.getUtcDateString();
         shareBtn.addEventListener("click", function (e) {
             e.preventDefault();
             shareDailyBrawldleResult({
-                dateUtc: dateUtc,
-                rankStepsOff: rankStepsOff,
-                isCorrect: isCorrect,
-                currentStreak: streak.current,
-                longestStreak: streak.longest,
+                dateUtc,
+                rankStepsOff,
+                isCorrect,
+                currentStreak: streakData.current,
+                longestStreak: streakData.longest,
             });
         });
     }
     showModal();
 
-    console.log('Submitting guess:', {
-        video_id: videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null,
-        guess: selectedRankName
-    });
-
-    const videoId = videoLinks[currentVideoIndex] ? videoLinks[currentVideoIndex].link : null;
-    const guessLabel = selectedRankName;
-
+    // ── Fire API in background; replace skeleton with real chart when ready ───
     fetch('https://solitary-star-3b20.caoalexander9-25f.workers.dev/api/guess', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            video_id: videoId,
-            guess: guessLabel
-        })
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_id: videoId, guess: guessedRank })
+    }).then(r => r.ok ? r.json() : null)
+    .then(async () => {
+        const skeleton = modalText.querySelector('.chart-skeleton');
+        if (skeleton) {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'guessDistributionChart';
+            canvas.width = 400;
+            canvas.height = 400;
+            skeleton.replaceWith(canvas);
         }
-        return response.json();
-    }).then(data => {
-        console.log('Guess submitted:', data);
-        showGuessDistribution(videoId);
+        await showGuessDistribution(videoId);
 
         const buttons = document.querySelectorAll('.rank-buttons img');
         selectedRankName = null;

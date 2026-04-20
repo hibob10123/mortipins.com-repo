@@ -3032,3 +3032,244 @@ body.glass-metal-site .gm-report-modal__btn:disabled {
   }
 }
 
+/* ── Chart skeleton loader ────────────────────────────────────────────────── */
+.chart-skeleton {
+  width: 100%;
+  padding: 8px 0 4px;
+}
+
+.chart-skeleton__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  padding: 0 4px;
+}
+
+.chart-skeleton__bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.06) 25%,
+    rgba(255,255,255,0.14) 50%,
+    rgba(255,255,255,0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: chart-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Stagger bar heights so it looks like a real distribution */
+.chart-skeleton__bar:nth-child(1) { height: 30%; animation-delay: 0.0s; }
+.chart-skeleton__bar:nth-child(2) { height: 45%; animation-delay: 0.1s; }
+.chart-skeleton__bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.chart-skeleton__bar:nth-child(4) { height: 85%; animation-delay: 0.3s; }
+.chart-skeleton__bar:nth-child(5) { height: 100%; animation-delay: 0.4s; }
+.chart-skeleton__bar:nth-child(6) { height: 70%; animation-delay: 0.5s; }
+.chart-skeleton__bar:nth-child(7) { height: 40%; animation-delay: 0.6s; }
+
+.chart-skeleton__label {
+  text-align: center;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+@keyframes chart-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Brawldle Hub Hero Strip  (brawldle.html)
+   ═══════════════════════════════════════════════════════════ */
+.bd-hub-hero {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2.2rem, 5vw, 3.8rem) 1.5rem clamp(1.8rem, 4vw, 3rem);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* subtle glow behind the text */
+.bd-hub-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,165,116,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bd-hub-hero__eyebrow {
+  display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gm-accent);
+  margin-bottom: 0.8rem;
+  opacity: 0;
+  animation: bd-hero-up 0.45s ease-out 0.05s forwards;
+}
+
+.bd-hub-hero__headline {
+  font-family: 'Lilita One', sans-serif;
+  font-size: clamp(2.4rem, 6.5vw, 5rem);
+  line-height: 1.05;
+  color: #fff;
+  margin: 0 0 0.55rem;
+  opacity: 0;
+  animation: bd-hero-up 0.45s ease-out 0.18s forwards;
+}
+
+.bd-hub-hero__headline em {
+  font-style: normal;
+  color: var(--gm-accent);
+}
+
+.bd-hub-hero__sub {
+  font-family: 'Open Sans', sans-serif;
+  font-size: clamp(0.88rem, 2vw, 1.08rem);
+  color: var(--gm-text-muted);
+  margin: 0 0 1.6rem;
+  opacity: 0;
+  animation: bd-hero-up 0.45s ease-out 0.3s forwards;
+}
+
+.bd-hub-hero__ranks {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(0.45rem, 1.8vw, 1.1rem);
+  padding: 0;
+  margin: 0;
+}
+
+.bd-hub-hero__ranks img {
+  width: clamp(34px, 5.5vw, 56px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(12px) scale(0.8);
+  animation: bd-rank-pop 0.38s var(--gm-motion-snap) forwards;
+  /* middle icon (Masters) grows slightly larger */
+}
+
+.bd-hub-hero__ranks img:nth-child(1) { animation-delay: 0.42s; }
+.bd-hub-hero__ranks img:nth-child(2) { animation-delay: 0.50s; }
+.bd-hub-hero__ranks img:nth-child(3) { animation-delay: 0.58s; }
+.bd-hub-hero__ranks img:nth-child(4) { animation-delay: 0.66s; width: clamp(38px, 6vw, 64px); }
+.bd-hub-hero__ranks img:nth-child(5) { animation-delay: 0.58s; }
+.bd-hub-hero__ranks img:nth-child(6) { animation-delay: 0.50s; }
+.bd-hub-hero__ranks img:nth-child(7) { animation-delay: 0.42s; }
+
+@keyframes bd-hero-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bd-rank-pop {
+  from { opacity: 0; transform: translateY(12px) scale(0.8); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-hub-hero__eyebrow,
+  .bd-hub-hero__headline,
+  .bd-hub-hero__sub,
+  .bd-hub-hero__ranks img {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Brawldle Splash Screen  (first-visit only, daily + unlimited)
+   ═══════════════════════════════════════════════════════════ */
+.bd-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #040814;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: bd-splash-in 0.2s ease-out forwards;
+  /* prevent layout shift underneath */
+  pointer-events: all;
+}
+
+.bd-splash--out {
+  animation: bd-splash-out 0.38s ease-in forwards !important;
+  pointer-events: none;
+}
+
+.bd-splash__inner {
+  text-align: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+
+.bd-splash__line {
+  margin: 0 0 0.15em;
+  font-family: 'Lilita One', sans-serif;
+  color: #e5e2e1;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: bd-splash-line 0.32s ease-out forwards;
+}
+
+.bd-splash__line--1 {
+  font-size: clamp(2.2rem, 8vw, 5.5rem);
+  animation-delay: 0.08s;
+}
+
+.bd-splash__line--2 {
+  font-size: clamp(2.2rem, 8vw, 5.5rem);
+  color: var(--gm-accent);
+  animation-delay: 0.28s;
+}
+
+.bd-splash__line--3 {
+  font-size: clamp(0.95rem, 2.5vw, 1.5rem);
+  color: var(--gm-text-muted);
+  margin-top: 0.6em;
+  animation-delay: 0.48s;
+}
+
+.bd-splash__skip {
+  display: block;
+  margin-top: 2rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  animation: bd-splash-line 0.32s ease-out 0.7s forwards;
+  opacity: 0;
+}
+
+@keyframes bd-splash-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bd-splash-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes bd-splash-line {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-splash,
+  .bd-splash__line,
+  .bd-splash__skip { animation: none; opacity: 1; transform: none; }
+  .bd-splash--out  { display: none; }
+}
+

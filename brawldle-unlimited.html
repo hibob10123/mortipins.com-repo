@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,21 +7,28 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MortipinS">
-    <meta name="description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle, Unlimited">
+    <meta name="description" content="Brawldle Unlimited — play endless Brawl Stars guess the rank rounds and climb the global Elo leaderboard. Watch real clips, pick Bronze to Masters, earn points. Free and unlimited.">
+    <meta name="keywords" content="Brawldle unlimited, Brawldle infinite, Brawl Stars guess the rank, brawl stars wordle, guess the rank unlimited, Elo leaderboard">
     <meta name="author" content="MortipinS">
+    <link rel="canonical" href="https://mortipins.com/brawldle-unlimited.html">
     <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="MortipinS">
-    <meta property="og:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta property="og:image" content="images/mortipins_logo.jpg">
+    <meta property="og:url" content="https://mortipins.com/brawldle-unlimited.html">
+    <meta property="og:title" content="Brawldle Unlimited — Endless Brawl Stars Guess the Rank">
+    <meta property="og:description" content="Brawldle Unlimited — play endless Brawl Stars guess the rank rounds and climb the global Elo leaderboard. Watch real clips, pick Bronze to Masters, earn points. Free and unlimited.">
+    <meta property="og:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta property="og:site_name" content="Morti-Site">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MortipinS">
-    <meta name="twitter:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="twitter:image" content="images/mortipins_logo.jpg">
-    <title>Brawldle Unlimited - Morti-Site</title>
+    <meta name="twitter:title" content="Brawldle Unlimited — Endless Brawl Stars Guess the Rank">
+    <meta name="twitter:description" content="Brawldle Unlimited — play endless Brawl Stars guess the rank rounds and climb the global Elo leaderboard. Watch real clips, pick Bronze to Masters, earn points. Free and unlimited.">
+    <meta name="twitter:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta name="theme-color" content="#040814">
+    <title>Brawldle Unlimited — Endless Brawl Stars Guess the Rank | MortipinS</title>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Brawldle Unlimited","alternateName":["Brawldle Infinite","Brawl Stars guess the rank unlimited","Brawl Stars Wordle unlimited"],"applicationCategory":"Game","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://mortipins.com/brawldle-unlimited.html","description":"Brawldle Unlimited: play as many Brawl Stars guess-the-rank rounds as you want. Earn Elo points, build win streaks, and climb the global leaderboard.","author":{"@type":"Organization","name":"MortipinS","url":"https://mortipins.com/","sameAs":"https://www.youtube.com/@mortipins"}}
+    </script>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
     <!-- google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +52,7 @@
     <script src="js/glass-metal.js" defer></script>
     <script src="js/report-video.js" defer></script>
     <script src="js/home-stars.js" defer></script>
+    <script src="js/brawldle-splash.js" defer></script>
 
 </head>
 
@@ -58,7 +66,9 @@
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body class="glass-metal-site brawldle-game" id="brawldle-unlimited">
+<body class="glass-metal-site brawldle-game" id="brawldle-unlimited"
+      data-splash-key="brawldle_unlimited_splash_v1"
+      data-splash-lines="Endless clips.|Guess the rank.|Climb the Elo leaderboard.">
     <div class="gm-starfield gm-starfield--subtle" aria-hidden="true">
         <div class="gm-planets">
             <div class="gm-planet gm-planet--a" data-parallax="0.038" aria-hidden="true"></div>
@@ -84,7 +94,7 @@
     
     <main id="main">
         <section class="brawldle">
-            <h1 class="brawldle-text">Brawldle UNLIMITED!</h1>
+            <h1 class="brawldle-text">Brawldle Unlimited — Guess the Rank</h1>
             <button onclick="location.href='leaderboard.html'" class="submit-button">See Leaderboard</button>
             <div id="streak">Streak: 0</div>
             <div class="featured-clip-wrap">
@@ -109,24 +119,22 @@
         </section>
 
         <div class="legal-page" style="margin-top: 2rem;">
-            <h2>About Brawldle Unlimited</h2>
+            <h2>What is Brawldle Unlimited?</h2>
             <p>
-                Brawldle Unlimited is the ultimate test for Brawl Stars fans. Unlike the daily challenge, you can play
-                as many rounds as you want here. Each clip is a real gameplay moment where you must determine the
-                player's rank based on their movement, gadget usage, and overall game sense.
+                <strong>Brawldle Unlimited</strong> is a free, endless <strong>Brawl Stars guess the rank</strong> game. Unlike the daily challenge, there are no limits here — play as many clips as you want. Each video is a real community-submitted gameplay moment. Watch the player's movement, gadget usage, and game sense, then decide: Bronze, Gold, Mythic, Masters?
             </p>
             <h3>Climb the Elo Leaderboard</h3>
             <p>
-                Your performance is tracked using an Elo-style point system. Correct guesses boost your score, while
-                incorrect ones will set you back. As you reach higher tiers, the stakes get higher! Make sure you are
-                logged in to your Morti-Site account to save your progress and see your name on the global leaderboard.
+                Every guess counts toward your <strong>Elo score</strong>. Correct guesses give points; wrong ones take them away. The closer to the right rank, the smaller the penalty. Sign in to your Morti-Site account to save your Elo and appear on the <a href="leaderboard.html">global leaderboard</a>.
             </p>
             <h3>Tips for better guessing</h3>
             <ul>
                 <li><strong>Watch the movement:</strong> Masters players have precise positioning and rarely waste movement.</li>
                 <li><strong>Check gadget timing:</strong> Panic gadgets often signal lower ranks, while strategic usage points higher.</li>
-                <li><strong>Look at the team coordination:</strong> Higher rank players often position themselves to pinch enemies or support teammates.</li>
+                <li><strong>Look at team coordination:</strong> Higher rank players often position to pinch enemies or support teammates.</li>
+                <li><strong>Notice mistakes:</strong> Bronze players overextend, walk into obvious damage, and ignore super timing.</li>
             </ul>
+            <p>Want just one round per day? Try the <a href="brawldle-daily.html">Brawldle Daily</a> challenge.</p>
         </div>
 
         <footer class="footer">

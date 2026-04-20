@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,21 +7,28 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MortipinS">
-    <meta name="description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="keywords" content="MortipinS, Brawl Stars, Guessing Game, Brawldle, Daily">
+    <meta name="description" content="Brawldle Daily — one free Brawl Stars guess the rank challenge every day. Watch today's clip and guess the rank before the timer resets. Same clip for everyone, see the community distribution.">
+    <meta name="keywords" content="Brawldle daily, Brawldle, Brawl Stars guess the rank, brawl stars wordle, daily guess the rank">
     <meta name="author" content="MortipinS">
+    <link rel="canonical" href="https://mortipins.com/brawldle-daily.html">
     <link rel="apple-touch-icon" href="images/mortipins_logo.jpg">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="MortipinS">
-    <meta property="og:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta property="og:image" content="images/mortipins_logo.jpg">
+    <meta property="og:url" content="https://mortipins.com/brawldle-daily.html">
+    <meta property="og:title" content="Brawldle Daily — Brawl Stars Guess the Rank Challenge">
+    <meta property="og:description" content="Brawldle Daily — one free Brawl Stars guess the rank challenge every day. Watch today's clip and guess the rank before the timer resets. Same clip for everyone, see the community distribution.">
+    <meta property="og:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta property="og:site_name" content="Morti-Site">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MortipinS">
-    <meta name="twitter:description" content="Welcome to Morti-Site, a Brawl Stars website created by YouTuber MortipinS. Play Guess the Rank (Brawldle), TrophyGuess, View Stats, Read Blogs, and more!">
-    <meta name="twitter:image" content="images/mortipins_logo.jpg">
-    <title>Brawldle Daily - Morti-Site</title>
+    <meta name="twitter:title" content="Brawldle Daily — Brawl Stars Guess the Rank Challenge">
+    <meta name="twitter:description" content="Brawldle Daily — one free Brawl Stars guess the rank challenge every day. Watch today's clip and guess the rank before the timer resets. Same clip for everyone, see the community distribution.">
+    <meta name="twitter:image" content="https://mortipins.com/images/mortipins_logo.jpg">
+    <meta name="theme-color" content="#040814">
+    <title>Brawldle Daily — Brawl Stars Guess the Rank | MortipinS</title>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Brawldle Daily","alternateName":["Brawldle","Brawl Stars guess the rank daily","Brawl Stars Wordle daily"],"applicationCategory":"Game","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://mortipins.com/brawldle-daily.html","description":"Brawldle Daily: one Brawl Stars guess-the-rank clip per day, shared by the whole community. Watch, guess Bronze through Masters, then see the full community distribution.","author":{"@type":"Organization","name":"MortipinS","url":"https://mortipins.com/","sameAs":"https://www.youtube.com/@mortipins"}}
+    </script>
     <link rel="icon" type="image/png" href="images/mortis5_mastery.png">
     <!-- google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,6 +51,7 @@
     <script src="js/glass-metal.js" defer></script>
     <script src="js/report-video.js" defer></script>
     <script src="js/home-stars.js" defer></script>
+    <script src="js/brawldle-splash.js" defer></script>
 
 </head>
 
@@ -57,7 +65,9 @@
   gtag('config', 'G-H31KKY28NR');
 </script>
 
-<body class="glass-metal-site brawldle-game" id="brawldle-daily">
+<body class="glass-metal-site brawldle-game" id="brawldle-daily"
+      data-splash-key="brawldle_daily_splash_v1"
+      data-splash-lines="Watch the clip.|Guess the rank.|One chance. Every 24 hours.">
     <div class="gm-starfield gm-starfield--subtle" aria-hidden="true">
         <div class="gm-planets">
             <div class="gm-planet gm-planet--a" data-parallax="0.038" aria-hidden="true"></div>
@@ -81,7 +91,7 @@
     
     <main id="main">
         <section class="brawldle">
-            <h1 class="brawldle-text">Daily Game!</h1>
+            <h1 class="brawldle-text">Brawldle Daily — Guess the Rank</h1>
             <div class="brawldle-daily-topbar">
                 <div id="timer" class="brawldle-daily-timer">Loading...</div>
                 <button type="button" class="gm-report-video-btn" id="gm-report-current-video-btn" data-report-video data-video-id="" data-video-url="" aria-label="Report this video">
@@ -109,22 +119,17 @@
         </section>
 
         <div class="legal-page" style="margin-top: 2rem;">
-            <h2>The Daily Brawldle Challenge</h2>
+            <h2>What is Brawldle Daily?</h2>
             <p>
-                Every day, a new featured clip is selected for the community. Everyone gets the same clip, and you only
-                get one shot to guess the rank correctly. It's a great way to test your skills against the entire
-                Morti-Site community.
+                <strong>Brawldle Daily</strong> is a free <strong>Brawl Stars guess the rank</strong> challenge that resets every 24 hours. One clip drops each day — everyone on the site gets the same video. Watch it closely, pick a rank (Bronze, Silver, Gold, Diamond, Mythic, Legendary, or Masters), and submit your single guess before time runs out.
             </p>
             <h3>Community Distribution</h3>
             <p>
-                After you submit your guess, you'll see a chart showing what everyone else guessed. See if you're in the
-                majority or if you spotted something others missed! The daily clip resets every 24 hours, so make sure
-                to check back daily to keep your streak going.
+                After you guess, you'll see a chart breaking down what the entire community picked. Are you in the majority, or did you spot something others missed? The daily clip resets at midnight UTC, so come back tomorrow to keep your streak alive.
             </p>
-            <h3>How to play</h3>
+            <h3>How to play Brawldle</h3>
             <p>
-                Simply watch the video above and select the rank you think the player belongs to. We use the official
-                Brawl Stars ranks: Bronze, Silver, Gold, Diamond, Mythic, Legendary, and Masters. Good luck!
+                Watch the clip above and study the gameplay: positioning, gadget use, map awareness, and decision-making. These all hint at the player's rank. Select the rank badge that matches your read, then hit <em>Submit Guess</em>. You get one shot — make it count. Want unlimited rounds? Try <a href="brawldle-unlimited.html">Brawldle Unlimited</a> with Elo ranking and a global leaderboard.
             </p>
         </div>
 
