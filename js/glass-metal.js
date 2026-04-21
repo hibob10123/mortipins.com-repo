@@ -243,15 +243,40 @@
       if (home) {
         document.body.classList.add("gm-slide-exit");
         window.setTimeout(function () {
+          document.body.classList.remove("gm-slide-exit");
           go(url);
         }, durationHomeMs);
       } else {
         document.body.classList.add("gm-slide-exit-site");
         window.setTimeout(function () {
+          document.body.classList.remove("gm-slide-exit-site");
           go(url);
         }, durationSiteMs);
       }
     },
     true
   );
+})();
+
+/**
+ * Back/forward cache (bfcache): restoring a page does not re-run DOMContentLoaded.
+ * If anything left the UI in a transitional state, fix it on restore.
+ */
+(function () {
+  function resetSlideAndRevealState() {
+    try {
+      document.body.classList.remove("gm-slide-exit", "gm-slide-exit-site");
+      document.documentElement.classList.remove("gm-slide-enter");
+      document.body.classList.add("gm-slide-enter-done");
+      document.body.style.overflow = "";
+      document.querySelectorAll(".gm-reveal").forEach(function (el) {
+        el.classList.add("is-visible");
+      });
+    } catch (e) {}
+  }
+
+  window.addEventListener("pageshow", function (ev) {
+    if (!ev.persisted) return;
+    resetSlideAndRevealState();
+  });
 })();

@@ -1299,6 +1299,22 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSubmitButton();
     }
 });
+
+// bfcache restore: DOMContentLoaded does not run again; clean UI state
+window.addEventListener("pageshow", function (ev) {
+    if (!ev.persisted) return;
+    document.body.style.overflow = "";
+    if (document.getElementById("rankModal")) {
+        closeModal();
+    }
+    if (document.getElementById("brawldle-daily")) {
+        updateSubmitButton();
+        animateBrawldleElements();
+    }
+    if (document.getElementById("brawldle-unlimited")) {
+        animateBrawldleElements();
+    }
+});
 // Only attach trophy slider listener if element exists
 const trophyRangeEl = document.getElementById("trophyRange");
 if (trophyRangeEl) {
