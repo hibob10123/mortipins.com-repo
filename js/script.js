@@ -889,6 +889,7 @@ if (typeof Chart !== 'undefined') {
 
 function updateSubmitButton() {
     const submitButton = document.getElementById("submitButton");
+    const viewChartBtn = document.getElementById("viewChartBtn");
     if (!submitButton || !window.MortipinsBrawldleStats) return;
 
     if (window.MortipinsBrawldleStats.hasDailyGuessUsedToday()) {
@@ -899,11 +900,40 @@ function updateSubmitButton() {
             if (e) e.preventDefault();
             return false;
         };
+        if (viewChartBtn) viewChartBtn.style.display = '';
     } else {
         submitButton.textContent = "Submit Guess";
         submitButton.classList.remove("disabled");
         submitButton.removeAttribute("aria-disabled");
         submitButton.onclick = submitGuessDaily;
+        if (viewChartBtn) viewChartBtn.style.display = 'none';
+    }
+}
+
+async function viewDailyChart() {
+    const modalText = document.getElementById("modalText");
+    if (!modalText) return;
+
+    const today    = window.MortipinsBrawldleStats ? window.MortipinsBrawldleStats.getUtcDateString() : '';
+    const saved    = today ? localStorage.getItem('brawldle_daily_guess_' + today) : null;
+    const clip     = videoLinks[currentVideoIndex];
+
+    modalText.innerHTML = `
+        ${saved ? `<p>You guessed: <strong>${saved}</strong></p>` : ''}
+        ${chartSkeletonHTML()}
+    `;
+    showModal();
+
+    if (clip) {
+        const skeleton = modalText.querySelector('.chart-skeleton');
+        if (skeleton) {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'guessDistributionChart';
+            canvas.width = 400;
+            canvas.height = 400;
+            skeleton.replaceWith(canvas);
+        }
+        await showGuessDistribution(clip.link);
     }
 }
 
@@ -990,6 +1020,8 @@ function submitGuessDaily() {
     if (window.MortipinsBrawldleStats) {
         window.MortipinsBrawldleStats.setDailyGuessCompletedToday();
         window.MortipinsBrawldleStats.recordDaily(isCorrect, rankStepsOff);
+        const today = window.MortipinsBrawldleStats.getUtcDateString();
+        localStorage.setItem('brawldle_daily_guess_' + today, guessedRank);
     }
     updateSubmitButton();
 
