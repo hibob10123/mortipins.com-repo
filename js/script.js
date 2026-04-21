@@ -16,6 +16,9 @@ function off() {
     overflow.style.overflow = "auto";
 }
 
+/* off topic videos
+{ link: "https://www.youtube.com/embed/MaalFNV9ZJY", trueRank: "Silver", guesses: [] },
+*/
 const videoLinks = [
     { link: "https://www.youtube.com/embed/MH1YnfTBF6I", trueRank: "Diamond", guesses: [] },
     { link: "https://www.youtube.com/embed/hk7BTKrno0k", trueRank: "Masters", guesses: [] },
@@ -179,7 +182,6 @@ const videoLinks = [
     { link: "https://www.youtube.com/embed/OydRuddFle8", trueRank: "Masters", guesses: [] },
     { link: "https://www.youtube.com/embed/aBYkqz9DuQg", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/RYhpkcjpS70", trueRank: "Masters", guesses: [] },
-    { link: "https://www.youtube.com/embed/avcTL4by5d0", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/qSVJElLZteA", trueRank: "Masters", guesses: [] },
     { link: "https://www.youtube.com/embed/fUzV1h65_KQ", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/lefAn76UYyE", trueRank: "Mythic", guesses: [] },
@@ -215,7 +217,6 @@ const videoLinks = [
     { link: "https://www.youtube.com/embed/Lv2X15uxSdM", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/so3QNxxCd38", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/LOShq50HbZg", trueRank: "Gold", guesses: [] },
-    { link: "https://www.youtube.com/embed/MaalFNV9ZJY", trueRank: "Silver", guesses: [] },
     { link: "https://www.youtube.com/embed/hT-ynsV8vio", trueRank: "Legendary", guesses: [] },
     { link: "https://www.youtube.com/embed/8H5IvgdQE5o", trueRank: "Mythic", guesses: [] },
     { link: "https://www.youtube.com/embed/G3GJKFnFIaw", trueRank: "Masters", guesses: [] },
@@ -300,7 +301,6 @@ const videoTrophyLinks = [
     { link: "https://www.youtube.com/embed/u_4qGc4TwIs", trueTrophy: "8712", guesses: [] },
     { link: "https://www.youtube.com/embed/Uec4kmcd8J4", trueTrophy: "24000", guesses: [] },
     { link: "https://www.youtube.com/embed/LmLFWlHCPko", trueTrophy: "45000", guesses: [] },
-    { link: "https://www.youtube.com/embed/oJtsKjF78DQ", trueTrophy: "45000", guesses: [] },
     { link: "https://www.youtube.com/embed/Xe3AuIcudVg", trueTrophy: "78000", guesses: [] },
     { link: "https://www.youtube.com/embed/fc_7Deq4oyw", trueTrophy: "40468", guesses: [] },
     { link: "https://www.youtube.com/embed/us--hJmbmBk", trueTrophy: "5976", guesses: [] },
